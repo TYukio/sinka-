@@ -21,6 +21,7 @@ function Signup() {
                     <TextField
                         label="Nome completo"
                         placeholder="Nome"
+                        fullWidth
                         InputProps={{
                         startAdornment: (
                             <InputAdornment position="start"><AccountCircle /></InputAdornment>
@@ -34,6 +35,7 @@ function Signup() {
                     <TextField
                         label="E-mail"
                         placeholder="E-mail"
+                        fullWidth
                         InputProps={{
                         startAdornment: (
                             <InputAdornment position="start"><Email /></InputAdornment>
@@ -48,6 +50,7 @@ function Signup() {
                     <TextField
                         label="Senha"
                         placeholder="Senha"
+                        fullWidth
                         InputProps={{
                         startAdornment: (
                             <InputAdornment position="start"><Password /></InputAdornment>
@@ -63,6 +66,7 @@ function Signup() {
                     <TextField
                         label="Verificar senha"
                         placeholder="Redigite a senha"
+                        fullWidth
                         InputProps={{
                         startAdornment: (
                             <InputAdornment position="start"><Password /></InputAdornment>
@@ -78,7 +82,7 @@ function Signup() {
                     
                     <LocalizationProvider dateAdapter={AdapterDateFns}>
                         <DatePicker
-                            renderInput={(props) => <TextField {...props} />}
+                            renderInput={(props) => <TextField {...props} fullWidth />}
                             label="Data de nascimento"
                             inputFormat="dd/MM/yyyy"
                             onChange={ (date, keyboardInputValue) => setBirth(date) }
@@ -89,14 +93,14 @@ function Signup() {
 
                     <FormControl sx={{alignItems: 'start'}}>
                         <FormLabel id="lbl-gender-radio-buttons-group">Gênero</FormLabel>
-                        <RadioGroup name="gender-radio-buttons-group" aria-labelledby="lbl-gender-radio-buttons-group" onChange={ (event) => setGender(event.target.value) } value={gender}>
+                        <RadioGroup row name="gender-radio-buttons-group" aria-labelledby="lbl-gender-radio-buttons-group" onChange={ (event) => setGender(event.target.value) } value={gender}>
                             <FormControlLabel value="female" control={<Radio />} label="Feminino" />
                             <FormControlLabel value="male" control={<Radio />} label="Masculino" />
                             <FormControlLabel value="other" control={<Radio />} label="Outro" />
                         </RadioGroup>
                     </FormControl>
 
-                    <Button disabled size="large" variant="outlined">Criar conta</Button>
+                    <Button fullWidth size="large" variant="contained">Criar conta</Button>
 
                 </Form>
             </Grid >
