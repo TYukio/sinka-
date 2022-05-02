@@ -1,14 +1,32 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import './App.css';
-import Home from './pages/Home';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { CssBaseline } from '@mui/material';
 
-function App() { 
+import Home from './pages/Home';
+import Signup from './pages/authpages/Signup';
+import { purple } from '@mui/material/colors';
+
+const darkTheme = createTheme({
+	palette: {
+	  mode: 'dark',
+	  primary:
+	  {
+		  main: purple[400]
+	  }
+	},
+});
+
+function App() {
   	return (
-		<Router>
-			<Routes>
-				<Route path="/" element={<Home />} /> 
-			</Routes>
-		</Router>
+		<ThemeProvider theme={darkTheme}>
+			<CssBaseline />
+			<Router>
+				<Routes>
+					<Route path="/" element={<Home />} /> 
+					<Route path="/registre-se" element={<Signup />} /> 
+				</Routes>
+			</Router>
+		</ThemeProvider>
 	);
 }
 
