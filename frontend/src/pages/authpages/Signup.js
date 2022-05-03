@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Grid, TextField, InputAdornment, Button, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, LinearProgress, Fade, Link } from '@mui/material';
+import { Grid, TextField, InputAdornment, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, LinearProgress, Fade, Link } from '@mui/material';
 import { DatePicker, LocalizationProvider  } from '@mui/x-date-pickers';
 import { AccountCircle, Email, Password } from '@mui/icons-material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import LoadingButton from '@mui/lab/LoadingButton';
 import validator from 'validator'
 import formvalidation from '../../util/formvalidation';
 import Form from '../../components/forms/Form';
@@ -22,23 +23,53 @@ function Signup() {
 
     const [passfocus, setPassfocus] = useState(false)
     const [formvalid, setFormvalid] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
+    const [alert, setAlert] = useState({text: undefined, severity: undefined})
 
     const formValidateEffect = formvalidation.formValidateEffect.bind(null, formdata, setFormvalid);
     const onChangeHandler = formvalidation.onChangeHandler.bind(null, formdata, setFormdata);
     const inErrorState = formvalidation.inErrorState.bind(null, formdata);
     const passwordScore = formvalidation.passwordScore.bind(null);
 
-    // eslint-disable-next-line
+    /*eslint-disable */
     useEffect(formValidateEffect, [formdata]);
+    /*eslint-enable */
+
+    // Backend
+    function fetchSignup()
+    {
+        setIsLoading(true);  
+        fetch('/auth/signup', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                name: formdata.name.value,
+                email: formdata.email.value,
+                pass: formdata.pass.value,
+                birth: formdata.birth.value,
+                gender: formdata.gender.value,
+            })
+        }).then(response => {
+            setIsLoading(false);
+            if (response.ok) { 
+                window.location.href = '/entrar?email=' + encodeURIComponent(formdata.email.value);
+            } else if (response.status === 409) {
+                setAlert({text: 'Endereço de e-mail já está em uso', severity: 'error'});
+            } else {
+                setAlert({text: 'A tentativa de cadastro falhou', severity: 'error'});
+            }
+        });
+    }
 
     return (
         <>
             <Grid container direction="column" alignItems="center">
-                <Form title="Junte-se ao Sinka">
+                <Form title="Junte-se ao Sinka" alert={alert.text} alertseverity={alert.severity}>
 
                     <TextField
                         label="Nome completo"
                         placeholder="Nome"
+                        disabled={isLoading}
                         fullWidth
                         InputProps={{
                         startAdornment: (
@@ -55,6 +86,7 @@ function Signup() {
                     <TextField
                         label="E-mail"
                         placeholder="E-mail"
+                        disabled={isLoading}
                         fullWidth
                         InputProps={{
                         startAdornment: (
@@ -72,6 +104,7 @@ function Signup() {
                     <TextField
                         label="Senha"
                         placeholder="Senha"
+                        disabled={isLoading}
                         fullWidth
                         InputProps={{
                         startAdornment: (
@@ -99,6 +132,7 @@ function Signup() {
                     <TextField
                         label="Verificar senha"
                         placeholder="Redigite a senha"
+                        disabled={isLoading}
                         fullWidth
                         InputProps={{
                         startAdornment: (
@@ -115,9 +149,8 @@ function Signup() {
                     />
 
                     <LocalizationProvider dateAdapter={AdapterDateFns}>
-                        <DatePicker
-                            
-                            renderInput={(props) => <TextField {...props} error={inErrorState('birth')}
+                        <DatePicker 
+                            renderInput={(props) => <TextField {...props} disabled={isLoading} error={inErrorState('birth')}
                                 helperText={inErrorState('birth') ? 'Insira uma data válida' : ''} fullWidth />}
                             label={"Data de nascimento"}
                             inputFormat="dd/MM/yyyy"
@@ -128,7 +161,7 @@ function Signup() {
                         />
                     </LocalizationProvider>
                     
-                    <FormControl sx={{alignItems: 'start'}}>
+                    <FormControl disabled={isLoading} sx={{alignItems: 'start'}}>
                         <FormLabel id="lbl-gender-radio-buttons-group">Gênero</FormLabel>
                         <RadioGroup row name="gender-radio-buttons-group" aria-labelledby="lbl-gender-radio-buttons-group" 
                         onChange={ (event) => onChangeHandler('gender', event.target.value, (value) => value !== null) } value={formdata.gender.value}>
@@ -138,7 +171,7 @@ function Signup() {
                         </RadioGroup>
                     </FormControl>
 
-                    <Button disabled={!formvalid} fullWidth size="large" variant="contained">Criar conta</Button>
+                    <LoadingButton loading={isLoading} onClick={fetchSignup} disabled={!formvalid} fullWidth size="large" variant="contained">Criar conta</LoadingButton>
 
                     <Grid container direction="row" alignItems="center" spacing={'0'} sx={{ fontSize:'0.75rem'}}>
                         <FormLabel sx={{ mr:'0.2rem', fontSize:'0.75rem'}}>Já possuí conta?</FormLabel>
