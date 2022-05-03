@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Grid, TextField, InputAdornment, Button, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, LinearProgress, Fade } from '@mui/material';
+import { Grid, TextField, InputAdornment, Button, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, LinearProgress, Fade, Link } from '@mui/material';
 import { DatePicker, LocalizationProvider  } from '@mui/x-date-pickers';
 import { AccountCircle, Email, Password } from '@mui/icons-material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -139,6 +139,11 @@ function Signup() {
                     </FormControl>
 
                     <Button disabled={!formvalid} fullWidth size="large" variant="contained">Criar conta</Button>
+
+                    <Grid container direction="row" alignItems="center" spacing={'0'} sx={{ fontSize:'0.75rem'}}>
+                        <FormLabel sx={{ mr:'0.2rem', fontSize:'0.75rem'}}>Já possuí conta?</FormLabel>
+                        <Link href="/entrar" underline="hover">{'Entrar'}</Link>
+                    </Grid>
 
                 </Form>
             </Grid >

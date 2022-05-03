@@ -4,6 +4,7 @@ import { CssBaseline } from '@mui/material';
 
 import Home from './pages/Home';
 import Signup from './pages/authpages/Signup';
+import Signin from './pages/authpages/Signin';
 import { purple } from '@mui/material/colors';
 
 const darkTheme = createTheme({
@@ -23,7 +24,8 @@ function App() {
 			<Router>
 				<Routes>
 					<Route path="/" element={<Home />} /> 
-					<Route path="/registre-se" element={<Signup />} /> 
+					<Route path="/registre-se" element={<Signup />} />
+					<Route path="/entrar" element={<Signin />} /> 
 				</Routes>
 			</Router>
 		</ThemeProvider>
