@@ -21,10 +21,10 @@ function Signup() {
         gender: { value: 'male', err: false, touched: false  }
     });
 
-    const [passfocus, setPassfocus] = useState(false)
-    const [formvalid, setFormvalid] = useState(false)
-    const [isLoading, setIsLoading] = useState(false)
-    const [alert, setAlert] = useState({text: undefined, severity: undefined})
+    const [passfocus, setPassfocus] = useState(false);
+    const [formvalid, setFormvalid] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [alert, setAlert] = useState({text: undefined, severity: undefined});
 
     const formValidateEffect = formvalidation.formValidateEffect.bind(null, formdata, setFormvalid);
     const onChangeHandler = formvalidation.onChangeHandler.bind(null, formdata, setFormdata);
@@ -33,6 +33,16 @@ function Signup() {
 
     /*eslint-disable */
     useEffect(formValidateEffect, [formdata]);
+
+    // Tenebroso, mas é o único jeito que eu achei
+    useEffect(() => {
+        let validpass = formdata.passrepeat.value != formdata.pass.value;
+        setFormdata({
+            ...formdata,
+            passrepeat: {value: formdata.passrepeat.value, err: validpass, touched: formdata.passrepeat.touched}
+        })
+    }, 
+    [formdata.pass.value, formdata.passrepeat.value]);
     /*eslint-enable */
 
     // Backend
@@ -142,7 +152,7 @@ function Signup() {
                         variant="outlined"
                         type="password"
                         autoComplete="new-password"
-                        onChange={ (event) => onChangeHandler('passrepeat', event.target.value, (value) => validator.equals(value, formdata.pass.value) ) }
+                        onChange={ (event) => onChangeHandler('passrepeat', event.target.value ) }
                         value={formdata.passrepeat.value}
                         error={inErrorState('passrepeat')}
                         helperText={inErrorState('passrepeat') ? 'As senhas não coencidem' : ''}
