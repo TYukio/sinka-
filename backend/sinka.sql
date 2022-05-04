@@ -3,7 +3,7 @@ CREATE DATABASE sinka;
 
 USE sinka;
 
-CREATE TABLE PersonType
+CREATE TABLE persontype
 (
 	id INT UNSIGNED AUTO_INCREMENT NOT NULL,
 	title VARCHAR(32) NOT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE PersonType
 	PRIMARY KEY(id)
 );
 
-CREATE TABLE Person
+CREATE TABLE person
 (
 	id INT UNSIGNED AUTO_INCREMENT NOT NULL,
     email VARCHAR(255) NOT NULL,
@@ -25,13 +25,13 @@ CREATE TABLE Person
 	PRIMARY KEY(id)
 );
 
-CREATE TABLE Person_PersonType
+CREATE TABLE person_persontype
 (
 	id_person INT UNSIGNED NOT NULL,
 	id_persontype INT UNSIGNED NOT NULL,
 
-	FOREIGN KEY(id_person) REFERENCES Person(id),
-	FOREIGN KEY(id_persontype) REFERENCES PersonType(id),
+	FOREIGN KEY(id_person) REFERENCES person(id),
+	FOREIGN KEY(id_persontype) REFERENCES persontype(id),
     
 	PRIMARY KEY(id_person, id_persontype)
 );
