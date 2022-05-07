@@ -1,4 +1,4 @@
-import { Container, Icon, Divider, Stack, useTheme, Alert } from '@mui/material';
+import { useTheme, Container, Icon, Divider, Stack, Alert } from '@mui/material';
 
 import logo from './sinka.svg'
 
@@ -10,7 +10,7 @@ function Form(props) {
                 <img alt="" src={logo} style={{height: '100%'}}/>
             </Icon>
 
-            <Container sx={{bgcolor: theme.palette.grey[900], textAlign:'center', width:'25rem', borderRadius:'4px' }}>
+            <Container sx={{bgcolor: theme.palette.background.overlay, textAlign:'center', width:'25rem', borderRadius:'4px' }}>
                 <h2 style={{letterSpacing: '0.075em'}}>{props.title}</h2> 
                 
                 <Alert sx={{mb: '1em', display: (props.alert !== undefined && props.alert !== 'undefined') ? 'auto' : 'none' }} severity={(props.alertseverity !== undefined) ? props.alertseverity : 'info'} variant="filled">

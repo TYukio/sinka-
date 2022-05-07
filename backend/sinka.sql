@@ -20,7 +20,7 @@ CREATE TABLE person
 	gender CHAR NOT NULL,
 	birth DATE NOT NULL,
 	full_name VARCHAR(64) NOT NULL,
-	biography VARCHAR(765) DEFAULT NULL,
+	biography VARCHAR(1024) DEFAULT NULL,
     
 	PRIMARY KEY(id)
 );

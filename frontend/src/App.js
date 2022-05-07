@@ -6,27 +6,66 @@ import Notfound from './pages/Notfound';
 import Home from './pages/Home';
 import Signup from './pages/authpages/Signup';
 import Signin from './pages/authpages/Signin';
-import { purple } from '@mui/material/colors';
+import User from './pages/profiles/User';
 
-const darkTheme = createTheme({
+const theme_dark = createTheme({
 	palette: {
-	  mode: 'dark',
-	  primary:
-	  {
-		  main: purple[400]
-	  }
+		mode: 'dark',
+
+		primary:
+		{
+			main: '#8e34b3'
+		},
+
+		neutral:
+		{
+			main: '#dddddd',
+			light: '#ffffff',
+			dark: '#cccccc',
+			contrastText: 'rgba(0, 0, 0, 0.87)'
+		},
+		
+		background:
+		{
+			overlay: '#222222'
+		}
+	},
+});
+
+const theme_light = createTheme({
+	palette: {
+		mode: 'light',
+
+		primary:
+		{
+			main: '#8e34b3'
+		},
+
+		neutral:
+		{
+			main: '#808080',
+			light: '#gggggg',
+			dark: '#707070',
+			contrastText: 'rgba(0, 0, 0, 0.87)'
+		},
+		
+		background:
+		{
+			overlay: '#eeeeee'
+		}
 	},
 });
 
 function App() {
   	return (
-		<ThemeProvider theme={darkTheme}>
+		<ThemeProvider theme={theme_dark}>
 			<CssBaseline />
 			<Router>
 				<Routes>
 					<Route path="/" element={<Home />} /> 
 					<Route path="/registre-se" element={<Signup />} />
 					<Route path="/entrar" element={<Signin />} />
+					<Route path="/user/:id" element={<User />} />
 					<Route path="*" element={<Notfound />} /> 
 				</Routes>
 			</Router>

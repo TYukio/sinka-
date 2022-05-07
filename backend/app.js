@@ -11,6 +11,7 @@ if (!process.env.CLIENT_DIST)
 
 // API
 const authRouter = require('./routes/api/auth');
+const userdataRouter = require('./routes/api/userdata');
 
 // React router
 var indexRouter = require('./routes/index');
@@ -24,6 +25,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(process.env.CLIENT_DIST)));
 
 app.use('/auth/', authRouter);
+app.use('/userdata/', userdataRouter);
 app.use('*', indexRouter);
 
 module.exports = app;
