@@ -12,7 +12,7 @@ import Home from './pages/Home';
 import Signup from './pages/authpages/Signup';
 import Signin from './pages/authpages/Signin';
 import User from './pages/profiles/User';
-
+import UserEdit from './pages/profiles/UserEdit';
 
 const themes = {
 	dark: createTheme({
@@ -81,6 +81,7 @@ function App() {
 						<Route path="/registre-se" element={<Signup />} />
 						<Route path="/entrar" element={<Signin />} />
 						<Route path="/user/:id" element={<User />} />
+						<Route path="/editarperfil" element={<UserEdit />} />
 						<Route path="*" element={<Notfound />} /> 
 					</Routes>
 				</SessionContext.Provider>

@@ -1,23 +1,28 @@
-import { useEffect, useState } from 'react';
-import { useTheme, Box, Stack, Avatar, Typography, Divider } from '@mui/material';
-import { CalendarMonth } from '@mui/icons-material';
+import { useEffect, useState, useContext } from 'react';
+import { useTheme, Box, Stack, Avatar, Typography, Divider, Fab } from '@mui/material';
+import { CalendarMonth, Edit } from '@mui/icons-material';
 import { useParams, useNavigate } from 'react-router-dom';
+import { SessionContext } from '../../util/contexts';
 import Dashboard from '../../components/profiles/Dashboard';
 import Loading from '../../components/Loading';
 
 import defaultbanner from './defaultbanner.jpg'
 
 function User(props) {
-	const [userdata, setUserdata] = useState(null);
+	const [userdata, setUserdata] = useState();
 	const navigate = useNavigate()
 	const params = useParams();
 	const theme = useTheme();
 
+	const session_uid = useContext(SessionContext);
 	const profile_uid = params.id;
 
     // Backend
     function fetchUserdata()
     {
+		if (profile_uid === null)
+			return;
+
         fetch('/userdata/fetchpublic?id=' + profile_uid, {
             method: 'GET'
         }).then(response => {
@@ -33,7 +38,7 @@ function User(props) {
 	useEffect(() => {fetchUserdata();}, []);
 	/*eslint-enable */
 
-	if (userdata !== null)
+	if (userdata)
 	{
 		return (
 			<Box sx={{width:'100vw', display: 'flex'}}>
@@ -43,7 +48,7 @@ function User(props) {
 					
 					<Box sx={{backgroundImage: `url(${defaultbanner})`, maxWidth: '1920px', width: 'calc(100% + 4rem)', marginX: '-4rem',
 						alignItems: 'center', display: 'flex', flexDirection: 'column'}}>
-						<Avatar alt="Usuário" src={`/images/pfp/${profile_uid}.jpg`} sx={{ width: '6em', height: '6em', marginY: '0.25em', border: '0.12em solid' }}/>
+						<Avatar src={`/images/pfp/${profile_uid}.jpg?${new Date().valueOf()}`} sx={{ width: '6em', height: '6em', marginY: '0.25em', border: '0.12em solid', borderColor: theme.palette.common.white }}/>
 
 						<Typography fontWeight="bold" variant="h4" component="div" sx={{marginY: '-2rem', color: theme.palette.common.white}}>
 							<p>{userdata.full_name}</p>
@@ -67,6 +72,11 @@ function User(props) {
 					<Typography component="div" sx={{borderRadius: '0.5em', textAlign: 'center', minWidth: '20rem', width: '50%', backgroundColor: theme.palette.background.overlay, padding: '0em 1em'}}>
 						<p>{userdata.biography !== null ? userdata.biography : 'Este usuário não adicionou sua biografia'}</p>
 					</Typography>
+
+					<Fab href="/editarperfil" color="primary" aria-label="edit" sx={{position: 'absolute', bottom: '3rem', right: '3rem', zIndex: 255, 
+						display: session_uid === parseInt(profile_uid) ? 'auto' : 'none'}}>
+						<Edit />
+					</Fab>
 
 				</Stack>
 			</Box>
