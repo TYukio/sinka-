@@ -13,7 +13,7 @@ router.post('/signin', function(req, res, next) {
     process.stdout.write(chalk.blue('Login') + ' solicitado para "' + chalk.bold(form.email) + '" na plataforma: ');
 
     dbconnection.then(conn => {
-        conn.query('SELECT `id`, `pass` FROM `person` WHERE `email` = (?) LIMIT 1', [form.email]).then(rows => {
+        conn.query('SELECT `id`, `pass` FROM `person` WHERE `email` = (?) LIMIT 1', [form.email.toLowerCase()]).then(rows => {
             if (rows.length > 0)
             {
                 var row = rows[0];
@@ -50,7 +50,7 @@ router.post('/signup', function(req, res, next) {
             if (rows.length === 0)
             {
                 conn.query('INSERT INTO `person` (`email`, `pass`, `gender`, `birth`, `full_name`) VALUES (?, ?, ?, ?, ?)', 
-                    [form.email, bcrypt.hashSync(form.pass, 4), form.gender.charAt(0), form.birth.substr(0, 10), form.name ]).then(rows => {
+                    [form.email.toLowerCase(), bcrypt.hashSync(form.pass, 4), form.gender.charAt(0), form.birth.substr(0, 10), form.name ]).then(rows => {
                     if (rows.affectedRows > 0 )
                     {
                         res.sendStatus(201);
