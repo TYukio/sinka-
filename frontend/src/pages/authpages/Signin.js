@@ -18,8 +18,8 @@ function Signup() {
     const formValidateEffect = formvalidation.formValidateEffect.bind(null, formdata, setFormvalid);
     const onChangeHandler = formvalidation.onChangeHandler.bind(null, formdata, setFormdata);
     const inErrorState = formvalidation.inErrorState.bind(null, formdata);
-
-   /*eslint-disable */
+    
+    /*eslint-disable */
     useEffect(formValidateEffect, [formdata]);
 
     useEffect(() => {
@@ -49,8 +49,7 @@ function Signup() {
         }).then(response => {
             setIsLoading(false);
             if (response.ok) { 
-                // TODO: Criar sessão de usuário
-                setAlert({text: 'Autenticado', severity: 'info'});
+                window.location.reload();
             } else if (response.status === 401) {
                 setAlert({text: 'E-mail ou senha incorretos', severity: 'error'});
             } else {
@@ -62,7 +61,7 @@ function Signup() {
     return (
         <>
             <Grid container direction="column" alignItems="center">
-                <Form title="Entrar no Sinka" alert={alert.text} alertseverity={alert.severity}>
+                <Form title="Entrar no Sinka" alert={alert.text} alertseverity={alert.severity} profileOnSession={true}>
 
                     <TextField
                         label="E-mail"

@@ -5,6 +5,7 @@ var router = express.Router();
 var dbconnection = require('../../util/dbconnection');
 var bcrypt = require("bcrypt");
 var chalk = require('chalk');
+var jwt = require('jsonwebtoken');
 
 /* POST login to account */
 router.post('/signin', function(req, res, next) {
@@ -12,12 +13,14 @@ router.post('/signin', function(req, res, next) {
     process.stdout.write(chalk.blue('Login') + ' solicitado para "' + chalk.bold(form.email) + '" na plataforma: ');
 
     dbconnection.then(conn => {
-        conn.query('SELECT `pass` FROM `person` WHERE `email` = (?) LIMIT 1', [form.email]).then(rows => {
+        conn.query('SELECT `id`, `pass` FROM `person` WHERE `email` = (?) LIMIT 1', [form.email]).then(rows => {
             if (rows.length > 0)
             {
-                if (bcrypt.compareSync(form.pass, rows[0].pass))
+                var row = rows[0];
+                if (bcrypt.compareSync(form.pass, row.pass))
                 {
-                    res.sendStatus(200);
+                    var token = jwt.sign({uid: row.id}, process.env.DB_PASS);
+                    res.status(200).cookie('token', token).send();
                     console.log(chalk.greenBright('AUTORIZADO'));
                 }
                 else
@@ -67,6 +70,11 @@ router.post('/signup', function(req, res, next) {
             }
         })
     });
+});
+
+/* GET sign out from account */
+router.get('/signout', function(req, res, next) {
+    res.status(200).clearCookie('token').redirect('/').send();
 });
 
 module.exports = router;

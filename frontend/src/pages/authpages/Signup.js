@@ -74,7 +74,7 @@ function Signup() {
     return (
         <>
             <Grid container direction="column" alignItems="center">
-                <Form title="Junte-se ao Sinka" alert={alert.text} alertseverity={alert.severity}>
+                <Form title="Junte-se ao Sinka" alert={alert.text} alertseverity={alert.severity} profileOnSession={true}>
 
                     <TextField
                         label="Nome completo"
