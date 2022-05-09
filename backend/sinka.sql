@@ -3,10 +3,20 @@ CREATE DATABASE sinka;
 
 USE sinka;
 
+CREATE TABLE sport
+(
+	id INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	title VARCHAR(32) NOT NULL,
+    mui_icon VARCHAR(32),
+
+	PRIMARY KEY(id)
+);
+
 CREATE TABLE persontype
 (
 	id INT UNSIGNED AUTO_INCREMENT NOT NULL,
 	title VARCHAR(32) NOT NULL,
+    mui_icon VARCHAR(32),
 
 	PRIMARY KEY(id)
 );
@@ -23,6 +33,17 @@ CREATE TABLE person
 	biography VARCHAR(1024) DEFAULT NULL,
     
 	PRIMARY KEY(id)
+);
+
+CREATE TABLE person_sport
+(
+	id_person INT UNSIGNED NOT NULL,
+	id_sport INT UNSIGNED NOT NULL,
+
+	FOREIGN KEY(id_person) REFERENCES person(id),
+	FOREIGN KEY(id_sport) REFERENCES sport(id),
+    
+	PRIMARY KEY(id_person, id_sport)
 );
 
 CREATE TABLE person_persontype

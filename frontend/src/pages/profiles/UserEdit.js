@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext, useRef } from 'react';
-import { useTheme, Box, Stack, Avatar, Typography, TextField, IconButton } from '@mui/material';
+import { useTheme, Box, Stack, Avatar, Typography, TextField, IconButton, List, ListItem, Checkbox, ListItemText, ListItemIcon, ListItemButton, Icon } from '@mui/material';
 import { Edit } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { SessionContext } from '../../util/contexts';
@@ -12,7 +12,9 @@ import Loading from '../../components/Loading';
 function User(props) {
     const [formdata, setFormdata] = useState({
         name: { value: '', err: false, touched: false },
-        biography: { value: null, err: false, touched: false  }
+        biography: { value: null, err: false, touched: false  },
+        usertypes: { value: new Set(), err: false, touched: false },
+        sports: { value: new Set(), err: false, touched: false }
     });
     const [formvalid, setFormvalid] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -29,6 +31,9 @@ function User(props) {
     const onChangeHandler = formvalidation.onChangeHandler.bind(null, formdata, setFormdata);
     const inErrorState = formvalidation.inErrorState.bind(null, formdata);
 
+    const [userTypes, setUserTypes] = useState({});
+    const [sports, setSports] = useState({});
+
     // Backend
     function fetchUserdata()
     {
@@ -43,10 +48,36 @@ function User(props) {
                     setUserdata(json);
                     setFormdata(
                         {
+                            ...formdata,
                             name: { value: json.full_name, err: false, touched: false},
                             biography: { value: json.biography || '', err: false, touched: false},
+                            usertypes: { value: new Set(json.types), err: false, touched: false },
+                            sports: { value: new Set(json.sports), err: false, touched: false }
                         }
                     )       
+                });
+            }
+        });
+    }
+
+    function fetchDatafields()
+    {
+        fetch('/datafields/usertypes', {
+            method: 'GET'
+        }).then(response => {
+            if (response.ok) { 
+                response.json().then((json) => {
+                    setUserTypes(json);
+                });
+            }
+        });
+
+        fetch('/datafields/sports', {
+            method: 'GET'
+        }).then(response => {
+            if (response.ok) { 
+                response.json().then((json) => {
+                    setSports(json);
                 });
             }
         });
@@ -59,6 +90,8 @@ function User(props) {
         const formData = new FormData();
         formData.append("name", formdata.name.value);
         formData.append("biography", formdata.biography.value);
+        formData.append("types", [...formdata.usertypes.value]);
+        formData.append("sports", [...formdata.sports.value]);
 
         if (avatarSelection !== null)
             formData.append("avatar", avatarSelection);
@@ -77,7 +110,7 @@ function User(props) {
     }
 
 	/*eslint-disable */
-	useEffect(() => {fetchUserdata();}, [session_uid]);
+	useEffect(() => {fetchUserdata(); fetchDatafields();}, [session_uid]);
     useEffect(formValidateEffect, [formdata]);
 	/*eslint-enable */
 
@@ -110,7 +143,6 @@ function User(props) {
                         />
                     </IconButton>
 
-
                         <TextField label="Nome" variant="standard" sx={{width: '14rem', paddingBottom: '1em', ml: '1em'}}
                             value={formdata.name.value} onChange={ (event) => onChangeHandler('name', event.target.value, (value) => validator.isLength(value, {min: 4, max: 64} ) ) }
                             error={inErrorState('name')} helperText={inErrorState('name') ? 'O nome deve conter entre 4 e 64 caracteres' : ''} />
@@ -130,6 +162,115 @@ function User(props) {
                         error={inErrorState('biography')}
                         helperText={inErrorState('biography') ? 'A biografia deve conter até 1024 caracteres' : ''}
                     />
+
+
+                    <Box display="flex" gap="2em" flexWrap="wrap" justifyContent="center">
+                        <Stack sx={{alignItems: 'center'}}>
+                            <Typography fontSize="1.125rem" component="div" letterSpacing="0.06em">
+                                <p>Tipo de usuário</p>
+                            </Typography>
+
+                            <List sx={{ maxHeight: '12em', width: '18em', bgcolor: 'background.overlay', overflowY: 'scroll', overflowX: 'hidden', borderRadius: '0.5em' }}>
+                                {Object.keys(userTypes).map((key) => {
+                                    const labelId = 'checkbox-usertype-label-' + userTypes[key].id;
+                                    return (
+                                    <ListItem
+                                        key={key}
+                                        secondaryAction={
+                                        <IconButton edge="end" aria-label="comments">
+                                            <Icon>{userTypes[key].mui_icon}</Icon>
+                                        </IconButton>
+                                        }
+                                        disablePadding >
+                                        <ListItemButton role={undefined} onClick={() => {
+                                            var updatedset = new Set(formdata.usertypes.value);
+                                            if (formdata.usertypes.value.has(userTypes[key].id))
+                                                updatedset.delete(userTypes[key].id) ;
+                                            else
+                                                updatedset.add(userTypes[key].id) ;
+
+                                            onChangeHandler('usertypes', updatedset);
+                                        }}>
+                                        <ListItemIcon>
+                                            <Checkbox
+                                            edge="start"
+                                            checked={formdata.usertypes.value.has(userTypes[key].id)}
+                                            disableRipple
+                                            inputProps={{ 'aria-labelledby': labelId }}
+                                            onChange={ (event) => {
+                                                var updatedset = new Set(formdata.usertypes.value);
+                                                if (event.target.checked)
+                                                    updatedset.add(userTypes[key].id) ;
+                                                else
+                                                    updatedset.delete(userTypes[key].id) ;
+
+                                                onChangeHandler('usertypes', updatedset);
+                                            }}
+                                            />
+                                        </ListItemIcon>
+                                        <ListItemText id={labelId} primary={userTypes[key].title} />
+                                        </ListItemButton>
+                                    </ListItem>
+                                    );
+                                })}
+                            </List>
+
+                        </Stack>
+
+                        <Stack sx={{alignItems: 'center'}}>
+                            <Typography fontSize="1.125rem" component="div" letterSpacing="0.06em">
+                                <p>Esportes</p>
+                            </Typography>
+
+                            <List sx={{ maxHeight: '12em', width: '18em', bgcolor: 'background.overlay', overflowY: 'scroll', overflowX: 'hidden', borderRadius: '0.5em' }}>
+                                {Object.keys(sports).map((key) => {
+                                    const labelId = 'checkbox-sports-label-' + sports[key].id;
+
+                                    return (
+                                    <ListItem
+                                        key={key}
+                                        secondaryAction={
+                                        <IconButton edge="end" aria-label="comments">
+                                            <Icon>{sports[key].mui_icon}</Icon>
+                                        </IconButton>
+                                        }
+                                        disablePadding >
+                                        <ListItemButton role={undefined} onClick={() => {
+                                            var updatedset = new Set(formdata.sports.value);
+                                            if (formdata.sports.value.has(sports[key].id))
+                                                updatedset.delete(sports[key].id) ;
+                                            else
+                                                updatedset.add(sports[key].id) ;
+
+                                            onChangeHandler('sports', updatedset);
+                                        }}>
+                                        <ListItemIcon>
+                                            <Checkbox
+                                            edge="start"
+                                            checked={formdata.sports.value.has(sports[key].id)}
+                                            disableRipple
+                                            inputProps={{ 'aria-labelledby': labelId }}
+                                            onChange={ (event) => {
+                                                var updatedset = new Set(formdata.sports.value);
+                                                if (event.target.checked)
+                                                    updatedset.add(sports[key].id) ;
+                                                else
+                                                    updatedset.delete(sports[key].id) ;
+
+                                                onChangeHandler('sports', updatedset);
+                                            }}
+                                            />
+                                        </ListItemIcon>
+                                        <ListItemText id={labelId} primary={sports[key].title} />
+                                        </ListItemButton>
+                                    </ListItem>
+                                    );
+                                })}
+                            </List>
+
+                        </Stack>
+
+                    </Box>
                     
                     <LoadingButton loading={isLoading} onClick={updateUserdata} endIcon={<Edit />} sx={{marginTop: '2em'}} disabled={!formvalid} size="large" variant="contained">salvar alterações</LoadingButton>
 

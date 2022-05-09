@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
-import { useTheme, Box, Stack, Avatar, Typography, Divider, Fab } from '@mui/material';
+import { useTheme, Box, Stack, Avatar, Typography, Divider, Fab, Chip, Icon } from '@mui/material';
 import { CalendarMonth, Edit } from '@mui/icons-material';
 import { useParams, useNavigate } from 'react-router-dom';
 import { SessionContext } from '../../util/contexts';
@@ -16,6 +16,9 @@ function User(props) {
 
 	const session_uid = useContext(SessionContext);
 	const profile_uid = params.id;
+
+	const [userTypes, setUserTypes] = useState([]);
+	const [sports, setSports] = useState([]);
 
     // Backend
     function fetchUserdata()
@@ -34,14 +37,37 @@ function User(props) {
         });
     }
 
+	function fetchDatafields()
+    {
+        fetch('/datafields/usertypes', {
+            method: 'GET'
+        }).then(response => {
+            if (response.ok) { 
+                response.json().then((json) => {
+                    setUserTypes(json);
+                });
+            }
+        });
+
+		fetch('/datafields/sports', {
+            method: 'GET'
+        }).then(response => {
+            if (response.ok) { 
+                response.json().then((json) => {
+                    setSports(json);
+                });
+            }
+        });
+    }
+
 	/*eslint-disable */
-	useEffect(() => {fetchUserdata();}, []);
+	useEffect(() => {fetchUserdata(); fetchDatafields();}, []);
 	/*eslint-enable */
 
 	if (userdata)
 	{
 		return (
-			<Box sx={{width:'100vw', display: 'flex'}}>
+			<Box height="100vh" width="100vw" display="flex">
 				<Dashboard useDefault={true} />
 
 				<Stack direction="column" sx={{padding: '2rem', paddingTop: '0', flexGrow: 1, overflowWrap: 'break-all', alignItems: 'center' }}>
@@ -63,6 +89,17 @@ function User(props) {
 						</Typography>
 					</Box>	
 
+					<Box sx={{display: 'flex', gap: '0.35em', flexDirection: 'row', fontSize: '1.125rem', alignItems: 'center', letterSpacing: '0.06em', mb: '1em'}}>
+						
+						{Object.keys(userdata.types).map((key) => {
+							if (userTypes === null || userTypes === undefined || userTypes.length === 0)
+								return(undefined);
+							const curtype = userTypes.find(element => element.id === userdata.types[key]);
+							return (
+								<Chip icon={<Icon>{curtype.mui_icon}</Icon>} label={curtype.title} />
+							);
+						})}
+					</Box>
 					<Divider sx={{width: '16rem'}} />
 
 					<Typography fontSize="1.125rem" component="div" letterSpacing="0.06em">
@@ -72,6 +109,26 @@ function User(props) {
 					<Typography component="div" sx={{borderRadius: '0.5em', textAlign: 'center', minWidth: '20rem', width: '50%', backgroundColor: theme.palette.background.overlay, padding: '0em 1em'}}>
 						<p>{userdata.biography !== null ? userdata.biography : 'Este usuário não adicionou sua biografia'}</p>
 					</Typography>
+
+					<Typography fontSize="1.125rem" component="div" letterSpacing="0.06em">
+						<p>Esportes</p>
+					</Typography>
+
+					<Typography sx={{marginTop: '-1em', textAlign: 'center', display: (userdata.sports && userdata.sports.length > 0) ? 'none' : 'auto'}} fontSize="0.965rem" component="div" letterSpacing="0.02em">
+						<p>Nenhum esporte por aqui</p>
+					</Typography>
+
+
+					<Box sx={{width: '60%', minWidth: '18em', display: 'flex', gap: '0.35em', flexDirection: 'row', flexWrap: 'wrap', fontSize: '1.125rem', justifyContent: 'center', letterSpacing: '0.06em', mb: '1em'}}>
+						{Object.keys(userdata.sports).map((key) => {
+							if (sports === null || sports === undefined || sports.length === 0)
+								return(undefined);
+							const curtype = sports.find(element => element.id === userdata.sports[key]);
+							return (
+								<Chip color="primary" icon={<Icon>{curtype.mui_icon}</Icon>} label={curtype.title} />
+							);
+						})}
+					</Box>
 
 					<Fab href="/editarperfil" color="primary" aria-label="edit" sx={{position: 'absolute', bottom: '3rem', right: '3rem', zIndex: 255, 
 						display: session_uid === parseInt(profile_uid) ? 'auto' : 'none'}}>

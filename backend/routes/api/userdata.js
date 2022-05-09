@@ -23,7 +23,22 @@ router.get('/fetchpublic', function(req, res, next) {
             if (rows.length > 0)
             {
                 console.log(chalk.greenBright('SUCESSO'));
-                return res.status(200).json(rows[0]);
+                conn.query('SELECT `id_persontype` FROM `person_persontype` WHERE `id_person` = ?;', [id]).then(rows_a => {
+                    var persontypes = [];
+                    for (const key in rows_a)
+                        if (rows_a[key].id_persontype)
+                            persontypes.push(rows_a[key].id_persontype);
+
+                        conn.query('SELECT `id_sport` FROM `person_sport` WHERE `id_person` = ?;', [id]).then(rows_b => {
+                            var usersports = [];
+                            for (const key in rows_b)
+                                if (rows_b[key].id_sport)
+                                    usersports.push(rows_b[key].id_sport);
+
+                            return res.status(200).json({...rows[0], types: persontypes, sports: usersports});
+                        });
+                    
+                });
             }
             else
             {
@@ -67,6 +82,21 @@ router.patch('/update', multerUpload.single('avatar'), function(req, res, next) 
             [form.name, form.biography === '' ? null : form.biography, decodedToken.uid]).then(rows => {
             if (rows.affectedRows > 0 )
             {
+                // Totamente ridículo
+                var persontypes = form.types.split(',');
+                var usersports = form.sports.split(',');
+
+                conn.query('DELETE FROM `person_persontype` WHERE `id_person` = ?;', [decodedToken.uid]);
+                conn.query('DELETE FROM `person_sport` WHERE `id_person` = ?;', [decodedToken.uid]);
+
+                for (var index in persontypes)
+                    if (!isNaN(parseInt(persontypes[index])))
+                        conn.query('INSERT INTO `person_persontype` VALUES (?, ?);', [decodedToken.uid, persontypes[index]]);
+
+                for (var index in usersports)
+                    if (!isNaN(parseInt(usersports[index])))
+                        conn.query('INSERT INTO `person_sport` VALUES (?, ?);', [decodedToken.uid, usersports[index]]);       
+
                 res.sendStatus(200);
                 console.log(chalk.greenBright('SUCESSO'));
             }  

@@ -23,7 +23,7 @@ function Dashboard(props) {
     const dashbuttons = props.useDefault === true ?  defaultbuttons.concat(additionalbuttons) : additionalbuttons;
 
     return (
-        <Box sx={{flexShrink: 0, position: 'relative', width: mobile ? 'none' : '14rem', height: '100vh'}}>
+        <Box sx={{flexShrink: 0, position: 'relative', width: mobile ? 'none' : '14rem'}}>
             <Stack direction="row" sx={{position: 'absolute', zIndex: 256}}>  
                 <Collapse in={expanded || !mobile} orientation="horizontal">
                     <Stack direction="column" sx={{backgroundColor: theme.palette.background.overlay, height: '100vh', width: '14rem', alignItems: 'center', justifyContent: 'flex-start'}} spacing={2}>
