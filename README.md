@@ -9,3 +9,11 @@ Usuários podem ser classificados como **atletas, coaches ou personal trainers**
 **Front-end:** React, Material-UI
 
 **Back-end:** Node, Express, MariaDB
+
+## Artefatos
+### Banco de dados
+![Modelo BD](https://raw.githubusercontent.com/itisluiz/sinka/main/artefatos/bd_modelofisico.jpg)
+
+### Ferramentas
+- [Canvas PBB](https://miro.com/app/board/uXjVOBmqtH8=/?share_link_id=966638970070)
+- [Trello](https://trello.com/b/587LW9G5/kanban)
