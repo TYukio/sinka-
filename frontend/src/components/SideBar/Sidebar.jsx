@@ -80,7 +80,7 @@ function Sidebar({ isOpen, toggle }) {
                     height: '100%',
                     display: 'grid',
                     gridTemplateColumns: '1fr',
-                    gridTemplateRows: 'repeat(6, 100px)',
+                    gridTemplateRows: 'repeat(6, 80px)',
                     textAlign: 'center',
                 }}>
                     <LinkRes to='/' onClick={toggle}>Sobre</LinkRes>

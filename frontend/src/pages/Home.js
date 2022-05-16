@@ -26,8 +26,9 @@ function Home() {
       <Header></Header>
       <Infosection {...homeObjOne}></Infosection>
       <Infosection {...homeObjTwo}></Infosection>
-      <Infosection {...homeObjThree}></Infosection>
       <Services></Services>
+      <Infosection {...homeObjThree}></Infosection>
+      
       <Footer></Footer>
     </div>
 

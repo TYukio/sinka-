@@ -24,6 +24,7 @@ const Services = () => {
         }}>
         <Typography variant="h1" sx={{
             fontSize:'3rem',
+            
             margin: '2rem',
             fontWeight: '700',
             textAlign: 'center',

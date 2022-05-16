@@ -4,7 +4,7 @@ import Img3 from'./img-3.svg'
 
 export const homeObjOne = {
     id: 'about',
-    lightBg: true,
+    lightBg: false,
     lightText: true,
     lightTextDesc: true,
     Topline: 'Plataforma Esportiva',
@@ -21,7 +21,7 @@ export const homeObjOne = {
 }
 export const homeObjTwo = {
     id: 'descobrir',
-    lightBg: false,
+    lightBg: true,
     lightText: true,
     lightTextDesc: true,
     Topline: 'Design e propriedade',
