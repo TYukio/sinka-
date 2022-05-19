@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Grid, TextField, InputAdornment, FormLabel , Link } from '@mui/material';
+import { Grid, Stack, TextField, InputAdornment, FormLabel , Link } from '@mui/material';
 import { Email, Password } from '@mui/icons-material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import validator from 'validator'
@@ -62,51 +62,51 @@ function Signup() {
         <>
             <Grid container direction="column" alignItems="center">
                 <Form title="Entrar no Sinka" alert={alert.text} alertseverity={alert.severity} profileOnSession={true}>
+                    <Stack sx={{width: '95%'}} marginY={'1em'} direction={'column'} justifyContent={'center'} alignItems={'center'} spacing={'1em'}>
+                        <TextField
+                            label="E-mail"
+                            placeholder="E-mail"
+                            disabled={isLoading}
+                            fullWidth
+                            InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start"><Email /></InputAdornment>
+                            ),
+                            }}
+                            variant="outlined"
+                            type="email"
+                            onChange={ (event) => onChangeHandler('email', event.target.value, (value) => validator.isEmail(value) ) }
+                            value={formdata.email.value}
+                            error={inErrorState('email')}
+                            helperText={inErrorState('email') ? 'Insira um endereço de e-mail válido' : ''}
+                        />
 
-                    <TextField
-                        label="E-mail"
-                        placeholder="E-mail"
-                        disabled={isLoading}
-                        fullWidth
-                        InputProps={{
-                        startAdornment: (
-                            <InputAdornment position="start"><Email /></InputAdornment>
-                        ),
-                        }}
-                        variant="outlined"
-                        type="email"
-                        onChange={ (event) => onChangeHandler('email', event.target.value, (value) => validator.isEmail(value) ) }
-                        value={formdata.email.value}
-                        error={inErrorState('email')}
-                        helperText={inErrorState('email') ? 'Insira um endereço de e-mail válido' : ''}
-                    />
+                        <TextField
+                            label="Senha"
+                            placeholder="Senha"
+                            disabled={isLoading}
+                            fullWidth
+                            InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start"><Password /></InputAdornment>
+                            ),
+                            }}
+                            variant="outlined"
+                            type="password"
+                            autoComplete="new-password"
+                            onChange={ (event) => onChangeHandler('pass', event.target.value, (value) => value !== '' ) }
+                            value={formdata.pass.value}
+                            error={inErrorState('pass')}
+                            helperText={inErrorState('pass') ? 'Insira sua senha' : ''}
+                        />
 
-                    <TextField
-                        label="Senha"
-                        placeholder="Senha"
-                        disabled={isLoading}
-                        fullWidth
-                        InputProps={{
-                        startAdornment: (
-                            <InputAdornment position="start"><Password /></InputAdornment>
-                        ),
-                        }}
-                        variant="outlined"
-                        type="password"
-                        autoComplete="new-password"
-                        onChange={ (event) => onChangeHandler('pass', event.target.value, (value) => value !== '' ) }
-                        value={formdata.pass.value}
-                        error={inErrorState('pass')}
-                        helperText={inErrorState('pass') ? 'Insira sua senha' : ''}
-                    />
-
-                    <LoadingButton loading={isLoading} onClick={fetchSignin} disabled={!formvalid} fullWidth size="large" variant="contained">Entrar</LoadingButton>
-                    
-                    <Grid container direction="row" alignItems="center" spacing={'0'} sx={{ fontSize:'0.75rem'}}>
-                        <FormLabel sx={{ mr:'0.2rem', fontSize:'0.75rem'}}>Ainda não possuí conta?</FormLabel>
-                        <Link href="/registre-se" underline="hover">{'Registre-se'}</Link>
-                    </Grid>
+                        <LoadingButton loading={isLoading} onClick={fetchSignin} disabled={!formvalid} fullWidth size="large" variant="contained">Entrar</LoadingButton>
                         
+                        <Grid container direction="row" alignItems="center" spacing={'0'} sx={{ fontSize:'0.75rem'}}>
+                            <FormLabel sx={{ mr:'0.2rem', fontSize:'0.75rem'}}>Ainda não possuí conta?</FormLabel>
+                            <Link href="/registre-se" underline="hover">{'Registre-se'}</Link>
+                        </Grid>
+                    </Stack>
                 </Form>
             </Grid >
         </>

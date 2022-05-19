@@ -1,7 +1,5 @@
 var express = require('express');
-var path = require('path');
 var router = express.Router();
-
 var dbconnection = require('../../util/dbconnection');
 var bcrypt = require("bcrypt");
 var chalk = require('chalk');
@@ -46,28 +44,47 @@ router.post('/signup', function(req, res, next) {
     process.stdout.write(chalk.yellow('Cadastro') + ' solicitado para "' + chalk.bold(form.email) + '" na plataforma: ');
 
     dbconnection.then(conn => {
+        conn.query('INSERT INTO `person` (`email`, `pass`, `gender`, `birth`, `full_name`) VALUES (?, ?, ?, ?, ?)', 
+            [form.email.toLowerCase(), bcrypt.hashSync(form.pass, 4), form.gender.charAt(0), form.birth.substr(0, 10), form.name ]).then(rows => {
+            if (rows.affectedRows > 0 )
+            {
+                for (var index in form.types)
+                    conn.query('INSERT INTO `person_persontype` VALUES (?, ?);', [rows.insertId, form.types[index]]);
+
+                res.sendStatus(201);
+                console.log(chalk.greenBright('SUCESSO'));
+            }  
+            else
+            {
+                res.sendStatus(500);
+                console.log(chalk.redBright('ERRO SQL'));
+            }
+        });
+    });
+});
+
+/* GET check e-mail validity */
+router.get('/emailcheck', function(req, res, next) {
+    const form = req.query;
+
+    if (form.email === undefined)
+        return res.sendStatus(400);
+
+    process.stdout.write(chalk.cyanBright('Verificação de e-mail') + ' solicitado para "' + chalk.bold(form.email) + '" na plataforma: ');
+
+    dbconnection.then(conn => {
         conn.query('SELECT 1 FROM `person` WHERE `email` = (?) LIMIT 1', [form.email]).then(rows => {
             if (rows.length === 0)
             {
-                conn.query('INSERT INTO `person` (`email`, `pass`, `gender`, `birth`, `full_name`) VALUES (?, ?, ?, ?, ?)', 
-                    [form.email.toLowerCase(), bcrypt.hashSync(form.pass, 4), form.gender.charAt(0), form.birth.substr(0, 10), form.name ]).then(rows => {
-                    if (rows.affectedRows > 0 )
-                    {
-                        res.sendStatus(201);
-                        console.log(chalk.greenBright('SUCESSO'));
-                    }  
-                    else
-                    {
-                        res.sendStatus(500);
-                        console.log(chalk.redBright('ERRO SQL'));
-                    }
-                });
-            }
+                console.log(chalk.greenBright('E-MAIL OK'));
+                res.sendStatus(200);
+            }    
             else
             {
+                console.log(chalk.redBright('E-MAIL EM USO'));
                 res.sendStatus(409);
-                console.log(chalk.yellowBright('E-MAIL EM USO'));
             }
+
         })
     });
 });

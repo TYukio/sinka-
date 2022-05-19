@@ -27,7 +27,7 @@ function Form(props) {
                     </Alert>
                     
                     <Divider />
-                    <Stack marginY={'1em'} direction={'column'} justifyContent={'center'} alignItems={'center'} spacing={'1em'}>
+                    <Stack marginY={'1em'} direction={'column'} justifyContent={'center'} alignItems={'center'} spacing={'1em'} overflow={'hidden'}>
                         {props.children}
                     </Stack>
 
