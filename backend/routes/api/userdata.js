@@ -16,13 +16,10 @@ router.get('/fetchpublic', function(req, res, next) {
 
     id = parseInt(req.query.id)
 
-    process.stdout.write(chalk.greenBright('Dados') + ' de ID #' + chalk.bold(id) + ' solicitados na plataforma: ');
-
     dbconnection.then(conn => {
         conn.query('SELECT `creation`, `gender`, `full_name`, `biography` FROM `person` WHERE `id` = ?;', [id]).then(rows => {
             if (rows.length > 0)
             {
-                console.log(chalk.greenBright('SUCESSO'));
                 conn.query('SELECT `id_persontype` FROM `person_persontype` WHERE `id_person` = ?;', [id]).then(rows_a => {
                     var persontypes = [];
                     for (const key in rows_a)
@@ -41,10 +38,7 @@ router.get('/fetchpublic', function(req, res, next) {
                 });
             }
             else
-            {
-                console.log(chalk.yellowBright('ID INVALIDO'));
                 return res.sendStatus(404);
-            }
         })
     });
 
