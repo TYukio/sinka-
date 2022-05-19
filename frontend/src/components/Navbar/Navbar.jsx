@@ -10,6 +10,7 @@ import { display } from '@mui/system';
 import styled from '@emotion/styled';
 
 
+
 function Navbar({ toggle }) {
     const modoCelularPequenito = useMediaQuery('(max-width:768px)');
     const LinkNav = styled(Link)({
