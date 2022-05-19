@@ -1,14 +1,15 @@
 import styled from "@emotion/styled";
 import { AppBar, Button, Container, Typography } from "@mui/material";
-import Header from "../components/HeroSection/Header";
-import Footer from "../components/Footer/Footer";
-import Navbar from "../components/Navbar/Navbar";
-import Sidebar from "../components/SideBar/Sidebar";
-import Infosection from "../components/InfoSection/Infosection";
-import Services from "../components/services/Services";
+import Header from "../../components/HeroSection/Header";
+import Footer from "../../components/Footer/Footer";
+import Navbar from "../../components/Navbar/Navbar";
+import Sidebar from "../../components/SideBar/Sidebar";
+import Infosection from "../../components/InfoSection/Infosection";
+import Services from "../../components/services/Services";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
-import { homeObjOne, homeObjThree, homeObjTwo } from "../components/InfoSection/data";
+import { homeObjOne, homeObjThree, homeObjTwo } from "../../components/InfoSection/data";
+import Dashboard from '../../components/profiles/Dashboard';
 
 
 
@@ -24,6 +25,7 @@ function Home() {
       <Sidebar isOpen={isOpen} toggle={toggle}></Sidebar>
       <Navbar toggle={toggle}></Navbar>
       <Header></Header>
+      
       <Infosection {...homeObjOne}></Infosection>
       <Infosection {...homeObjTwo}></Infosection>
       <Services></Services>

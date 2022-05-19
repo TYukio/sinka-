@@ -8,7 +8,7 @@ import { useCookies } from 'react-cookie';
 import { useJwt } from 'react-jwt';
 
 import Notfound from './pages/Notfound';
-import Home from './pages/Home';
+import Home from './pages/LandingPage/Home';
 import Signup from './pages/authpages/Signup';
 import Signin from './pages/authpages/Signin';
 import User from './pages/profiles/User';
