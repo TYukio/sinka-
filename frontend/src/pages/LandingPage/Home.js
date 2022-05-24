@@ -9,7 +9,7 @@ import Services from "../../components/services/Services";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
 import { homeObjOne, homeObjThree, homeObjTwo } from "../../components/InfoSection/data";
-import Dashboard from '../../components/profiles/Dashboard';
+
 
 
 

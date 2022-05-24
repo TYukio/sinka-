@@ -1,41 +1,18 @@
-import { Divider, Grid, Link, Typography } from '@mui/material';
+import { Grid, Icon, Link } from '@mui/material';
+import { Box } from '@mui/system';
 import React from 'react'
+import { Layout, Main } from './SideElements';
 
-import {  Center, Bottom, Sidebar, Top } from "./DashboardElements";
-const Dashboard = () => {
-    return (
-        <Sidebar>
-            <Top>
-                <Typography sx={{
-                    fontSize: '20px',
-                    fontWeight: 'bold',
+import Sidebar from '../SideDash/sidebar'
 
-                }}>
-                    Logo
-                
-                </Typography>
-                
-            </Top>
-            <Divider sx={{width:'10rem',}}></Divider>
-            <Center>
-                <Grid>
-                    <Grid>
-                        <Typography>AuAU</Typography>
-                    </Grid>
-                    <Grid>
-                        <Typography>AuAU</Typography>
-                    </Grid>
-                    <Grid>
-                        <Typography>AuAU</Typography>
-                    </Grid>
-                    <Grid>
-                        <Typography>AuAU</Typography>
-                    </Grid>
-                </Grid>
-            </Center>
-            <Bottom>Bottom</Bottom>
-        </Sidebar>
-    )
+const Dashboard = ({children}) => {
+  const activeMenu = true;
+  return (
+    <Layout>
+      <Sidebar></Sidebar>
+      <Main>{children}</Main>
+    </Layout>
+  )
 }
 
 export default Dashboard
