@@ -1,18 +1,63 @@
-import { Grid, Icon, Link } from '@mui/material';
-import { Box } from '@mui/system';
-import React from 'react'
-import { Layout, Main } from './SideElements';
+import { useState, useContext } from 'react';
+import { Stack, Collapse, Typography, Divider, Button, IconButton, useTheme, useMediaQuery, Box } from '@mui/material';
+import { Home, Person, Logout, Login, DoubleArrowRounded } from '@mui/icons-material';
+import { SessionContext } from '../../util/contexts';
 
-import Sidebar from '../SideDash/sidebar'
+function Dashboard(props) {
+    const theme = useTheme();
+    const mobile = useMediaQuery('(max-aspect-ratio: 6/5)');
+    const [expanded, setExpanded] = useState(false);
 
-const Dashboard = ({children}) => {
-  const activeMenu = true;
-  return (
-    <Layout>
-      <Sidebar></Sidebar>
-      <Main>{children}</Main>
-    </Layout>
-  )
+    const session_uid = useContext(SessionContext);
+
+    const additionalbuttons = Array.isArray(props.buttons) ? props.buttons : [];
+    const defaultbuttons = [
+        {label: 'home', icon: <Home />, href: '/'},
+    ]
+    
+    if (session_uid !== null)
+    {
+        defaultbuttons.push({label: 'meu perfil', icon: <Person />, href: '/user/' + session_uid});
+    }
+        
+    const dashbuttons = props.useDefault === true ?  defaultbuttons.concat(additionalbuttons) : additionalbuttons;
+
+    return (
+        <Box sx={{flexShrink: 0, position: 'relative', width: mobile ? 'none' : '14rem'}}>
+            <Stack direction="row" sx={{position: 'absolute', zIndex: 256}}>  
+                <Collapse in={expanded || !mobile} orientation="horizontal">
+                    <Stack direction="column" sx={{backgroundColor: theme.palette.background.overlay, height: '100vh', width: '14rem', alignItems: 'center', justifyContent: 'flex-start'}} spacing={2}>
+                        <Typography fontWeight="bold" variant="h6" letterSpacing={'0.1rem'} component="div" sx={{marginBottom: '-1.5rem'}}>
+                            <p>DASHBOARD</p>
+                        </Typography>
+
+                        <Divider sx={{width: '80%'}} orientation="horizontal" />
+                        {
+                            dashbuttons.map((btn, i) =>
+                                <Button href={btn.href} color="neutral" sx={{width: '80%', height: '3rem', my: '-2em'}} startIcon={btn.icon}>
+                                    {btn.label}
+                                </Button>
+                            )
+                        }
+
+                        <Stack direction="column-reverse" sx={{pb: '1em', flexGrow: 1, alignItems: 'center', width: '100%'}}>
+
+                            <Button href={session_uid !== null ? '/auth/signout' : '/entrar'} color="neutral" sx={{width: '80%', height: '3rem'}} startIcon={session_uid !== null ? <Logout color="error" /> : <Login color="success" />}>
+                                {session_uid !== null ? 'Sair' : 'Entrar'}
+                            </Button>
+
+                        </Stack>
+
+                    </Stack>
+                    
+                </Collapse>
+
+                <IconButton disableRipple={true} aria-label="dashboard" size="large" onClick={() => setExpanded(!expanded)} sx={{borderRadius: 0, display: mobile ? 'auto' : 'none'}}>
+                    <DoubleArrowRounded sx={{transition: '0.25s', transform: expanded ? 'rotate(-180deg)': 'none'}} />
+                </IconButton>
+            </Stack>
+        </Box>
+    );
 }
 
-export default Dashboard
+export default Dashboard;
