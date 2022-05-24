@@ -24,9 +24,9 @@ function Dashboard(props) {
 
     return (
         <Box sx={{flexShrink: 0, position: 'relative', width: mobile ? 'none' : '14rem'}}>
-            <Stack direction="row" sx={{position: 'absolute', zIndex: 256}}>  
+            <Stack direction="row" sx={{position: 'absolute', zIndex: 256, height:'100%', minHeight: '100vh'}}>  
                 <Collapse in={expanded || !mobile} orientation="horizontal">
-                    <Stack direction="column" sx={{backgroundColor: theme.palette.background.overlay, height: '100vh', width: '14rem', alignItems: 'center', justifyContent: 'flex-start'}} spacing={2}>
+                    <Stack direction="column" sx={{backgroundColor: theme.palette.background.overlay, height: '100%', width: '14rem', alignItems: 'center', justifyContent: 'flex-start'}} spacing={2}>
                         <Typography fontWeight="bold" variant="h6" letterSpacing={'0.1rem'} component="div" sx={{marginBottom: '-1.5rem'}}>
                             <p>DASHBOARD</p>
                         </Typography>
@@ -34,10 +34,24 @@ function Dashboard(props) {
                         <Divider sx={{width: '80%'}} orientation="horizontal" />
                         {
                             dashbuttons.map((btn, i) =>
-                                <Button href={btn.href} color="neutral" sx={{width: '80%', height: '3rem', my: '-2em'}} startIcon={btn.icon}>
-                                    {btn.label}
-                                </Button>
-                            )
+                            {
+                                if (btn.href == null)
+                                    return (
+                                        <Box width="80%" display="inline-flex" alignItems="center">
+                                            <Typography sx={{marginRight: '1em', opacity: '75%', textTransform: 'upperCase', fontSize: '0.8em'}}>
+                                                {btn.label}
+                                            </Typography>
+                                            <Divider textAlign="left" sx={{flexGrow: 1, alignContent: 'center', padding: '-2em'}}/>
+                                        </Box>
+
+                                    );
+                                else
+                                    return(
+                                        <Button href={btn.href} color="neutral" sx={{width: '80%', height: '3rem', my: '-2em'}} startIcon={btn.icon}>
+                                            {btn.label}
+                                        </Button>
+                                    );
+                            })
                         }
 
                         <Stack direction="column-reverse" sx={{pb: '1em', flexGrow: 1, alignItems: 'center', width: '100%'}}>

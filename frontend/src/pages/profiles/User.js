@@ -3,7 +3,7 @@ import { useTheme, Box, Stack, Avatar, Typography, Divider, Fab, Chip, Icon } fr
 import { CalendarMonth, Edit } from '@mui/icons-material';
 import { useParams, useNavigate } from 'react-router-dom';
 import { SessionContext, HostContext } from '../../util/contexts';
-import Dashboard from '../../components/profiles/Dashboard';
+import Dashboard from '../../components/dashboard/Dashboard';
 import Loading from '../../components/Loading';
 
 import defaultbanner from './defaultbanner.jpg'
@@ -69,7 +69,7 @@ function User(props) {
 	if (userdata)
 	{
 		return (
-			<Box height="100vh" width="100vw" display="flex">
+			<Box height="100%" width="100%" display="flex">
 				<Dashboard useDefault={true} />
 
 				<Stack direction="column" sx={{padding: '2rem', paddingTop: '0', flexGrow: 1, overflowWrap: 'break-all', alignItems: 'center' }}>

@@ -20,8 +20,6 @@ function Sidebar({ isOpen, toggle }) {
         fontSize: '2rem',
         cursor: 'pointer',
         outline: 'none',
-        
-
 
     })
     const LinkRes = styled(Link)({

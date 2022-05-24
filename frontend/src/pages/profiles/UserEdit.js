@@ -6,7 +6,7 @@ import { SessionContext, HostContext } from '../../util/contexts';
 import LoadingButton from '@mui/lab/LoadingButton';
 import formvalidation from '../../util/formvalidation';
 import validator from 'validator'
-import Dashboard from '../../components/profiles/Dashboard';
+import Dashboard from '../../components/dashboard/Dashboard';
 import Loading from '../../components/Loading';
 
 function User(props) {
@@ -119,7 +119,7 @@ function User(props) {
 	if (userdata)
 	{
 		return (
-			<Box sx={{width:'100vw', display: 'flex'}}>
+			<Box sx={{height: '100%', width:'100%', display: 'flex'}}>
 				<Dashboard useDefault={true} />
 
 				<Stack direction="column" sx={{padding: '2rem', paddingTop: '0', flexGrow: 1, overflowWrap: 'break-all', alignItems: 'center' }}>
