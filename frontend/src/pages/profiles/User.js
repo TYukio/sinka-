@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from 'react';
 import { useTheme, Box, Stack, Avatar, Typography, Divider, Fab, Chip, Icon } from '@mui/material';
 import { CalendarMonth, Edit } from '@mui/icons-material';
 import { useParams, useNavigate } from 'react-router-dom';
-import { SessionContext } from '../../util/contexts';
+import { SessionContext, HostContext } from '../../util/contexts';
 import Dashboard from '../../components/profiles/Dashboard';
 import Loading from '../../components/Loading';
 
@@ -21,12 +21,14 @@ function User(props) {
 	const [sports, setSports] = useState([]);
 
     // Backend
+	const hostname = useContext(HostContext);
+
     function fetchUserdata()
     {
 		if (profile_uid === null)
 			return;
 
-        fetch('/userdata/fetchpublic?id=' + profile_uid, {
+        fetch(hostname + 'userdata/fetchpublic?id=' + profile_uid, {
             method: 'GET'
         }).then(response => {
             if (response.ok) { 
@@ -39,7 +41,7 @@ function User(props) {
 
 	function fetchDatafields()
     {
-        fetch('/datafields/usertypes', {
+        fetch(hostname + 'datafields/usertypes', {
             method: 'GET'
         }).then(response => {
             if (response.ok) { 
@@ -49,7 +51,7 @@ function User(props) {
             }
         });
 
-		fetch('/datafields/sports', {
+		fetch(hostname + 'datafields/sports', {
             method: 'GET'
         }).then(response => {
             if (response.ok) { 
@@ -74,7 +76,7 @@ function User(props) {
 					
 					<Box sx={{backgroundImage: `url(${defaultbanner})`, maxWidth: '1920px', width: 'calc(100% + 4rem)', marginX: '-4rem',
 						alignItems: 'center', display: 'flex', flexDirection: 'column'}}>
-						<Avatar src={`/images/pfp/${profile_uid}.jpg?${new Date().valueOf()}`} sx={{ width: '6em', height: '6em', marginY: '0.25em', border: '0.12em solid', borderColor: theme.palette.common.white }}/>
+						<Avatar src={hostname + `images/pfp/${profile_uid}.jpg?${new Date().valueOf()}`} sx={{ width: '6em', height: '6em', marginY: '0.25em', border: '0.12em solid', borderColor: theme.palette.common.white }}/>
 
 						<Typography fontWeight="bold" variant="h4" component="div" sx={{marginY: '-2rem', color: theme.palette.common.white}}>
 							<p>{userdata.full_name}</p>

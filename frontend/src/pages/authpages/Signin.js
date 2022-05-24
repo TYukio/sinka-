@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Grid, Stack, TextField, InputAdornment, FormLabel , Link } from '@mui/material';
 import { Email, Password } from '@mui/icons-material';
+import { HostContext } from '../../util/contexts';
 import LoadingButton from '@mui/lab/LoadingButton';
 import validator from 'validator'
 import formvalidation from '../../util/formvalidation';
@@ -36,10 +37,12 @@ function Signup() {
     /*eslint-enable */
 
     // Backend
+    const hostname = useContext(HostContext);
+    
     function fetchSignin()
     {
         setIsLoading(true);  
-        fetch('/auth/signin', {
+        fetch(hostname + 'auth/signin', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({

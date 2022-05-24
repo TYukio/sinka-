@@ -2,7 +2,7 @@ import { useEffect, useState, useContext, useRef } from 'react';
 import { useTheme, Box, Stack, Avatar, Typography, TextField, IconButton, List, ListItem, Checkbox, ListItemText, ListItemIcon, ListItemButton, Icon } from '@mui/material';
 import { Edit } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
-import { SessionContext } from '../../util/contexts';
+import { SessionContext, HostContext } from '../../util/contexts';
 import LoadingButton from '@mui/lab/LoadingButton';
 import formvalidation from '../../util/formvalidation';
 import validator from 'validator'
@@ -35,12 +35,14 @@ function User(props) {
     const [sports, setSports] = useState({});
 
     // Backend
+    const hostname = useContext(HostContext);
+
     function fetchUserdata()
     {
 		if (session_uid === null)
             return;
 
-        fetch('/userdata/fetchpublic?id=' + session_uid, {
+        fetch(hostname + 'userdata/fetchpublic?id=' + session_uid, {
             method: 'GET'
         }).then(response => {
             if (response.ok) { 
@@ -62,7 +64,7 @@ function User(props) {
 
     function fetchDatafields()
     {
-        fetch('/datafields/usertypes', {
+        fetch(hostname + 'datafields/usertypes', {
             method: 'GET'
         }).then(response => {
             if (response.ok) { 
@@ -72,7 +74,7 @@ function User(props) {
             }
         });
 
-        fetch('/datafields/sports', {
+        fetch(hostname + 'datafields/sports', {
             method: 'GET'
         }).then(response => {
             if (response.ok) { 
@@ -96,7 +98,7 @@ function User(props) {
         if (avatarSelection !== null)
             formData.append("avatar", avatarSelection);
             
-        fetch('/userdata/update', {
+        fetch(hostname + 'userdata/update', {
             method: 'PATCH',
             credentials: 'include',
             body: formData
@@ -130,7 +132,7 @@ function User(props) {
 
                     <IconButton onClick={()=> avatarBrowser.current.click()} onMouseEnter={() => setAvatarEdit(true)} onMouseLeave={() => setAvatarEdit(false)}>
                         <Avatar
-                            src={avatarSelection !== null ? URL.createObjectURL(avatarSelection) : `/images/pfp/${session_uid}.jpg`}
+                            src={avatarSelection !== null ? URL.createObjectURL(avatarSelection) : hostname + `images/pfp/${session_uid}.jpg`}
                             sx={{width: '5em', height: '5em'}}
                         />
                         <Edit sx={{position: 'absolute', display: avatarEdit ? 'auto' : 'none'}} />

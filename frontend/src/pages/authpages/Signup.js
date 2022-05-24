@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Button, Icon, Grid, TextField, InputAdornment, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, LinearProgress, Fade, Link, Stack, Slide, Typography } from '@mui/material';
 import { DatePicker, LocalizationProvider  } from '@mui/x-date-pickers';
 import { AccountCircle, Email, Password } from '@mui/icons-material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { HostContext } from '../../util/contexts';
 import LoadingButton from '@mui/lab/LoadingButton';
 import validator from 'validator'
 import formvalidation from '../../util/formvalidation';
@@ -56,10 +57,12 @@ function Signup() {
     }
 
     // Backend
+    const hostname = useContext(HostContext);
+    
     function fetchSignup()
     {
         setIsLoading(true);  
-        fetch('/auth/signup', {
+        fetch(hostname + 'auth/signup', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -84,7 +87,7 @@ function Signup() {
     function fetchValidMail()
     {
         setIsLoading(true);  
-        fetch('/auth/emailcheck?email=' + encodeURIComponent(formdata.email.value), {
+        fetch(hostname + 'auth/emailcheck?email=' + encodeURIComponent(formdata.email.value), {
             method: 'GET',
         }).then(response => {
             setIsLoading(false);
@@ -100,7 +103,7 @@ function Signup() {
 
     function fetchDatafields()
     {
-        fetch('/datafields/usertypes', {
+        fetch(hostname + 'datafields/usertypes', {
             method: 'GET'
         }).then(response => {
             if (response.ok) { 

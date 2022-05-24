@@ -1,9 +1,8 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
-import { createContext } from 'react';
 
-import { SessionContext } from './util/contexts';
+import { SessionContext, HostContext } from './util/contexts';
 import { useCookies } from 'react-cookie';
 import { useJwt } from 'react-jwt';
 
@@ -68,14 +67,14 @@ function App() {
 	const [cookies] = useCookies(['token'])
 	const { decodedToken } = useJwt(cookies.token);
 	const session_uid = (decodedToken !== null) ? decodedToken.uid : null;
-
-	createContext(session_uid);
+	const hostname = (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? 'http://localhost:3001/' : '/';
 
   	return (
 		<ThemeProvider theme={themes.dark}>
 			<CssBaseline />
 			<Router>
 				<SessionContext.Provider value={session_uid}>
+				<HostContext.Provider value={hostname}>
 					<Routes>
 						<Route path="/" element={<Home />} /> 
 						<Route path="/registre-se" element={<Signup />} />
@@ -84,6 +83,7 @@ function App() {
 						<Route path="/editarperfil" element={<UserEdit />} />
 						<Route path="*" element={<Notfound />} /> 
 					</Routes>
+				</HostContext.Provider>
 				</SessionContext.Provider>
 			</Router>
 		</ThemeProvider>
