@@ -22,9 +22,9 @@ function Navbar({ toggle }) {
         padding: '0 2rem',
         height: '100%',
         cursor: 'pointer',
-        fontWeight:'600',
-        textTransform:'uppercase',
-        letterSpacing:'1px',
+        fontWeight: '600',
+        textTransform: 'uppercase',
+        letterSpacing: '1px',
         '&.active': {
             borderBottom: '3px solid #fff'
         },
@@ -55,19 +55,29 @@ function Navbar({ toggle }) {
                     width: '100%',
                     padding: '20px',
                     maxWidth: '1100px',
-                    
+
                 }}>
-                    <Icon sx={{
+                    <LinkNav href='/' sx={{
+
                         color: '#fff',
+
                         justifySelf: 'flex-start',
+
                         cursor: 'pointer',
+
                         fontSize: '3rem',
+
                         display: 'flex',
+
                         alignItems: 'center',
+
                         marginLeft: '24px',
+
                     }}>
-                        <img alt="" onClick={toggle} src={logo} style={{ height: '100%' }} />
-                    </Icon>
+
+                        <img alt="" src={logo} style={{ height: '100%' }} />
+
+                    </LinkNav>
                     <DehazeIcon onClick={toggle} sx={{
                         display: modoCelularPequenito ? 'block' : 'none',
                         position: 'absolute',
@@ -89,7 +99,7 @@ function Navbar({ toggle }) {
                             height: '80px',
                             fontWeight: '500'
                         }}>
-                            <LinkNav to='/'>
+                            <LinkNav href ='/sobre'> 
                                 Sobre
                             </LinkNav>
                         </Grid>
@@ -126,7 +136,7 @@ function Navbar({ toggle }) {
                         textAlign: 'center',
                         textTransform: 'none',
                         borderRadius: '50px',
-                        textTransform:'uppercase',
+                        textTransform: 'uppercase',
 
                     }}>Cadastro</Button>
                 </Container>

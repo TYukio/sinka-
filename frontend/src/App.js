@@ -5,7 +5,7 @@ import { CssBaseline } from '@mui/material';
 import { SessionContext, HostContext } from './util/contexts';
 import { useCookies } from 'react-cookie';
 import { useJwt } from 'react-jwt';
-
+import Aboutus from "./pages/Aboutus/About" 
 import Notfound from './pages/Notfound';
 import Home from './pages/LandingPage/Home';
 import Signup from './pages/authpages/Signup';
@@ -78,6 +78,7 @@ function App() {
 					<Routes>
 						<Route path="/" element={<Home />} /> 
 						<Route path="/registre-se" element={<Signup />} />
+						<Route path="/sobre" element={<Aboutus />} /> 
 						<Route path="/entrar" element={<Signin />} />
 						<Route path="/user/:id" element={<User />} />
 						<Route path="/editarperfil" element={<UserEdit />} />
