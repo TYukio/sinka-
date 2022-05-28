@@ -1,8 +1,8 @@
 import Cardabout from "../../components/CardAbout";
 import Footer from "../../components/Footer/Footer";
-import Navbar from "../../components/Navbar/Navbar";
-import Sidebar from "../../components/SideBar/Sidebar";
-import Infosection from "../../components/InfoSection/Infosection";
+import Navbar from "../../components/home/Navbar/Navbar";
+import Sidebar from "../../components/home/Navbar/Sidebar";
+
 
 function About() {
     

@@ -122,7 +122,7 @@ function Cardabout() {
           fontWeight: 'bold',
           fontSize: '30px',
 
-        }}>Nossa Compania</Typography>
+        }}>Nossa Companhia</Typography>
         <Typography sx={{
 
         }}>sexo sexo tesão piazão demonio pinto pau pinto yukio pintudo</Typography>

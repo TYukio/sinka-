@@ -1,13 +1,16 @@
 import { useEffect, useState, useContext } from 'react';
-import { useTheme, Box, Stack, Avatar, Typography, Divider, Fab, Chip, Icon, Grid } from '@mui/material';
+import { useTheme, Box, Stack, Avatar, Typography, Divider, Fab, Chip, Icon, Grid, Container, Button } from '@mui/material';
 import { CalendarMonth, Edit } from '@mui/icons-material';
 import { useParams, useNavigate } from 'react-router-dom';
 import { SessionContext, HostContext } from '../../util/contexts';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import Dashboard from '../../components/dashboard/Dashboard';
 import Loading from '../../components/Loading';
+import InfoIcon from '@mui/icons-material/Info';
 
 import defaultbanner from './defaultbanner.png'
+
+
 
 function User(props) {
 	const [userdata, setUserdata] = useState();
@@ -73,68 +76,124 @@ function User(props) {
 				<Stack direction="column" sx={{ padding: '2rem', paddingTop: '0', flexGrow: 1, overflowWrap: 'break-all', alignItems: 'center' }}>
 
 					<Box sx={{
-						backgroundImage: `url(${defaultbanner})`, maxWidth: '4920px', width: 'calc(100% + 4rem)', marginX: '-4rem', height: '30vh',
-						alignItems: 'center', display: 'flex', flexDirection: 'column'
+						backgroundImage: `url(${defaultbanner})`,
+						width: 'calc(100% + 4rem)',
+						backgroundSize: 'cover',
+						marginX: '-4rem',
+						height: '30vh',
+						alignItems: 'center',
+						display: 'flex',
+						flexDirection: 'column'
 					}}>
 					</Box>
-					<Box sx={{
-						display: 'flex',
-						height: '20vh',
-						marginLeft: '-40em',
-						gap: '1.5em',
-						justifyContent: 'space-between'
+					<Container sx={{
+
 					}}>
+						<Box sx={{
+							display: 'flex',
+							height: '20vh',
+							marginLeft: '-1em',
+							gap: '1.5em',
+							justifyContent: 'space-between'
+						}}>
+							<Box sx={{
+								display: 'flex',
+								gap: '1em'
+							}}>
+								<Avatar src={hostname + `images/pfp/${profile_uid}.jpg?${new Date().valueOf()}`} sx={{
+									width: '6.5em',
 
-						<Avatar src={hostname + `images/pfp/${profile_uid}.jpg?${new Date().valueOf()}`} sx={{ width: '6.5em', height: '6.5em', marginY: '0.25em', border: '0.12em solid', borderColor: theme.palette.common.white, marginTop: '-1.5em', }} />
+									height: '6.5em',
+									marginY: '0.25em',
+									border: '0.12em solid',
+									borderColor: theme.palette.common.white,
+									marginTop: '-1.5rem',
+								}} />
 
-						<Typography fontWeight="500" variant="h4" component="div" sx={{ marginY: '-1em', color: theme.palette.common.white, marginTop: '-15px' }}>
-							<p>{userdata.full_name}</p>
-							<Box sx={{ display: 'flex', flexDirection: 'row', fontSize: '0.725rem', alignItems: 'center', letterSpacing: '0.06em', marginTop: '-3.5em', marginLeft: '5px', }}>
-								<p>Membro desde</p>
-								<Typography fontWeight="bold" component="div" sx={{ marginLeft: '0.35em', fontSize: '0.725rem', marginTop:'1px', }}>
-									<p>{userdata.creation.substr(0, 10).split('-').reverse().join('/')}</p>
+								<Typography fontWeight="500" variant="h4" component="div" sx={{ marginY: '-1em', color: theme.palette.common.white, marginTop: '-15px', }}>
+									<p>{userdata.full_name}</p>
 
 								</Typography>
-
-
-
 							</Box>
-						</Typography>
-						<Box sx={{
-							marginLeft: '-1em',
-							marginTop: '1.8em',
-						}}>
-							<VerifiedIcon sx={{
-								color: 'cyan',
-							}}></VerifiedIcon>
+							<Box sx={{
+
+								marginTop: '1.8rem',
+								display: 'flex',
+								gap: '0.5em',
+
+							}}>
+
+								<Button variant="outlined" sx=
+									{{
+										height: '2rem',
+										minWidth: '64px',
+										borderRadius: '50px'
+									}}>
+									Seguir
+								</Button>
+								<Button variant="contained" sx=
+									{{
+										height: '2rem',
+										minWidth: '64px',
+										borderRadius: '50px'
+									}}>
+									Mensagem
+								</Button>
+							</Box>
 
 						</Box>
 
-					</Box>
+
+						<Box sx={{
+						}}>
+							<Typography sx={{
+								fontWeight: 'semibold',
+								alignItens: 'center',
+								justifyContent: 'flex-start',
+								paddingBottom: '0.5em',
+							}}>TAGS <InfoIcon sx={{
+								marginBottom: '-0.1em',
+								fontSize: '16px'
+							}}></InfoIcon></Typography>
+							<Box sx={{ display: 'flex', gap: '0.45em', flexDirection: 'row', fontSize: '0.5em', alignItems: 'center', letterSpacing: '0.06em', mb: '2em' }}>
+
+								{Object.keys(userdata.types).map((key) => {
+									if (userTypes === null || userTypes === undefined || userTypes.length === 0)
+										return (undefined);
+									const curtype = userTypes.find(element => element.id === userdata.types[key]);
+									return (
+										<Chip icon={<Icon>{curtype.mui_icon}</Icon>} label={curtype.title} />
+									);
+								})}
+							</Box>
+						</Box>
+					</Container>
+					<Container sx={{
+						justifyContent: 'space-around',
+						display: 'flex',
+						flexWrap:'wrap',
+						
+					}}>
+						<Box >
+							<Typography fontSize="1rem" component="div" letterSpacing="0.06em" marginBottom={'-1em'} textTransform={'uppercase'} letterSpacing={'2px'}>
+								<p>Sobre</p>
+							</Typography>
+
+							<Typography component="div" sx={{ borderRadius: '0.5em', textAlign: 'center', minWidth: '20rem', width: '40%', backgroundColor: theme.palette.background.overlay, padding: '0em 1em' }}>
+								<p>{userdata.biography !== null ? userdata.biography : 'Este usuário não adicionou sua biografia'}</p>
+							</Typography>
+						</Box>
+						<Box>
+							<Typography fontSize="1rem" component="div" letterSpacing="0.06em" marginBottom={'-1em'} textTransform={'uppercase'} letterSpacing={'2px'}>
+								<p>Consquistas</p>
+							</Typography>
 
 
-
-
-					<Box sx={{ display: 'flex', gap: '0.35em', flexDirection: 'row', fontSize: '1.125rem', alignItems: 'center', letterSpacing: '0.06em', mb: '1em' }}>
-
-						{Object.keys(userdata.types).map((key) => {
-							if (userTypes === null || userTypes === undefined || userTypes.length === 0)
-								return (undefined);
-							const curtype = userTypes.find(element => element.id === userdata.types[key]);
-							return (
-								<Chip icon={<Icon>{curtype.mui_icon}</Icon>} label={curtype.title} />
-							);
-						})}
-					</Box>
-					<Divider sx={{ width: '16rem' }} />
-
-					<Typography fontSize="1.125rem" component="div" letterSpacing="0.06em">
-						<p>Sobre</p>
-					</Typography>
-
-					<Typography component="div" sx={{ borderRadius: '0.5em', textAlign: 'center', minWidth: '20rem', width: '50%', backgroundColor: theme.palette.background.overlay, padding: '0em 1em' }}>
-						<p>{userdata.biography !== null ? userdata.biography : 'Este usuário não adicionou sua biografia'}</p>
-					</Typography>
+							<Typography component="div" sx={{ borderRadius: '0.5em', textAlign: 'center', minWidth: '20rem', width: '40%', backgroundColor: theme.palette.background.overlay, padding: '0em 1em' }}>
+								<p>{userdata.biography !== null ? userdata.biography : 'Este usuário não adicionou sua biografia'}</p>
+							</Typography>
+						</Box>
+					</Container>
 
 					<Typography fontSize="1.125rem" component="div" letterSpacing="0.06em">
 						<p>Esportes</p>
@@ -162,9 +221,19 @@ function User(props) {
 					}}>
 						<Edit />
 					</Fab>
+					<Divider sx={{ width: '16rem' }} />
+					<Box sx={{ display: 'flex', flexDirection: 'row', fontSize: '0.725rem', alignItems: 'center', letterSpacing: '0.06em', marginLeft: '2px', }}>
+						<p>Membro desde</p>
+						<Typography fontWeight="bold" component="div" sx={{ marginLeft: '0.35em', fontSize: '0.725rem', marginTop: '1px', }}>
+							<p>{userdata.creation.substr(0, 10).split('-').reverse().join('/')}</p>
 
+						</Typography>
+
+
+
+					</Box>
 				</Stack>
-			</Box>
+			</Box >
 		);
 	}
 	else return (

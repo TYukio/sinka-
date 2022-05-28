@@ -14,11 +14,12 @@ function Dashboard(props) {
 
     const additionalbuttons = Array.isArray(props.buttons) ? props.buttons : [];
     const defaultbuttons = [
+        { label: 'Home' },
         { label: 'Home', icon: <HomeOutlined />, href: '/' },
         { label: 'Perfil', icon: <PersonOutline />, href: '/' },
         { label: 'Dashboard', icon: <DashboardOutlined/>, href: '/' },
+       
         
-        { label: 'Meu Time', icon: <GroupsOutlined/>, href: '/' },
     ]
 
     if (session_uid !== null) {
@@ -28,22 +29,26 @@ function Dashboard(props) {
     const dashbuttons = props.useDefault === true ? defaultbuttons.concat(additionalbuttons) : additionalbuttons;
 
     return (
-        <Box sx={{ flexShrink: 0, position: 'relative', width: mobile ? 'none' : '14rem' }}>
+        <Box sx={{ flexShrink: 0, position: 'relative', width: mobile ? 'none' : '14rem', overflowY:mobile ? 'none':'scroll',  backgroundColor: theme.palette.background.overlay }}>
             <Stack direction="row" sx={{ position: 'absolute', zIndex: 256, height: '100%', minHeight: '100vh' }}>
-                <Collapse in={expanded || !mobile} orientation="horizontal">
+                <Collapse in={expanded || !mobile} orientation="horizontal" sx={{
+                    overflowY:'scroll',
+                    display:'block',
+                    backgroundColor: theme.palette.background.overlay
+                }}>
                     <Stack direction="column" sx={{ backgroundColor: theme.palette.background.overlay, height: '100%', width: '14rem', justifyContent: 'flex-start' }} spacing={2}>
                         <Box sx={{height:'2.8em', marginTop:'1em', textAlign: 'center'}}><img src={logo} style={{ height: '100%' }} ></img></Box>
 
-                        <Divider textAlign="left" sx={{ flexGrow: 0, alignContent: 'center', padding: '-2em' }} />
+                        
                         {
                             dashbuttons.map((btn, i) => {
                                 if (btn.href == null)
                                     return (
-                                        <Box width="80%" display="inline-flex" alignItems="center">
-                                            <Typography sx={{ marginRight: '1em', opacity: '75%', textTransform: 'upperCase', fontSize: '0.8em' }}>
+                                        <Box width="100%" display="inline-flex" alignItems="center">
+                                            <Typography sx={{marginX: '1em', opacity: '75%', textTransform: 'upperCase', fontSize: '0.8em'}}>
                                                 {btn.label}
                                             </Typography>
-                                            <Divider textAlign="left" sx={{ flexGrow: 1, alignContent: 'center', padding: '-2em' }} />
+                                            <Divider textAlign="center" sx={{flexGrow: 1, alignContent: 'center', padding: '-2em'}}/>
                                         </Box>
 
                                     );
@@ -55,8 +60,7 @@ function Dashboard(props) {
                                     );
                             })
                         }
-                        <Divider textAlign="left" sx={{ flexGrow: 0, alignContent: 'center', padding: '-2em' }} />
-
+                        
                         <Stack direction="column-reverse" sx={{ pb: '1em', flexGrow: 1, alignItems: 'center', width: '100%' }}>
 
                             <Button href={session_uid !== null ? '/auth/signout' : '/entrar'} color="neutral" sx={{ width: '100%', height: '3rem' }} startIcon={session_uid !== null ? <Logout color="error" /> : <Login color="success" />}>
