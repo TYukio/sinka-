@@ -1,10 +1,9 @@
 import { useEffect, useState, useContext } from 'react';
-import { useTheme, Box, Stack, Avatar, Typography, Divider, Fab, Chip, Icon, Grid, Container, Button } from '@mui/material';
-import { CalendarMonth, Edit } from '@mui/icons-material';
+import { useTheme, Box, Stack, Avatar, Typography, Divider, Fab, Chip, Icon, Container, Button } from '@mui/material';
+import { Edit } from '@mui/icons-material';
 import { useParams, useNavigate } from 'react-router-dom';
 import { SessionContext, HostContext } from '../../util/contexts';
 import { fakeComponentAlert } from '../../util/miscmethods';
-import VerifiedIcon from '@mui/icons-material/Verified';
 import Dashboard from '../../components/dashboard/Dashboard';
 import Loading from '../../components/Loading';
 import InfoIcon from '@mui/icons-material/Info';

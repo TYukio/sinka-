@@ -10,7 +10,6 @@ function Dashboard(props) {
     const [expanded, setExpanded] = useState(false);
 
     const session_uid = useContext(SessionContext);
-    
 
     const additionalbuttons = Array.isArray(props.buttons) ? props.buttons : [];
     const defaultbuttons = [
@@ -35,8 +34,7 @@ function Dashboard(props) {
                     backgroundColor: theme.palette.background.overlay
                 }}>
                     <Stack direction="column" sx={{ backgroundColor: theme.palette.background.overlay, height: '100%', width: '14rem', justifyContent: 'flex-start' }} spacing={2}>
-                        <Box sx={{height:'2.8em', marginTop:'1em', textAlign: 'center'}}><img src={logo} style={{ height: '100%' }} ></img></Box>
-
+                        <Box sx={{height:'2.8em', marginTop:'1em', textAlign: 'center'}}><img alt="" src={logo} style={{ height: '100%' }} ></img></Box>
                         
                         {
                             dashbuttons.map((btn, i) => {

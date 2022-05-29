@@ -2,9 +2,7 @@ import * as React from 'react';
 
 import Typography from '@mui/material/Typography';
 
-
-import { AppBar, Container, Icon, IconButton, Toolbar, useMediaQuery, Box, Grid } from '@mui/material'
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { Container, useMediaQuery, Box } from '@mui/material'
 import AboutUsCards from './AboutDataInsert'
 import { Nicolas, Luiz, Tiago } from './data'
 import { ImgAboutWrapper } from './AboutElements';
@@ -13,7 +11,6 @@ function CardAbout() {
 
   const modoCelularPequenito = useMediaQuery('(max-width:768px)');
   const modoCelularPequenito2 = useMediaQuery('(max-width:1680px)');
-
 
   return (
     <div>

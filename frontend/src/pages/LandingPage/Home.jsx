@@ -1,17 +1,11 @@
-import styled from "@emotion/styled";
-import { AppBar, Button, Container, Typography } from "@mui/material";
 import Header from "../../components/home/HeroSection/Header";
 import Footer from "../../components/Footer/Footer";
 import Navbar from "../../components/home/Navbar/Navbar";
 import Sidebar from "../../components/home/Navbar/Sidebar";
 import Infosection from "../../components/home/InfoSection/Infosection";
 import Services from "../../components/home/InfoSection/Services";
-import { Box } from "@mui/system";
 import React, { useState } from "react";
 import { homeObjOne, homeObjThree, homeObjTwo } from "../../components/home/InfoSection/data";
-
-
-
 
 function Home() {
   const [isOpen, setIsOpen] = useState(false);
