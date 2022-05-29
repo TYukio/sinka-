@@ -1,16 +1,16 @@
 import { AppBar, Container, Grid, Icon, Button } from "@mui/material";
 import { display, height } from "@mui/system";
-import { useState } from "react";
+import { useContext } from "react";
 import CloseIcon from '@mui/icons-material/Close';
 import styled from "@emotion/styled";
 import React from "react";
 import { Link } from "react-router-dom";
-
-
-
+import { fakeComponentAlert } from '../../../util/miscmethods';
+import { SessionContext } from '../../../util/contexts';
 
 function Sidebar({ isOpen, toggle }) {
 
+    const session_uid = useContext(SessionContext);
 
     const Icon = styled(Grid)({
         position: 'absolute',
@@ -81,16 +81,22 @@ function Sidebar({ isOpen, toggle }) {
                     gridTemplateRows: 'repeat(6, 80px)',
                     textAlign: 'center',
                 }}>
-                    <LinkRes to='/' onClick={toggle}>Sobre</LinkRes>
+                    <LinkRes to='/sobre' onClick={toggle}>Sobre</LinkRes>
 
-                    <LinkRes to='/' onClick={toggle}>Descobrir</LinkRes>
+                    <LinkRes to='#' onClick={fakeComponentAlert}>Descobrir</LinkRes>
 
-                    <LinkRes to='/' onClick={toggle}>Serviços</LinkRes>
+                    <LinkRes to='#' onClick={fakeComponentAlert}>Serviços</LinkRes>
 
+                    { session_uid == null ?
                     <LinkRes to='/entrar' onClick={toggle}>Login</LinkRes>
+                    :
+                    <></>
+                    }
                 </Grid>
 
             </Grid>
+
+            
             <Grid  sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', }} >
                 <Button href='/registre-se' variant="contained" sx={{
                     justifyContent: 'center',
@@ -103,7 +109,7 @@ function Sidebar({ isOpen, toggle }) {
                     whiteSpace: 'no-wrap',
 
 
-                }}>Cadastro</Button>
+                }}>{session_uid == null ? 'Cadastro' : 'Meu perfil'}</Button>
             </Grid>
 
 
