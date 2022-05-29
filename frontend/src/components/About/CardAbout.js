@@ -1,23 +1,15 @@
 import * as React from 'react';
 
 import Typography from '@mui/material/Typography';
-import { styled } from '@mui/material/styles';
-
-import Paper from '@mui/material/Paper';
 
 
 import { AppBar, Container, Icon, IconButton, Toolbar, useMediaQuery, Box, Grid } from '@mui/material'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import AboutUsCards from './AboutDataInsert'
+import { Nicolas, Luiz, Tiago } from './data'
+import { ImgAboutWrapper } from './AboutElements';
 
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-}));
-
-function Cardabout() {
+function CardAbout() {
 
   const modoCelularPequenito = useMediaQuery('(max-width:768px)');
   const modoCelularPequenito2 = useMediaQuery('(max-width:1680px)');
@@ -115,37 +107,36 @@ function Cardabout() {
         height: '70vh',
       }}>
         <Container sx={{
-          marginTop:'5rem',
+          marginTop: '5rem',
         }}>
-        <Typography sx={{
-          color: '#E0F80E',
-          fontWeight: 'bold',
-          fontSize: '30px',
+          <Typography sx={{
+            color: '#E0F80E',
+            fontWeight: 'bold',
+            fontSize: '30px',
 
-        }}>Nossa Companhia</Typography>
-        <Typography sx={{
+          }}>Nosso time</Typography>
+          <Typography sx={{
 
-        }}>sexo sexo tesão piazão demonio pinto pau pinto yukio pintudo</Typography>
+          }}>Conheça quem está por trás desse projeto</Typography>
         </Container>
         <Container sx={{
-          marginTop:'5rem',
-        }}>
+          height: modoCelularPequenito ? '1200px' : '460px',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItens: 'center',
+       
 
-          <Grid container spacing={3}>
-            <Grid item xs="auto">
-              <Item>pinto</Item>
-            </Grid>
-            <Grid item xs={6}>
-              <Item>xs=6</Item>
-            </Grid>
-            <Grid item xs>
-              <Item>xs</Item>
-            </Grid>
-          </Grid>
+        }}>
+          <ImgAboutWrapper>
+            <AboutUsCards {...Nicolas}></AboutUsCards>
+            <AboutUsCards {...Luiz}></AboutUsCards>
+            <AboutUsCards {...Tiago}></AboutUsCards>
+          </ImgAboutWrapper>
         </Container>
       </Box>
 
     </div>
   );
 }
-export default Cardabout
+export default CardAbout
