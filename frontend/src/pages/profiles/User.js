@@ -3,14 +3,13 @@ import { useTheme, Box, Stack, Avatar, Typography, Divider, Fab, Chip, Icon, Gri
 import { CalendarMonth, Edit } from '@mui/icons-material';
 import { useParams, useNavigate } from 'react-router-dom';
 import { SessionContext, HostContext } from '../../util/contexts';
+import { fakeComponentAlert } from '../../util/miscmethods';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import Dashboard from '../../components/dashboard/Dashboard';
 import Loading from '../../components/Loading';
 import InfoIcon from '@mui/icons-material/Info';
 
 import defaultbanner from './defaultbanner.png'
-
-
 
 function User(props) {
 	const [userdata, setUserdata] = useState();
@@ -122,7 +121,7 @@ function User(props) {
 
 							}}>
 
-								<Button variant="outlined" sx=
+								<Button variant="outlined" onClick={fakeComponentAlert} sx=
 									{{
 										height: '2rem',
 										minWidth: '64px',
@@ -130,7 +129,7 @@ function User(props) {
 									}}>
 									Seguir
 								</Button>
-								<Button variant="contained" sx=
+								<Button variant="contained" onClick={fakeComponentAlert} sx=
 									{{
 										height: '2rem',
 										minWidth: '64px',

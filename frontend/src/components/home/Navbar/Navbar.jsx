@@ -7,6 +7,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Link from '@mui/material/Link';
 import { Translate } from '@mui/icons-material';
 import { display } from '@mui/system';
+import { fakeComponentAlert } from '../../../util/miscmethods';
 import styled from '@emotion/styled';
 
 
@@ -107,7 +108,7 @@ function Navbar({ toggle }) {
                             height: '80px',
                             fontWeight: '500'
                         }}>
-                            <LinkNav to='/'>
+                            <LinkNav onClick={fakeComponentAlert}>
                                 Descobrir
                             </LinkNav>
                         </Grid>
@@ -115,7 +116,7 @@ function Navbar({ toggle }) {
                             height: '80px',
                             fontWeight: '500'
                         }}>
-                            <LinkNav to='/'>
+                            <LinkNav onClick={fakeComponentAlert}>
                                 Serviços
                             </LinkNav>
                         </Grid>

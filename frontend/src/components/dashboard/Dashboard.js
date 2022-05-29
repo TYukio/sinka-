@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react';
-import { Stack, Collapse, Typography, Divider, Button, IconButton, useTheme, useMediaQuery, Box, Icon } from '@mui/material';
-import { Home, HomeOutlined, Person, PersonOutline, Logout, Login, DoubleArrowRounded, GroupsOutlined, DashboardOutlined } from '@mui/icons-material';
+import { Stack, Collapse, Typography, Divider, Button, IconButton, useTheme, useMediaQuery, Box } from '@mui/material';
+import { HomeOutlined, PersonOutline, Logout, Login, DoubleArrowRounded, WorkspacesOutlined } from '@mui/icons-material';
 import { SessionContext } from '../../util/contexts';
 import logo from './sinka.svg';
 
@@ -14,14 +14,14 @@ function Dashboard(props) {
 
     const additionalbuttons = Array.isArray(props.buttons) ? props.buttons : [];
     const defaultbuttons = [
-        { label: 'Home' },
+        { label: 'Navegue' },
         { label: 'Home', icon: <HomeOutlined />, href: '/' },
-        { label: 'Perfil', icon: <PersonOutline />, href: '/' },
-        { label: 'Dashboard', icon: <DashboardOutlined/>, href: '/' },
+        { label: 'Sobre', icon: <WorkspacesOutlined/>, href: '/sobre' },
     ]
 
     if (session_uid !== null) {
-        defaultbuttons.push({ label: 'meu perfil', icon: <Person />, href: '/user/' + session_uid });
+        defaultbuttons.push({ label: 'Meu Sinka'});
+        defaultbuttons.push({ label: 'Perfil', icon: <PersonOutline />, href: '/user/' + session_uid });
     }
 
     const dashbuttons = props.useDefault === true ? defaultbuttons.concat(additionalbuttons) : additionalbuttons;
