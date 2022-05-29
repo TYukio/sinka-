@@ -18,8 +18,6 @@ function Dashboard(props) {
         { label: 'Home', icon: <HomeOutlined />, href: '/' },
         { label: 'Perfil', icon: <PersonOutline />, href: '/' },
         { label: 'Dashboard', icon: <DashboardOutlined/>, href: '/' },
-       
-        
     ]
 
     if (session_uid !== null) {
@@ -29,7 +27,7 @@ function Dashboard(props) {
     const dashbuttons = props.useDefault === true ? defaultbuttons.concat(additionalbuttons) : additionalbuttons;
 
     return (
-        <Box sx={{ flexShrink: 0, position: 'relative', width: mobile ? 'none' : '14rem', overflowY:mobile ? 'none':'scroll',  backgroundColor: theme.palette.background.overlay }}>
+        <Box sx={{ flexShrink: 0, position: 'relative', width: mobile ? 'none' : '14rem',  backgroundColor: theme.palette.background.overlay }}>
             <Stack direction="row" sx={{ position: 'absolute', zIndex: 256, height: '100%', minHeight: '100vh' }}>
                 <Collapse in={expanded || !mobile} orientation="horizontal" sx={{
                     overflowY:'scroll',

@@ -86,15 +86,15 @@ function User(props) {
 						flexDirection: 'column'
 					}}>
 					</Box>
-					<Container sx={{
-
-					}}>
+					<Container>
 						<Box sx={{
 							display: 'flex',
-							height: '20vh',
+							width: '100%',
+							height: '8em',
 							marginLeft: '-1em',
 							gap: '1.5em',
-							justifyContent: 'space-between'
+							justifyContent: 'space-between',
+							flexGrow: 1
 						}}>
 							<Box sx={{
 								display: 'flex',
@@ -102,7 +102,6 @@ function User(props) {
 							}}>
 								<Avatar src={hostname + `images/pfp/${profile_uid}.jpg?${new Date().valueOf()}`} sx={{
 									width: '6.5em',
-
 									height: '6.5em',
 									marginY: '0.25em',
 									border: '0.12em solid',
@@ -144,8 +143,7 @@ function User(props) {
 						</Box>
 
 
-						<Box sx={{
-						}}>
+						<Box sx={{flexGrow: 1}}>
 							<Typography sx={{
 								fontWeight: 'semibold',
 								alignItens: 'center',
@@ -153,7 +151,7 @@ function User(props) {
 								paddingBottom: '0.5em',
 							}}>TAGS <InfoIcon sx={{
 								marginBottom: '-0.1em',
-								fontSize: '16px'
+								fontSize: '0.85em'
 							}}></InfoIcon></Typography>
 							<Box sx={{ display: 'flex', gap: '0.45em', flexDirection: 'row', fontSize: '0.5em', alignItems: 'center', letterSpacing: '0.06em', mb: '2em' }}>
 
@@ -175,7 +173,7 @@ function User(props) {
 						
 					}}>
 						<Box >
-							<Typography fontSize="1rem" component="div" letterSpacing="0.06em" marginBottom={'-1em'} textTransform={'uppercase'} letterSpacing={'2px'}>
+							<Typography fontSize="1rem" component="div" letterSpacing="0.06em" marginBottom={'-1em'} textTransform={'uppercase'}>
 								<p>Sobre</p>
 							</Typography>
 
@@ -184,7 +182,7 @@ function User(props) {
 							</Typography>
 						</Box>
 						<Box>
-							<Typography fontSize="1rem" component="div" letterSpacing="0.06em" marginBottom={'-1em'} textTransform={'uppercase'} letterSpacing={'2px'}>
+							<Typography fontSize="1rem" component="div" letterSpacing="0.06em" marginBottom={'-1em'} textTransform={'uppercase'}>
 								<p>Consquistas</p>
 							</Typography>
 
@@ -216,7 +214,7 @@ function User(props) {
 					</Box>
 
 					<Fab href="/editarperfil" color="primary" aria-label="edit" sx={{
-						position: 'absolute', bottom: '3rem', right: '3rem', zIndex: 255,
+						position: 'fixed', bottom: '3rem', right: '3rem', zIndex: 255,
 						display: session_uid === parseInt(profile_uid) ? 'auto' : 'none'
 					}}>
 						<Edit />
