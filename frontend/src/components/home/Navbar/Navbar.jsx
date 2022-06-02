@@ -96,9 +96,11 @@ function Navbar({ toggle }) {
 
                         alignItems: 'center',
 
-                        marginLeft: '24px',
+                        marginLeft:modoCelularPequenito ? '-10px' : '24px',
 
+                        marginTop: modoCelularPequenito ? '5px' : 'none',
                     }}>
+
 
                         <img alt="" src={logo} style={{ height: '100%' }} />
 

@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
-import { useTheme, Box, Stack, Avatar, Typography, Divider, Fab, Chip, Icon, Container, Button } from '@mui/material';
+import { useTheme, Box, Stack, Avatar, Typography, Divider, Fab, Chip, Icon, Container, Button, useMediaQuery } from '@mui/material';
 import { Edit } from '@mui/icons-material';
 import { useParams, useNavigate } from 'react-router-dom';
 import { SessionContext, HostContext } from '../../util/contexts';
@@ -24,7 +24,7 @@ function User(props) {
 
 	// Backend
 	const hostname = useContext(HostContext);
-
+	const mobile = useMediaQuery('(max-width:768px)');
 	function fetchUserdata() {
 		if (profile_uid === null)
 			return;
@@ -68,8 +68,9 @@ function User(props) {
 
 	if (userdata) {
 		return (
-			<Box height="100%" width="100%" display="flex">
-				<Dashboard useDefault={true} />
+
+			<Box height="100%" width="100%" display="flex" >
+				<Dashboard sx={{ position: 'fixed' }} useDefault={true} />
 
 				<Stack direction="column" sx={{ padding: '2rem', paddingTop: '0', flexGrow: 1, overflowWrap: 'break-all', alignItems: 'center' }}>
 
@@ -89,10 +90,10 @@ function User(props) {
 							display: 'flex',
 							width: '100%',
 							height: '8em',
-							marginLeft: '-1em',
+
 							gap: '1.5em',
 							justifyContent: 'space-between',
-							flexGrow: 1
+							flexGrow: '1'
 						}}>
 							<Box sx={{
 								display: 'flex',
@@ -107,24 +108,28 @@ function User(props) {
 									marginTop: '-1.5rem',
 								}} />
 
-								<Typography fontWeight="500" variant="h4" component="div" sx={{ marginY: '-1em', color: theme.palette.common.white, marginTop: '-15px', }}>
+								<Typography fontWeight="500" variant="h4" component="div" sx={{ marginY: '-1em', color: theme.palette.common.white, marginTop: '-15px', fontSize:mobile ? '1.5em' : '2em' }}>
 									<p>{userdata.full_name}</p>
 
-								</Typography>
+								</Typography>  
 							</Box>
 							<Box sx={{
 
-								marginTop: '1.8rem',
+								
 								display: 'flex',
-								gap: '0.5em',
+								marginTop:'0.5em', 
+								flexWrap: 'wrap',
+								gap:'0.5em',
 
 							}}>
 
 								<Button variant="outlined" onClick={fakeComponentAlert} sx=
 									{{
 										height: '2rem',
-										minWidth: '64px',
-										borderRadius: '50px'
+										
+										borderRadius: '50px',
+										marginTop: '4px',
+										width: mobile ? '8rem' : '6rem',
 									}}>
 									Seguir
 								</Button>
@@ -132,7 +137,9 @@ function User(props) {
 									{{
 										height: '2rem',
 										minWidth: '64px',
-										borderRadius: '50px'
+										borderRadius: '50px',
+										marginTop: mobile ? '-2em': '4px',
+										width: mobile ? '8rem' : '8rem',
 									}}>
 									Mensagem
 								</Button>
@@ -141,7 +148,7 @@ function User(props) {
 						</Box>
 
 
-						<Box sx={{flexGrow: 1}}>
+						<Box sx={{ flexGrow: 1 }}>
 							<Typography sx={{
 								fontWeight: 'semibold',
 								alignItens: 'center',
@@ -153,39 +160,40 @@ function User(props) {
 							}}></InfoIcon></Typography>
 							<Box sx={{ display: 'flex', gap: '0.45em', flexDirection: 'row', fontSize: '0.5em', alignItems: 'center', letterSpacing: '0.06em', mb: '2em' }}>
 
-								{Object.keys(userdata.types).map((key) => {
+								{Object.keys(userdata.types).map((key, i) => {
 									if (userTypes === null || userTypes === undefined || userTypes.length === 0)
 										return (undefined);
 									const curtype = userTypes.find(element => element.id === userdata.types[key]);
 									return (
-										<Chip icon={<Icon>{curtype.mui_icon}</Icon>} label={curtype.title} />
+										<Chip key={i} icon={<Icon>{curtype.mui_icon}</Icon>} label={curtype.title} />
 									);
 								})}
 							</Box>
 						</Box>
 					</Container>
 					<Container sx={{
-						justifyContent: 'space-around',
+						marginLeft: mobile? '2rem':'13rem',
+						justifyContent: 'center',
 						display: 'flex',
-						flexWrap:'wrap',
-						
+						flexWrap: 'wrap',
+
 					}}>
-						<Box >
+						<Box sx={{ maxWidth: '25rem' }}>
 							<Typography fontSize="1rem" component="div" letterSpacing="0.06em" marginBottom={'-1em'} textTransform={'uppercase'}>
 								<p>Sobre</p>
 							</Typography>
 
-							<Typography component="div" sx={{ borderRadius: '0.5em', textAlign: 'center', minWidth: '20rem', width: '40%', backgroundColor: theme.palette.background.overlay, padding: '0em 1em' }}>
+							<Typography component="div" sx={{ borderRadius: '0.5em', textAlign: 'center', minWidth: '20rem', width: '40%', backgroundColor: theme.palette.background.overlay, padding: '0.5em 1em' }}>
 								<p>{userdata.biography !== null ? userdata.biography : 'Este usuário não adicionou sua biografia'}</p>
 							</Typography>
 						</Box>
-						<Box>
+						<Box sx={{ maxWidth: '25rem' }}>
 							<Typography fontSize="1rem" component="div" letterSpacing="0.06em" marginBottom={'-1em'} textTransform={'uppercase'}>
 								<p>Consquistas</p>
 							</Typography>
 
 
-							<Typography component="div" sx={{ borderRadius: '0.5em', textAlign: 'center', minWidth: '20rem', width: '40%', backgroundColor: theme.palette.background.overlay, padding: '0em 1em' }}>
+							<Typography component="div" sx={{ borderRadius: '0.5em', textAlign: 'center', minWidth: '20rem', width: '40%', backgroundColor: theme.palette.background.overlay, padding: '0.5em 1em' }}>
 								<p>{userdata.biography !== null ? userdata.biography : 'Este usuário não adicionou sua biografia'}</p>
 							</Typography>
 						</Box>
@@ -201,7 +209,7 @@ function User(props) {
 
 
 					<Box sx={{ width: '60%', minWidth: '18em', display: 'flex', gap: '0.35em', flexDirection: 'row', flexWrap: 'wrap', fontSize: '1.125rem', justifyContent: 'center', letterSpacing: '0.06em', mb: '1em' }}>
-						{Object.keys(userdata.sports).map((key) => {
+						{Object.keys(userdata.sports).map((key, i) => {
 							if (sports === null || sports === undefined || sports.length === 0)
 								return (undefined);
 							const curtype = sports.find(element => element.id === userdata.sports[key]);

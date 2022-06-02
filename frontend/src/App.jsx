@@ -12,7 +12,7 @@ import Signup from './pages/authpages/Signup';
 import Signin from './pages/authpages/Signin';
 import User from './pages/profiles/User';
 import UserEdit from './pages/profiles/UserEdit';
-
+import Team from './pages/teams/createteam'
 const themes = {
 	dark: createTheme({
 		palette: {
@@ -81,6 +81,7 @@ function App() {
 						<Route path="/sobre" element={<Aboutus />} /> 
 						<Route path="/entrar" element={<Signin />} />
 						<Route path="/user/:id" element={<User />} />
+						<Route path="/team/:id" element={<Team />} />
 						<Route path="/editarperfil" element={<UserEdit />} />
 						<Route path="*" element={<Notfound />} /> 
 					</Routes>

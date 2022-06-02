@@ -4,6 +4,7 @@ USE sinka;
 INSERT INTO `persontype` (`title`, `mui_icon`) VALUES ('Atleta', 'directions_run');
 INSERT INTO `persontype` (`title`, `mui_icon`) VALUES ('Personal Trainer', 'sports_kabaddi');
 INSERT INTO `persontype` (`title`, `mui_icon`) VALUES ('Coach', 'sports');
+INSERT INTO `persontype` (`title`, `mui_icon`) VALUES ('SinkaAdmin', 'person');
 
 # Esportes
 INSERT INTO `sport` (`title`, `mui_icon`) VALUES ('Vôlei', 'sports_volleyball');
@@ -19,6 +20,7 @@ INSERT INTO `sport` (`title`, `mui_icon`) VALUES ('Ciclismo', 'directions_bike')
 INSERT INTO `sport` (`title`, `mui_icon`) VALUES ('Fisioculturismo', 'fitness_center');
 INSERT INTO `sport` (`title`, `mui_icon`) VALUES ('Canoagem', 'kayaking');
 INSERT INTO `sport` (`title`, `mui_icon`) VALUES ('Skate', 'skateboarding');
+INSERT INTO `sport` (`title`, `mui_icon`) VALUES ('DeathNote', 'book');
 
 # Usuários fictícios, todas as senhas são '123'
 INSERT INTO `person` (`email`, `pass`, `creation`, `gender`, `birth`, `full_name`, `biography`) VALUES (
