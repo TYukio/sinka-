@@ -3,7 +3,7 @@ import { ImgAboutWrapper, AboutCard, AboutIcon, ImgAbout } from './AboutElements
 import Typography from '@mui/material/Typography';
 
 
-const AboutDataInsert = ({ img, alt, Topline, Subtitle, Name }) => {
+const AboutDataInsert = ({ img, alt, Topline, Subtitle, Name, Hobbies }) => {
 
     return (
         
@@ -34,6 +34,14 @@ const AboutDataInsert = ({ img, alt, Topline, Subtitle, Name }) => {
                         color: 'darktext',
 
                     }}>{Subtitle}</Typography>
+                      <Typography className='Subtitle' sx={{
+                        maxWidth: '440px',
+                        marginBottom: '35px',
+                        fontSize: '18px',
+                        lineHeight: '24px',
+                        color: 'darktext',
+
+                    }}>{Hobbies}</Typography>
 
                 </AboutCard>
 

@@ -64,7 +64,7 @@ function CardAbout() {
               marginTop: '0px',
               textAlign: 'center',
               maxWidth: '600px',
-              fontSize: '20px',
+              fontSize: '30px',
               fontWeight: '500',
               textTransform: 'uppercase',
               letterSpacing: '2px',
@@ -85,8 +85,8 @@ function CardAbout() {
           <Typography variant='h1' sx={{
             textAlign: 'center',
             fontWeight: '700',
-            maxWidth: modoCelularPequenito ? '500px' : '650px',
-            fontSize: modoCelularPequenito ? "25px" : '35px',
+            maxWidth: modoCelularPequenito ? '500px' : '1550px',
+            fontSize: modoCelularPequenito ? "25px" : '50px',
           }}>
 
             Somos a equipe de desenvolvimento da plataforma perfeita para esportistas.

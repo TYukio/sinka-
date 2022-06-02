@@ -3,22 +3,25 @@ import Img2 from'./luiz.jpg';
 import Img3 from'./yukio.png';
 
 export const Nicolas = {
-img: Img3,
-alt: 'Tiago Izumi',
-Topline: 'Tiago Izumi',
-Subtitle: ''
+img: Img1,
+alt: 'NICOlas',
+Topline: 'NICOLAS BRUN',
+Subtitle: 'CEO',
+Hobbies: "Eu gosto de volei e UI "
 };
 export const Luiz = {
     img: Img2,
 alt: 'Luiz',
 Topline: 'Luiz Kruger',
-Subtitle: ''
-};
+Subtitle: 'CEO ',
+Hobbies: "Gosto de ouvir musica e jogar"
+   }
 export const Tiago = {
-    img: Img1,
+    img: Img3,
    
-alt: 'NB',
-Topline: 'Nicolas Brun',
-Subtitle: 'CEO sinka'
+alt: 'TY',
+Topline: 'TIAGO IZUMI',
+Subtitle: 'Director',
+Hobbies: "Gosto de cozinhar e musica"
 
 };
