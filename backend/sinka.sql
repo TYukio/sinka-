@@ -35,6 +35,35 @@ CREATE TABLE person
 	PRIMARY KEY(id)
 );
 
+CREATE TABLE team
+(
+	id INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	id_creator INT UNSIGNED NOT NULL,
+	id_sport INT UNSIGNED NOT NULL,
+	creation DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	title VARCHAR(64) NOT NULL,
+	gender CHAR NOT NULL,
+	about VARCHAR(1024) DEFAULT NULL,
+
+	FOREIGN KEY(id_creator) REFERENCES person(id),
+	FOREIGN KEY(id_sport) REFERENCES sport(id),
+    
+	PRIMARY KEY(id)
+);
+
+CREATE TABLE person_team
+(
+	id_person INT UNSIGNED NOT NULL,
+	id_team INT UNSIGNED NOT NULL,
+	joined DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	coach BIT DEFAULT 0 NOT NULL,
+
+	FOREIGN KEY(id_person) REFERENCES person(id),
+	FOREIGN KEY(id_team) REFERENCES team(id),
+    
+	PRIMARY KEY(id_person, id_team)
+);
+
 CREATE TABLE person_sport
 (
 	id_person INT UNSIGNED NOT NULL,
