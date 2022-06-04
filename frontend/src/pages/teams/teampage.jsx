@@ -9,47 +9,34 @@ import Loading from '../../components/Loading';
 import { Add, Search, Toys } from '@mui/icons-material';
 import defaultbanner from './defaultbanner.png'
 import Teamprofile from './ac-milan-logo-0.png'
-function Team(props) {
-    const [userdata, setUserdata] = useState();
+
+function TeamPage(props) {
+    const [teamsdata, setTeamsdata] = useState();
     const navigate = useNavigate()
     const params = useParams();
     const theme = useTheme();
 
     const session_uid = useContext(SessionContext);
-    const profile_uid = params.id;
 
-    const [userTypes, setUserTypes] = useState([]);
     const [sports, setSports] = useState([]);
 
     // Backend
     const hostname = useContext(HostContext);
     const mobile = useMediaQuery('(max-width:920px)');
+    
     function fetchUserdata() {
-        if (profile_uid === null)
-            return;
-
-        fetch(hostname + 'userdata/fetchpublic?id=' + profile_uid, {
+        fetch(hostname + 'teamdata/fetchall?', {
             method: 'GET'
         }).then(response => {
             if (response.ok) {
-                response.json().then((json) => setUserdata(json));
+                response.json().then((json) => setTeamsdata(json));
             } else if (response.status === 404) {
-                navigate('/team');
+                navigate('/');
             }
         });
     }
 
     function fetchDatafields() {
-        fetch(hostname + 'datafields/usertypes', {
-            method: 'GET'
-        }).then(response => {
-            if (response.ok) {
-                response.json().then((json) => {
-                    setUserTypes(json);
-                });
-            }
-        });
-
         fetch(hostname + 'datafields/sports', {
             method: 'GET'
         }).then(response => {
@@ -65,10 +52,8 @@ function Team(props) {
     useEffect(() => { fetchUserdata(); fetchDatafields(); }, []);
     /*eslint-enable */
 
-    if (userdata) {
+    if (teamsdata) {
         return (
-
-
             <Box height="100%" width="100%" display="flex">
                 <Dashboard sx={{ position: 'fixed' }} useDefault={true}></Dashboard>
 
@@ -80,339 +65,180 @@ function Team(props) {
                     alignItems: 'center'
                 }}>
 
-
-
                     <Typography sx={{
                         marginBottom: '1em',
                         fontSize: '2em',
                         fontWeight: '700'
-                    }}>TEAM PAGE</Typography>
+                    }}>Times</Typography>
 
-
-                    <Box sx={{
-
-                        justifyContent: 'center',
-                        width: '100%',
-                        marginBottom: '40px',
-                        alignItems: 'center',
-                        maxWidth: '1900px',
-
-                    }}>
-                        <Typography sx={{
-                            fontSize: "1.25rem",
-                            letterSpacing: '5px',
-                            textTransform: 'uppercase',
-                            marginBottom: '0.5em',
-                            justifyContent: 'initial',
-                        }}>
-                            Esportes
-                        </Typography>
-
-                        <Typography sx={{ marginTop: '-1em', textAlign: 'center', display: (userdata.sports && userdata.sports.length > 0) ? 'none' : 'auto' }} fontSize="0.965rem" component="div" letterSpacing="0.02em">
-                            Nenhum esporte por aqui
-                        </Typography>
-
-
-                        <Box sx={{ minWidth: '100%', flexWrap: 'wrap', gap: mobile ? '0rem' : '1em', display: 'flex', fontSize: '2.125rem', justifyContent: 'initial', letterSpacing: '0.06em', mb: '1em' }}>
-                            {Object.keys(userdata.sports).map((key, i) => {
-                                if (sports === null || sports === undefined || sports.length === 0)
-                                    return (undefined);
-                                const curtype = sports.find(element => element.id === userdata.sports[key]);
-                                return (
-                                    <Button variant='contained' color="primary" disabled sx={{
-                                        fontSize: mobile ? '0.5em' : '0.5em',
-                                        margin: mobile ? '0.5em' : 'none',
-
-                                        flexWrap: 'unset',
-
-                                    }}>
-                                        {curtype.title}
-                                        <Icon >{curtype.mui_icon}</Icon>
-                                    </Button>
-
-
-                                );
-                            })}
-                        </Box>
-                        <Box sx={{
-                            display:'flex',
-                            justifyContent:'center',
-                            gap:'5rem',
-                            flexWrap:'wrap',
-                        }}>
-                            <Stack direction={'collumn'}
-                                sx={{
-                                    display: 'flex',
-                                    flexWrap: 'wrap',
-                                    gap: '1rem',
-                                    justifyContent: 'center',
-                                    marginTop: mobile ? '2em' : 'none',
-                                }}>
+                    {
+                        Object.keys(teamsdata).map((key, i) => {
+                            let team = teamsdata[i];
+                            return (
 
                                 <Box sx={{
-                                    height: '100%',
-                                    minHeight: mobile ? '40rem' : '30rem',
-                                    maxWidth: '20rem',
-                                    minWidth: '20rem',
-                                    width: '100%',
 
-                                    marginBottom: mobile ? '0' : '2em',
-                                    margin: 'auto',
                                     justifyContent: 'center',
-                                    background: theme.palette.background.box,
-                                    borderRadius: '20px',
-
+                                    width: '100%',
+                                    marginBottom: '40px',
+                                    alignItems: 'center',
+                                    maxWidth: '1900px',
+        
                                 }}>
+        
                                     <Box sx={{
-                                        backgroundImage: `url(${defaultbanner})`,
-                                        width: 'calc(100%)',
-                                        borderTopLeftRadius: '20px',
-                                        borderTopRightRadius: '20px',
-                                        backgroundSize: 'cover',
-                                        borderRadiusTop: '20px',
-                                        height: '15vh',
-                                        alignItems: 'center',
-                                        display: 'relative',
-                                        flexDirection: 'column'
-                                    }}></Box>
-                                    <Stack direction={'collumn'} sx={{
-                                        justifyContent: 'center',
+                                        display:'flex',
+                                        justifyContent:'center',
+                                        gap:'5rem',
+                                        flexWrap:'wrap'
                                     }}>
-                                        <Avatar
-                                            alt='Milan'
-                                            src={Teamprofile}
+                                        <Stack orientation={'row'}
                                             sx={{
-
+                                                display: 'flex',
+                                                flexWrap: 'wrap',
+                                                gap: '1rem',
                                                 justifyContent: 'center',
-                                                marginTop: '-3em',
-                                                height: '10rem',
-                                                width: '10rem',
-                                                borderRadius: '50%',
+                                                marginTop: mobile ? '2em' : 'none'
+                                            }}>
+        
+                                            <Box sx={{
+                                                height: '100%',
+                                                width: '20rem',
+        
+                                                marginBottom: mobile ? '0' : '2em',
+                                                margin: 'auto',
+                                                justifyContent: 'center',
                                                 background: theme.palette.background.box,
-                                                border: 1,
-                                                borderColor: theme.palette.background.overlay
-                                            }}></Avatar>
-                                    </Stack>
-                                    <Stack sx={{
-                                        display: 'flex',
-                                        justifyContent:  'center' ,
-                                        margin: '0' ,
-                                        width: '100%',
-                                        marginTop: '0' ,
-                                        alignText: 'center',
-                                        flex: 'wrap',
+                                                borderRadius: '20px',
+                                                padding: '2em'
+        
+                                            }}>
+                                                <Box sx={{
+                                                    backgroundImage: `url(${defaultbanner})`,
+                                                    width: 'calc(100% + 4em)',
+                                                    margin: '-2em',
+                                                    borderTopLeftRadius: '20px',
+                                                    borderTopRightRadius: '20px',
+                                                    backgroundSize: 'cover',
+                                                    borderRadiusTop: '20px',
+                                                    height: '15vh',
+                                                    alignItems: 'center',
+                                                    display: 'relative',
+                                                    flexDirection: 'column'
+                                                }}></Box>
+                                                <Stack direction={'collumn'} sx={{
+                                                    justifyContent: 'center',
+                                                }}>
+                                                    <Avatar
+                                                        alt={team.title}
+                                                        src={hostname + `images/team_pfp/${team.id}.jpg?${new Date().valueOf()}`}
+                                                        sx={{
+        
+                                                            justifyContent: 'center',
+                                                            marginTop: '-3em',
+                                                            height: '10rem',
+                                                            width: '10rem',
+                                                            borderRadius: '50%',
+                                                            background: theme.palette.background.box,
+                                                            border: 1,
+                                                            borderColor: theme.palette.background.overlay
+                                                        }}></Avatar>
+                                                </Stack>
+                                                <Stack sx={{
+                                                    display: 'flex',
+                                                    justifyContent:  'center' ,
+                                                    margin: '0' ,
+                                                    width: '100%',
+                                                    marginTop: '0' ,
+                                                    alignText: 'center',
+                                                    flex: 'wrap',
+        
+                                                }}>
+                                                    <Typography sx={{
+                                                        display: 'flex',
+                                                        justifyContent:'center',
+                                                        fontSize: '1.35em',
+                                                        fontWeight: '600',
+        
+        
+                                                        textTransform: 'uppercase',
+                                                    }}>{team.title}</Typography>
+        
+                                                </Stack>
 
-                                    }}>
-                                        <Typography sx={{
-                                            display: 'flex',
-                                            justifyContent:'center',
-                                            fontSize: '1.8em',
-                                            fontWeight: '600',
+                                                <Box gap="0.5em" marginTop="2em" justifyContent="center" maxWidth="100%" display="flex">
+                                                    {
+                                                        Object.keys(team.members).map((key, i) => {
+                                                            let member = team.members[i];
 
+                                                            return (
+                                                                <Box sx={{cursor: 'pointer'}}>
+                                                                    <Avatar onClick={() => navigate(`/user/${member.id_person}`)}
+                                                                        src={hostname + `images/pfp/${member.id_person}.jpg?${new Date().valueOf()}`} sx={{
+                                                                        width: '2em',
+                                                                        height: '2em',
+                                                                        marginY: '0.25em',
+                                                                        border: '0.12em solid',
+                                                                        borderColor: member.coach == 1 ? "#E0F80E" : theme.palette.common.white,
+                                                                        marginTop: '-1.5rem',
+                                                                    }} />
+                                                                </Box>
 
-                                            textTransform: 'uppercase',
-                                        }}> A.C MILAN B
-                                        </Typography>
-                                        <Typography sx={{
-                                            display: 'flex',
-                                            justifyContent: 'center' ,
-                                            color: theme.palette.neutral.dark,
-                                            fontWeight: '600',
-                                            textTransform: 'uppercase',
-                                            alignText: 'center',
-                                            marginTop:  '0' ,
-                                            marginRight:  '0' ,
-
-
-                                        }}>
-                                            Participantes: 10/10
-                                        </Typography>
-
-                                    </Stack>
-                                    <Box sx={{
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        width: '100%',
-                                        margin: 'auto',
-
-                                    }}>
-                                        <Button variant='contained' href='/team/1' sx={{
-                                            borderRadius: '50px',
-                                            height: '4rem',
-                                            width: '12rem',
-                                            fontSize: '1.2rem',
-                                            marginTop: '5rem',
-                                            backgroundColor: "#E0F80E",
-                                            color: '#000',
-                                            fontWeight: '600',
-                                            '&:hover':
-                                                { color: "white" }
-
-                                        }}>Visitar Página</Button>
-                                    </Box>
-                                    <Box sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'row', fontSize: '0.725rem', alignItems: 'center', letterSpacing: '0.06em', marginLeft: '2px', marginTop: '10%' }}>
-                                        <p>Criado desde</p>
-                                        <Typography fontWeight="bold" component="div" sx={{ marginLeft: '0.35em', fontSize: '0.725rem', marginTop: '1px', }}>
-                                            <p>{userdata.creation.substr(0, 10).split('-').reverse().join('/')}</p>
-
-                                        </Typography>
-
-
+                                                            )
+                                                        })
+                                                    }
+                                                </Box>
+                                                <Box display="flex" marginTop="1em" justifyContent="center">
+                                                    <Chip color="primary" icon={<Icon>{sports.find(element => element.id === team.id_sport).mui_icon}</Icon>} label={sports.find(element => element.id === team.id_sport).title} />
+                                                </Box>
+                                                <Box sx={{
+                                                    display: 'flex',
+                                                    justifyContent: 'center',
+                                                    width: '100%',
+                                                    margin: 'auto',
+        
+                                                }}>
+                                                    <Button variant='contained' href={'/team/' + team.id} sx={{
+                                                        borderRadius: '50px',
+                                                        height: '4rem',
+                                                        width: '12rem',
+                                                        fontSize: '1.2rem',
+                                                        marginTop: '2rem',
+                                                        backgroundColor: "#E0F80E",
+                                                        color: '#000',
+                                                        fontWeight: '600',
+                                                        '&:hover':
+                                                            { color: "white" }
+        
+                                                    }}>Visitar Página</Button>
+                                                </Box>
+                                                
+                                            </Box>
+                                        </Stack>
+        
                                     </Box>
                                 </Box>
-                            </Stack>
-                            <Stack direction={'collumn'}
-                                sx={{
-                                    display: 'flex',
-                                    flexWrap: 'wrap',
-                                    gap: '1rem',
-                                    justifyContent: 'center',
-                                    marginTop: mobile ? '2em' : 'none',
-                                }}>
+                            );
+                        })
+                    }
 
-                                <Box sx={{
-                                    height: '100%',
-                                    minHeight: mobile ? '40rem' : '30rem',
-                                    maxWidth: '20rem',
-                                    minWidth: '20rem',
-                                    width: '100%',
+                        <Fab href="/" color="primary" aria-label="edit" sx={{
+                            position: 'fixed', bottom: '3rem', right: '3rem', zIndex: 255,
 
-                                    marginBottom: mobile ? '0' : '2em',
-                                    margin: 'auto',
-                                    justifyContent: 'center',
-                                    background: theme.palette.background.box,
-                                    borderRadius: '20px',
-
-                                }}>
-                                    <Box sx={{
-                                        backgroundImage: `url(${defaultbanner})`,
-                                        width: 'calc(100%)',
-                                        borderTopLeftRadius: '20px',
-                                        borderTopRightRadius: '20px',
-                                        backgroundSize: 'cover',
-                                        borderRadiusTop: '20px',
-                                        height: '15vh',
-                                        alignItems: 'center',
-                                        display: 'relative',
-                                        flexDirection: 'column'
-                                    }}></Box>
-                                    <Stack direction={'collumn'} sx={{
-                                        justifyContent: 'center',
-                                    }}>
-                                        <Avatar
-                                            alt='Milan'
-                                            src={Teamprofile}
-                                            sx={{
-
-                                                justifyContent: 'center',
-                                                marginTop: '-3em',
-                                                height: '10rem',
-                                                width: '10rem',
-                                                borderRadius: '50%',
-                                                background: theme.palette.background.box,
-                                                border: 1,
-                                                borderColor: theme.palette.background.overlay
-                                            }}></Avatar>
-                                    </Stack>
-                                    <Stack sx={{
-                                        display: 'flex',
-                                        justifyContent:  'center' ,
-                                        margin: '0' ,
-                                        width: '100%',
-                                        marginTop: '0' ,
-                                        alignText: 'center',
-                                        flex: 'wrap',
-
-                                    }}>
-                                        <Typography sx={{
-                                            display: 'flex',
-                                            justifyContent:'center',
-                                            fontSize: '1.8em',
-                                            fontWeight: '600',
-
-
-                                            textTransform: 'uppercase',
-                                        }}> A.C MILAN B
-                                        </Typography>
-                                        <Typography sx={{
-                                            display: 'flex',
-                                            justifyContent: 'center' ,
-                                            color: theme.palette.neutral.dark,
-                                            fontWeight: '600',
-                                            textTransform: 'uppercase',
-                                            alignText: 'center',
-                                            marginTop:  '0' ,
-                                            marginRight:  '0' ,
-
-
-                                        }}>
-                                            Participantes: 10/10
-                                        </Typography>
-
-                                    </Stack>
-                                    <Box sx={{
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        width: '100%',
-                                        margin: 'auto',
-
-                                    }}>
-                                        <Button variant='contained' href='/team/1' sx={{
-                                            borderRadius: '50px',
-                                            height: '4rem',
-                                            width: '12rem',
-                                            fontSize: '1.2rem',
-                                            marginTop: '5rem',
-                                            backgroundColor: "#E0F80E",
-                                            color: '#000',
-                                            fontWeight: '600',
-                                            '&:hover':
-                                                { color: "white" }
-
-                                        }}>Visitar Página</Button>
-                                    </Box>
-                                    <Box sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'row', fontSize: '0.725rem', alignItems: 'center', letterSpacing: '0.06em', marginLeft: '2px', marginTop: '10%' }}>
-                                        <p>Criado desde</p>
-                                        <Typography fontWeight="bold" component="div" sx={{ marginLeft: '0.35em', fontSize: '0.725rem', marginTop: '1px', }}>
-                                            <p>{userdata.creation.substr(0, 10).split('-').reverse().join('/')}</p>
-
-                                        </Typography>
-
-
-                                    </Box>
-                                </Box>
-                            </Stack>
-
-                            
-                        </Box>
-                    </Box>
-                    <Fab href="/" color="primary" aria-label="edit" sx={{
-                        position: 'fixed', bottom: '3rem', right: '3rem', zIndex: 255,
-
-                    }}>
-                        <Search />
-                    </Fab>
-                    <Fab href="/criartime" color="primary" aria-label="edit" sx={{
-                        position: 'fixed', bottom: '3rem', left: mobile ? '3rem' : '15rem', zIndex: 255,
-
-                    }}>
-                        <Add />
-                    </Fab>
-                </Stack>
-            </Box >
-
-
-
-
-
-
-
+                        }}>
+                            <Search />
+                        </Fab>
+                        <Fab href="/criartime" color="primary" aria-label="edit" sx={{
+                            position: 'fixed', bottom: '3rem', left: mobile ? '3rem' : '15rem', zIndex: 255,
+                        }}>
+                            <Add />
+                        </Fab>
+                    </Stack>
+                </Box >
 
         )
 
     }
 }
 
-
-
-export default Team
+export default TeamPage
