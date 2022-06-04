@@ -7,7 +7,7 @@ import { fakeComponentAlert } from '../../util/miscmethods';
 import Dashboard from '../../components/dashboard/Dashboard';
 import Loading from '../../components/Loading';
 import InfoIcon from '@mui/icons-material/Info';
-
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import defaultbanner from './defaultbanner.png'
 
 function Team(props) {
@@ -23,8 +23,8 @@ function Team(props) {
 
 	// Backend
 	const hostname = useContext(HostContext);
-    
-	const mobile = useMediaQuery('(max-width:768px)');
+
+	const mobile = useMediaQuery('(max-width:1240px)');
 	function fetchTeamdata() {
 		if (team_uid === null)
 			return;
@@ -112,21 +112,23 @@ function Team(props) {
 						</Stack>
 						<Stack direction={'collumn'} sx={{
 							display: 'flex',
-							justifyContent: 'space-between',
+							justifyContent: mobile ? 'center' : 'space-evenly',
 							flexWrap: 'wrap',
-							gap: '5rem',
+							gap: mobile ? '3rem' : '5rem',
+							marginTop: mobile ? '8rem' : '2rem',
 							marginBottom: '1em'
 						}} >
 							<Box sx={{
-								marginTop:'-5rem'
+								marginTop: '-4rem'
 							}}>
-								<Typography fontWeight="500" variant="h4" component="div" sx={{ justifyContent: 'left', color: theme.palette.common.white, textTransform: 'uppercase', letterSpacing: '2px', marginTop:'-4rem' }}>
+								<Typography fontWeight="500" variant="h4" component="div" sx={{ justifyContent: 'left', color: theme.palette.common.white, textTransform: 'uppercase', letterSpacing: '2px', marginTop: mobile ? '-5rem' : '-7rem', marginLeft: mobile ? '12rem' : '0', }}>
 									<p>{teamdata.title}</p></Typography>
 								<Box sx={{
 									backgroundColor: theme.palette.background.box,
 									height: '25rem',
+									marginTop: '4.2rem',
 									width: '30rem',
-									marginLeft: '-2em',
+									marginLeft: mobile ? '0' : '-2em',
 									borderRadius: '10px',
 									border: 1,
 									borderColor: theme.palette.background.overlay,
@@ -170,49 +172,57 @@ function Team(props) {
 								</Box>
 							</Box>
 							<Box sx={{
-								marginTop:'-5rem'
+
+								marginTop: '-2.1rem'
 							}}>
-								<Typography fontWeight="500" variant="h4" component="div" sx={{ justifyContent: 'left', color: theme.palette.common.white, marginTop:'-4rem' }}>
-									<p>Participantes</p>
-                                </Typography>
+
 								<Box sx={{
 									backgroundColor: theme.palette.background.box,
 									height: '25rem',
 									width: '30rem',
-									marginRight: '-2em',
+									marginRight: mobile ? '0' : '-2em',
 									borderRadius: '10px',
 									border: 1,
 									borderColor: theme.palette.background.overlay,
 									padding: '2em',
 								}}>
+									<Typography sx={{
+										color: "#E0F80E",
+										fontWeight: '700',
+										letterSpacing: '1.4px',
+										textTransform: 'uppercase',
+										marginTop: '1.5em',
+										marginBottom: '0.5em',
+										fontSize: '16px',
+									}}>Participantes</Typography>
 
-                                    {Object.keys(teamdata.members).map((key, i) => {
+									{Object.keys(teamdata.members).map((key, i) => {
 
-                                        let member = teamdata.members[i];
+										let member = teamdata.members[i];
 
-                                        return (
-                                            <Box onClick={() => navigate(`/user/${member.id_person}`)} marginTop="0.5em" sx={{cursor: "pointer"}} display="flex" justifyContent="left">
-                                                <Avatar onHover={{}} src={hostname + `images/pfp/${member.id_person}.jpg?${new Date().valueOf()}`} sx={{
-                                                    width: '2.5em',
-                                                    height: '2.5em',
-                                                    marginY: '0.25em',
-                                                    border: '0.12em solid',
-                                                    marginRight: '0.75em',
-                                                    borderColor: theme.palette.common.white
-                                                }} />
+										return (
+											<Box onClick={() => navigate(`/user/${member.id_person}`)} marginTop="0.5em" sx={{ cursor: "pointer" }} display="flex" justifyContent="left">
+												<Avatar onHover={{}} src={hostname + `images/pfp/${member.id_person}.jpg?${new Date().valueOf()}`} sx={{
+													width: '2.5em',
+													height: '2.5em',
+													marginY: '0.25em',
+													border: '0.12em solid',
+													marginRight: '0.75em',
+													borderColor: theme.palette.common.white
+												}} />
 
-                                                <Stack alignSelf="center">
-                                                    <Box display="flex">
-                                                        <Typography marginRight="0.35em" color={member.coach == 1 ? '#E0F80E' : 'auto'}>{member.full_name}</Typography>
-                                                        {member.coach == 1 ? <SportsOutlined sx={{color: '#E0F80E'}}/> : undefined}
-                                                    </Box>
+												<Stack alignSelf="center">
+													<Box display="flex">
+														<Typography marginRight="0.35em" color={member.coach == 1 ? '#E0F80E' : 'auto'}>{member.full_name}</Typography>
+														{member.coach == 1 ? <SportsOutlined sx={{ color: '#E0F80E' }} /> : undefined}
+													</Box>
 
-                                                    <Typography fontSize="0.75em"><b>Desde: </b>{member.joined.substr(0, 10).split('-').reverse().join('/')}</Typography>
-                                                </Stack>
-                                                
-                                            </Box>
-                                        )
-                                    })}
+													<Typography fontSize="0.75em"><b>Desde: </b>{member.joined.substr(0, 10).split('-').reverse().join('/')}</Typography>
+												</Stack>
+
+											</Box>
+										)
+									})}
 
 								</Box>
 							</Box>
@@ -235,6 +245,12 @@ function Team(props) {
 						</Typography>
 					</Box>
 				</Stack>
+				<Fab href="/myteam/1" color="primary" aria-label="edit" sx={{
+                        position: 'fixed', bottom: '3rem', left: mobile ? '3rem' : '15rem', zIndex: 255,
+
+                    }}>
+                        <ArrowBackIcon/>
+                    </Fab>
 			</Box >
 		);
 	}

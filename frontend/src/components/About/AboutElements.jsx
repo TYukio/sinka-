@@ -20,17 +20,19 @@ padding: 0 0px;
 }
 `
 export const AboutCard = styled.div`
-background: #222;
+background: #0f0f0f;
 display: flex;
 flex-direction: column;
 justify-content: flex-start;
 align-items: center;
+textAlign: initial;
 border-radius: 10px;
 padding: 30px;
 box-shadow: 0 1px 2px rgba(0,0,0,0.2);
 transition: all 0.2s ease-in-out;
 height: 360px;
-width: 350px;
+width: 300px;
+border: 3px solid #222;
 &:hover{
     transform: scale(1.02);
     transition: all 0.2s ease-in-out;

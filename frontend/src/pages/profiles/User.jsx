@@ -138,7 +138,7 @@ function User(props) {
 										height: '2rem',
 										minWidth: '64px',
 										borderRadius: '50px',
-										marginTop: mobile ? '-2em': '4px',
+										marginTop: mobile ? '0em': '4px',
 										width: mobile ? '8rem' : '8rem',
 									}}>
 									Mensagem
@@ -172,7 +172,7 @@ function User(props) {
 						</Box>
 					</Container>
 					<Container sx={{
-						marginLeft: mobile? '2rem':'13rem',
+						
 						justifyContent: 'space-evenly',
 						display: 'flex',
 						flexWrap: 'wrap',

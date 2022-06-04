@@ -8,7 +8,7 @@ import { Nicolas, Luiz, Tiago } from './data'
 import { ImgAboutWrapper } from './AboutElements';
 
 function CardAbout() {
-
+  
   const modoCelularPequenito = useMediaQuery('(max-width:768px)');
   const modoCelularPequenito2 = useMediaQuery('(max-width:1680px)');
 
