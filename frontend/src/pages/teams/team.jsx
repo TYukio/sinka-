@@ -66,7 +66,7 @@ function Team(props) {
 
 					<Box sx={{
 						backgroundImage: `url(${defaultbanner})`,
-						width: 'calc(100% + 4rem)',
+						width: 'calc(100% + 8rem)',
 						backgroundSize: 'cover',
 						marginX: '-4rem',
 						height: '30vh',
@@ -119,16 +119,17 @@ function Team(props) {
 							marginBottom: '1em'
 						}} >
 							<Box sx={{
-								marginTop: '-4rem'
+								marginTop: '-4rem',
+								
 							}}>
-								<Typography fontWeight="500" variant="h4" component="div" sx={{ justifyContent: 'left', color: theme.palette.common.white, textTransform: 'uppercase', letterSpacing: '2px', marginTop: mobile ? '-5rem' : '-7rem', marginLeft: mobile ? '12rem' : '0', }}>
+								<Typography fontWeight="500" variant="h4" component="div" sx={{ justifyContent: 'left', color: theme.palette.common.white, textTransform: 'uppercase', letterSpacing: '2px', marginTop: mobile ? '-4rem' : '-7rem', marginLeft: mobile ? '0.8rem' : '0', width:'100%', }}>
 									<p>{teamdata.title}</p></Typography>
 								<Box sx={{
 									backgroundColor: theme.palette.background.box,
 									height: '25rem',
-									marginTop: '4.2rem',
+									marginTop:mobile?'-1em': '4.2rem',
 									width: '30rem',
-									marginLeft: mobile ? '0' : '-2em',
+									marginLeft: mobile ? '0em' : '-2em',
 									borderRadius: '10px',
 									border: 1,
 									borderColor: theme.palette.background.overlay,
@@ -180,7 +181,7 @@ function Team(props) {
 									backgroundColor: theme.palette.background.box,
 									height: '25rem',
 									width: '30rem',
-									marginRight: mobile ? '0' : '-2em',
+									marginRight: mobile ? '0em' : '-2em',
 									borderRadius: '10px',
 									border: 1,
 									borderColor: theme.palette.background.overlay,
@@ -245,7 +246,7 @@ function Team(props) {
 						</Typography>
 					</Box>
 				</Stack>
-				<Fab href="/myteam/1" color="primary" aria-label="edit" sx={{
+				<Fab href="/myteam" color="primary" aria-label="edit" sx={{
                         position: 'fixed', bottom: '3rem', left: mobile ? '3rem' : '15rem', zIndex: 255,
 
                     }}>

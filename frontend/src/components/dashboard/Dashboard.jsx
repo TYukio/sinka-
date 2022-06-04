@@ -26,11 +26,11 @@ function Dashboard(props) {
     if (session_uid !== null) {
         defaultbuttons.push({ label: 'Meu Sinka' });
         defaultbuttons.push({ label: 'Perfil', icon: <PersonOutline />, href: '/user/' + session_uid });
-        defaultbuttons.push({ label: 'Meus Times', icon: <GroupsOutlined />, href: '/myteam/' + session_uid });
+        defaultbuttons.push({ label: 'Meus Times', icon: <GroupsOutlined />, href: '/myteam/'  });
         
     }
     else{
-        defaultbuttons.push({ label: 'Ver Times', icon: <GroupsOutlined />, href: '/myteam/' + session_uid });
+        defaultbuttons.push({ label: 'Ver Times', icon: <GroupsOutlined />, href: '/myteam/'  });
     }
 
     const dashbuttons = props.useDefault === true ? defaultbuttons.concat(additionalbuttons) : additionalbuttons;
