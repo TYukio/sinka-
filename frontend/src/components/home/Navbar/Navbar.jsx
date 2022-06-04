@@ -70,6 +70,7 @@ function Navbar({ toggle }) {
                 top: '0',
                 zIndex: '10',
                 width: '100%',
+                
 
             }}>
                 <Container sx={{

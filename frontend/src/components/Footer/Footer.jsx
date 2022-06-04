@@ -44,7 +44,7 @@ export default function StickyFooter() {
       >
         <Container maxWidth="sm">
           <Typography variant="body1">
-            Footer Inacabado aff
+            Todos os direitos reservados 2022
           </Typography>
           <Copyright />
         </Container>

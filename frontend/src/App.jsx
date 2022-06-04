@@ -27,12 +27,13 @@ const themes = {
 			{
 				main: '#dddddd',
 				light: '#ffffff',
-				dark: '#cccccc',
+				dark: '#525252',
 				contrastText: 'rgba(0, 0, 0, 0.87)'
 			},
 			
 			background:
 			{
+				box: '#0f0f0f',
 				overlay: '#222222'
 			}
 		},

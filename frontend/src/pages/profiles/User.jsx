@@ -173,7 +173,7 @@ function User(props) {
 					</Container>
 					<Container sx={{
 						marginLeft: mobile? '2rem':'13rem',
-						justifyContent: 'center',
+						justifyContent: 'space-evenly',
 						display: 'flex',
 						flexWrap: 'wrap',
 
@@ -183,7 +183,7 @@ function User(props) {
 								<p>Sobre</p>
 							</Typography>
 
-							<Typography component="div" sx={{ borderRadius: '0.5em', textAlign: 'center', minWidth: '20rem', width: '40%', backgroundColor: theme.palette.background.overlay, padding: '0.5em 1em' }}>
+							<Typography component="div" sx={{ borderRadius: '0.5em', textAlign: 'center', minWidth: '20rem', width: '40%', backgroundColor: theme.palette.background.box, padding: '0.5em 1em' }}>
 								<p>{userdata.biography !== null ? userdata.biography : 'Este usuário não adicionou sua biografia'}</p>
 							</Typography>
 						</Box>
@@ -193,7 +193,7 @@ function User(props) {
 							</Typography>
 
 
-							<Typography component="div" sx={{ borderRadius: '0.5em', textAlign: 'center', minWidth: '20rem', width: '40%', backgroundColor: theme.palette.background.overlay, padding: '0.5em 1em' }}>
+							<Typography component="div" sx={{ borderRadius: '0.5em', textAlign: 'center', minWidth: '20rem', width: '40%', backgroundColor: theme.palette.background.box, padding: '0.5em 1em' }}>
 								<p>{userdata.biography !== null ? userdata.biography : 'Este usuário não adicionou sua biografia'}</p>
 							</Typography>
 						</Box>
