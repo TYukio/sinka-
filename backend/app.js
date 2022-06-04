@@ -13,6 +13,7 @@ if (!process.env.CLIENT_DIST)
 // API
 const authRouter = require('./routes/api/auth');
 const userdataRouter = require('./routes/api/userdata');
+const teamdataRouter = require('./routes/api/teamdata');
 const datafieldsRouter = require('./routes/api/datafields');
 
 // React router
@@ -30,6 +31,7 @@ app.use(express.static('public'));
 
 app.use('/auth/', authRouter);
 app.use('/userdata/', userdataRouter);
+app.use('/teamdata/', teamdataRouter);
 app.use('/datafields/', datafieldsRouter);
 app.use('*', indexRouter);
 

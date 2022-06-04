@@ -12,7 +12,8 @@ import Signup from './pages/authpages/Signup';
 import Signin from './pages/authpages/Signin';
 import User from './pages/profiles/User';
 import UserEdit from './pages/profiles/UserEdit';
-import Team from './pages/teams/createteam'
+import Team from './pages/teams/team';
+
 const themes = {
 	dark: createTheme({
 		palette: {
