@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
-import { useTheme, Box, Stack, Avatar, Typography, Divider, Fab, Chip, Icon, Container, Button, useMediaQuery } from '@mui/material';
+import { useTheme, Box, Stack, Avatar, Typography, Divider, Fab, Chip, Icon, Container, Button, useMediaQuery, Badge } from '@mui/material';
 import { Edit } from '@mui/icons-material';
 import { useParams, useNavigate } from 'react-router-dom';
 import { SessionContext, HostContext } from '../../util/contexts';
@@ -12,6 +12,7 @@ import defaultbanner from './defaultbanner.png'
 
 function User(props) {
 	const [userdata, setUserdata] = useState();
+	const [teamsdata, setTeamsdata] = useState();
 	const navigate = useNavigate()
 	const params = useParams();
 	const theme = useTheme();
@@ -34,6 +35,21 @@ function User(props) {
 		}).then(response => {
 			if (response.ok) {
 				response.json().then((json) => setUserdata(json));
+			} else if (response.status === 404) {
+				navigate('/user');
+			}
+		});
+	}
+
+	function fetchTeams() {
+		if (profile_uid === null)
+			return;
+
+		fetch(hostname + 'userdata/teams?id=' + profile_uid, {
+			method: 'GET'
+		}).then(response => {
+			if (response.ok) {
+				response.json().then((json) => setTeamsdata(json));
 			} else if (response.status === 404) {
 				navigate('/user');
 			}
@@ -63,7 +79,7 @@ function User(props) {
 	}
 
 	/*eslint-disable */
-	useEffect(() => { fetchUserdata(); fetchDatafields(); }, []);
+	useEffect(() => { fetchUserdata(); fetchDatafields(); fetchTeams(); }, []);
 	/*eslint-enable */
 
 	if (userdata) {
@@ -138,7 +154,7 @@ function User(props) {
 										height: '2rem',
 										minWidth: '64px',
 										borderRadius: '50px',
-										marginTop: mobile ? '0em': '4px',
+										marginTop: mobile ? '-2em': '4px',
 										width: mobile ? '8rem' : '8rem',
 									}}>
 									Mensagem
@@ -172,7 +188,7 @@ function User(props) {
 						</Box>
 					</Container>
 					<Container sx={{
-						
+						marginLeft: mobile? '2rem':'13rem',
 						justifyContent: 'space-evenly',
 						display: 'flex',
 						flexWrap: 'wrap',
@@ -190,13 +206,44 @@ function User(props) {
 						</Box>
 						<Box sx={{ maxWidth: '25rem' }}>
 							<Typography fontSize="1rem" component="div" letterSpacing="0.06em" marginBottom={'-1em'} textTransform={'uppercase'}>
-								<p>Consquistas</p>
+								<p>Equipes</p>
 							</Typography>
 
-
-							<Typography component="div" sx={{ borderRadius: '0.5em', textAlign: 'center', minWidth: '20rem', width: '40%', backgroundColor: theme.palette.background.box, padding: '0.5em 1em', border:1,
+							<Typography component="div" sx={{ overflowX: 'scroll', borderRadius: '0.5em', minWidth: '20rem', width: '40%', backgroundColor: theme.palette.background.box, padding: '0.5em 1em', border:1,
 								borderColor:theme.palette.background.overlay }}>
-								<p>{userdata.biography !== null ? userdata.biography : 'Este usuário não adicionou sua biografia'}</p>
+								{
+									Object.keys(teamsdata).map((key, i) => {
+										let team = teamsdata[i];
+
+										return (
+											<Stack  direction="column" sx={{ cursor: 'pointer', alignItems: 'center', textAlign: 'center' }}>
+
+												<Badge color="primary"
+													overlap="circular"
+													anchorOrigin= {{ vertical: 'bottom', horizontal: 'right' }}
+													badgeContent= {
+														<Icon sx={{fontSize: '1.25em'}}>{sports.find(element => element.id === team.id_sport).mui_icon}</Icon>
+													}
+												>
+													<Avatar onClick={() => navigate(`/team/${team.id}`)}
+														src={hostname + `images/team_pfp/${team.id}.jpg?${new Date().valueOf()}`} sx={{
+															width: '2em',
+															height: '2em',
+															border: '0.12em solid',
+															marginTop: '0.45em',
+															borderColor: theme.palette.common.white,
+													}}/>
+												</Badge>
+												<Typography justifySelf="center" maxWidth="6em">
+
+													{team.title}
+												</Typography>
+											</Stack>
+
+										)
+									})
+								}
+
 							</Typography>
 						</Box>
 					</Container>
@@ -208,7 +255,6 @@ function User(props) {
 					<Typography sx={{ marginTop: '-1em', textAlign: 'center', display: (userdata.sports && userdata.sports.length > 0) ? 'none' : 'auto' }} fontSize="0.965rem" component="div" letterSpacing="0.02em">
 						<p>Nenhum esporte por aqui</p>
 					</Typography>
-
 
 					<Box sx={{ width: '60%', minWidth: '18em', display: 'flex', gap: '0.35em', flexDirection: 'row', flexWrap: 'wrap', fontSize: '1.125rem', justifyContent: 'center', letterSpacing: '0.06em', mb: '1em' }}>
 						{Object.keys(userdata.sports).map((key, i) => {
@@ -234,8 +280,6 @@ function User(props) {
 							<p>{userdata.creation.substr(0, 10).split('-').reverse().join('/')}</p>
 
 						</Typography>
-
-
 
 					</Box>
 				</Stack>

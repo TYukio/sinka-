@@ -103,4 +103,20 @@ router.patch('/update', multerUpload.single('avatar'), function(req, res, next) 
     });
 });
 
+/* GET all teams a user id is part of */
+router.get('/teams', function(req, res, next) {
+
+    if (req.query.id === undefined)
+        return res.sendStatus(400);
+
+    id = parseInt(req.query.id)
+
+    dbconnection.then(conn => {
+        conn.query('SELECT `id`, `title`, `id_sport`, `joined` FROM `person_team`, `team` WHERE `person_team`.`id_team` = `team`.`id` AND `person_team`.`id_person` = ?;', [id]).then(rows => {
+            res.status(200).json(rows);
+        });
+    });
+
+});
+
 module.exports = router;
