@@ -169,7 +169,7 @@ function Team(props) {
 										fontSize: '16px',
 									}}>Gênero</Typography>
 
-									<Typography>{teamdata.gender == 'o' ? 'Unisex' : (teamdata.gender == 'm' ? 'Masculino' : 'Feminino')}</Typography>
+									<Typography>{teamdata.gender == 'o' ? 'Misto' : (teamdata.gender == 'm' ? 'Masculino' : 'Feminino')}</Typography>
 								</Box>
 							</Box>
 							<Box sx={{
