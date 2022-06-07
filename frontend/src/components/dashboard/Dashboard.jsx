@@ -1,9 +1,8 @@
 import { useState, useContext } from 'react';
-import { Stack, Collapse, Typography, Divider, Button, IconButton, useTheme, useMediaQuery, Box, AppBar, Container } from '@mui/material';
-import { HomeOutlined, PersonOutline, Logout, Login, DoubleArrowRounded, WorkspacesOutlined, AddCircleOutline, GroupsOutlined      } from '@mui/icons-material';
+import { Stack, Collapse, Typography, Divider, Button, IconButton, useTheme, useMediaQuery, Box } from '@mui/material';
+import { HomeOutlined, PersonOutline, Logout, Login, DoubleArrowRounded, WorkspacesOutlined, GroupsOutlined      } from '@mui/icons-material';
 import { SessionContext } from '../../util/contexts';
 import logo from './sinka.svg';
-import ScrollBar from './scrollbar.css';
 
 function Dashboard(props) {
     const theme = useTheme();

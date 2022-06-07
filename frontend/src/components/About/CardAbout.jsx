@@ -7,6 +7,8 @@ import AboutUsCards from './AboutDataInsert'
 import { Nicolas, Luiz, Tiago } from './data'
 import { ImgAboutWrapper } from './AboutElements';
 
+import bg from './bg.jpg';
+
 function CardAbout() {
   
   const modoCelularPequenito = useMediaQuery('(max-width:768px)');
@@ -27,7 +29,7 @@ function CardAbout() {
       }}>
         <Box sx={{
           position: "absolute",
-          backgroundImage: "url('https://wallpaper-mania.com/wp-content/uploads/2018/09/High_resolution_wallpaper_background_ID_77700388521.jpg')",
+          backgroundImage: "url(" + bg + ")",
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover, contain",
           backgroundPositionY: modoCelularPequenito2 ? '- 50px' : '-250px',

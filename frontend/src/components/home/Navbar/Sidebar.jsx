@@ -1,5 +1,4 @@
-import { AppBar, Container, Grid, Icon, Button } from "@mui/material";
-import { display, height } from "@mui/system";
+import { AppBar, Grid, Button } from "@mui/material";
 import { useContext } from "react";
 import CloseIcon from '@mui/icons-material/Close';
 import styled from "@emotion/styled";
@@ -53,7 +52,6 @@ function Sidebar({ isOpen, toggle }) {
             background: 'rgba(0,0,0,0.8)',
             backdropFilter: 'blur(8px)',
             display: 'grid',
-            top: '0',
             left: '0',
             transition: '0.3s ease-in-out',
             opacity: isOpen ? '100%' : '0%',

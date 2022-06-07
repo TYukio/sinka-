@@ -1,16 +1,13 @@
 import React from 'react'
-import { ImgAboutWrapper, AboutCard, AboutIcon, ImgAbout } from './AboutElements';
+import { AboutCard, AboutIcon, ImgAbout } from './AboutElements';
 import Typography from '@mui/material/Typography';
-import { Box, Container } from '@mui/material'
+import { Container } from '@mui/material'
 
 
 
-const AboutDataInsert = ({ img, alt, Topline, Subtitle, Name, Hobbies }) => {
+const AboutDataInsert = ({ img, alt, Topline, Name, Hobbies }) => {
 
     return (
-
-
-
 
         <AboutCard>
 

@@ -1,12 +1,8 @@
-import { AppBar, Button, Container, Grid, Icon, useMediaQuery, Avatar, Typography, Box } from '@mui/material'
+import { AppBar, Button, Container, Grid, useMediaQuery, Avatar, Typography, Box } from '@mui/material'
 import { React, useContext, useEffect, useState } from 'react'
 import logo from './sinka.svg'
 import DehazeIcon from '@mui/icons-material/Dehaze';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
 import Link from '@mui/material/Link';
-import { Translate } from '@mui/icons-material';
-import { display } from '@mui/system';
 import { fakeComponentAlert } from '../../../util/miscmethods';
 import { SessionContext, HostContext } from '../../../util/contexts';
 import { useNavigate } from 'react-router-dom';
@@ -56,7 +52,7 @@ function Navbar({ toggle }) {
         });
     }
 
-    useEffect(fetchUserdata, [session_uid]);
+    useEffect(fetchUserdata, [session_uid, hostname]);
 
     return (
         <>
@@ -166,7 +162,6 @@ function Navbar({ toggle }) {
                             alignItems: 'center',
                             listStyle: 'none',
                             textAlign: 'center',
-                            textTransform: 'none',
                             borderRadius: '50px',
                             textTransform: 'uppercase',
                         }}>Cadastro</Button>

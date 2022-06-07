@@ -1,9 +1,5 @@
 import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import { Box,  Container,  useMediaQuery } from "@mui/material";
+import { Container,  useMediaQuery } from "@mui/material";
 import Img4 from './img-4.svg'
 import Img5 from './img-5.svg'
 import Img6 from './img-6.svg'

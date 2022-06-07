@@ -1,9 +1,6 @@
-import { Avatar, Button, Container, createTheme, Grid, Icon, Typography, useMediaQuery } from "@mui/material";
-import { Box, color } from "@mui/system";
+import { Button, Typography, useMediaQuery } from "@mui/material";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import styled from "@emotion/styled";
 import React from 'react'
-import { AddBoxSharp } from "@mui/icons-material";
 import { InfoRow, Column1, Column2, Img, InfoContainer, InfoWrapper, TextWrapper, ImgWrap } from "./InfoElements";
 
 const Infosection = ({ lightBg, id, imgStart, Topline, Heading, Subtitle, buttonLabel, img, alt, lightText, darkText,  }) => {

@@ -1,21 +1,13 @@
-import { AppBar, Button, Container, Icon, IconButton, Toolbar, Typography, useMediaQuery } from '@mui/material'
+import { Button, Container, Typography, useMediaQuery } from '@mui/material'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 import React from 'react'
-import { Link } from 'react-router-dom'
-import logo from './sinka.svg'
-import SortIcon from '@mui/icons-material/Sort';
 import { Box } from '@mui/system';
 
-
-import { useEffect, useRef, useState } from "react";
-
+import bg from './bg.png';
 
 const Navbar = () => {
     const modoCelularPequenito = useMediaQuery('(max-width:768px)');
-
-
-    
 
     return (
         <Box sx={{
@@ -31,7 +23,7 @@ const Navbar = () => {
         }}>
             <Box sx={{
                 position: "absolute",
-                backgroundImage: "url('https://wallpaperaccess.com/full/7927699.png')",
+                backgroundImage: "url(" + bg + ")",
                 backgroundRepeat: "no-repeat",
                 backgroundSize: "cover",
                 
