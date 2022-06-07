@@ -116,7 +116,7 @@ function User(props) {
     useEffect(formValidateEffect, [formdata]);
 	/*eslint-enable */
 
-	if (userdata)
+	if (userdata && sports.length > 0 && userTypes.length > 0)
 	{
 		return (
 			<Box sx={{height: '100%', width:'100%', display: 'flex'}}>

@@ -55,7 +55,7 @@ function TeamPage(props) {
     useEffect(() => { fetchUserdata(); fetchDatafields(); }, []);
     /*eslint-enable */
 
-    if (teamsdata) {
+    if (teamsdata && sports.length > 0) {
         return (
             <Box height="100%" width="100%" display="flex">
                 <Dashboard sx={{ position: 'fixed' }} useDefault={true}></Dashboard>

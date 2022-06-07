@@ -82,7 +82,7 @@ function User(props) {
 	useEffect(() => { fetchUserdata(); fetchDatafields(); fetchTeams(); }, []);
 	/*eslint-enable */
 
-	if (userdata) {
+	if (userdata && teamsdata && sports.length > 0 && userTypes.length > 0) {
 		return (
 
 			<Box height="100%" width="100%" display="flex" >
