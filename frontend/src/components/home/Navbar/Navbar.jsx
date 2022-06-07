@@ -131,7 +131,7 @@ function Navbar({ toggle }) {
                             height: '80px',
                             fontWeight: '500'
                         }}>
-                            <LinkNav onClick={fakeComponentAlert}>
+                            <LinkNav href="/myteam">
                                 Descobrir
                             </LinkNav>
                         </Grid>

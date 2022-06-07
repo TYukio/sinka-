@@ -81,7 +81,7 @@ function Sidebar({ isOpen, toggle }) {
                 }}>
                     <LinkRes to='/sobre' onClick={toggle}>Sobre</LinkRes>
 
-                    <LinkRes to='#' onClick={fakeComponentAlert}>Descobrir</LinkRes>
+                    <LinkRes to='/myteam'>Descobrir</LinkRes>
 
                     <LinkRes to='#' onClick={fakeComponentAlert}>Serviços</LinkRes>
 
