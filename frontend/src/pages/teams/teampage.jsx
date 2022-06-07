@@ -1,14 +1,13 @@
 import { useEffect, useState, useContext } from 'react';
-import { useTheme, Box, Stack, Avatar, Typography, Divider, Fab, Chip, Icon, Container, Button, useMediaQuery, Grid, TextField, Checkbox, FormControlLabel } from '@mui/material';
+import { useTheme, Box, Stack, Avatar, Typography, Fab, Chip, Icon, Button, useMediaQuery, TextField, Checkbox, FormControlLabel } from '@mui/material';
 import React from 'react'
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { SessionContext, HostContext } from '../../util/contexts';
 
 import Dashboard from '../../components/dashboard/Dashboard';
 import Loading from '../../components/Loading';
-import { Add, Search, Toys } from '@mui/icons-material';
+import { Add, Search } from '@mui/icons-material';
 import defaultbanner from './defaultbanner.png'
-import Teamprofile from './ac-milan-logo-0.png'
 
 function TeamPage(props) {
     const [teamsdata, setTeamsdata] = useState();
@@ -114,7 +113,7 @@ function TeamPage(props) {
                                     if (memberOnly)
                                     {
                                         for (let i = 0; i < team.members.length; ++i)
-                                            if (team.members[i].id_person == session_uid)
+                                            if (team.members[i].id_person === session_uid)
                                             {
                                                 memberFilter = true;
                                                 break;
@@ -212,7 +211,7 @@ function TeamPage(props) {
                                                                                     height: '2em',
                                                                                     marginY: '0.25em',
                                                                                     border: '0.12em solid',
-                                                                                    borderColor: member.coach == 1 ? "#E0F80E" : theme.palette.common.white,
+                                                                                    borderColor: member.coach === 1 ? "#E0F80E" : theme.palette.common.white,
                                                                                     marginTop: '-1.5rem',
                                                                                 }} />
                                                                         </Box>
@@ -274,7 +273,9 @@ function TeamPage(props) {
 
         )
 
-    }
+    }	
+	else
+        return (<Loading />)
 }
 
 export default TeamPage

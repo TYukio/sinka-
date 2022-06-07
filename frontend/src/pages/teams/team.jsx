@@ -1,12 +1,10 @@
 import { useEffect, useState, useContext } from 'react';
-import { useTheme, Box, Stack, Avatar, Typography, Divider, Fab, Chip, Icon, Container, Button, useMediaQuery } from '@mui/material';
+import { useTheme, Box, Stack, Avatar, Typography, Divider, Fab, Chip, Icon, Container, useMediaQuery } from '@mui/material';
 import { Edit, SportsOutlined } from '@mui/icons-material';
 import { useParams, useNavigate } from 'react-router-dom';
 import { SessionContext, HostContext } from '../../util/contexts';
-import { fakeComponentAlert } from '../../util/miscmethods';
 import Dashboard from '../../components/dashboard/Dashboard';
 import Loading from '../../components/Loading';
-import InfoIcon from '@mui/icons-material/Info';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import defaultbanner from './defaultbanner.png'
 
@@ -169,7 +167,7 @@ function Team(props) {
 										fontSize: '16px',
 									}}>Gênero</Typography>
 
-									<Typography>{teamdata.gender == 'o' ? 'Misto' : (teamdata.gender == 'm' ? 'Masculino' : 'Feminino')}</Typography>
+									<Typography>{teamdata.gender === 'o' ? 'Misto' : (teamdata.gender === 'm' ? 'Masculino' : 'Feminino')}</Typography>
 								</Box>
 							</Box>
 							<Box sx={{
@@ -214,8 +212,8 @@ function Team(props) {
 
 												<Stack alignSelf="center">
 													<Box display="flex">
-														<Typography marginRight="0.35em" color={member.coach == 1 ? '#E0F80E' : 'auto'}>{member.full_name}</Typography>
-														{member.coach == 1 ? <SportsOutlined sx={{ color: '#E0F80E' }} /> : undefined}
+														<Typography marginRight="0.35em" color={member.coach === 1 ? '#E0F80E' : 'auto'}>{member.full_name}</Typography>
+														{member.coach === 1 ? <SportsOutlined sx={{ color: '#E0F80E' }} /> : undefined}
 													</Box>
 
 													<Typography fontSize="0.75em"><b>Desde: </b>{member.joined.substr(0, 10).split('-').reverse().join('/')}</Typography>
@@ -255,9 +253,8 @@ function Team(props) {
 			</Box >
 		);
 	}
-	else return (
-		<Loading />
-	)
+	else
+        return (<Loading />)
 }
 
 export default Team;
