@@ -101,12 +101,6 @@ function Team(props) {
 							justifyContent: 'space-between'
 						}}>
 
-
-
-
-
-
-
 						</Stack>
 						<Stack direction={'collumn'} sx={{
 							display: 'flex',
@@ -230,7 +224,7 @@ function Team(props) {
 					</Container>
 
 
-					<Fab href="/editarperfil" color="primary" aria-label="edit" sx={{
+					<Fab href={'/editartime/' + team_uid} color="primary" aria-label="edit" sx={{
 						position: 'fixed', bottom: '3rem', right: '3rem', zIndex: 255,
 						display: session_uid === parseInt(teamdata.id_creator) ? 'auto' : 'none'
 					}}>

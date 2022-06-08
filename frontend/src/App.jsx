@@ -14,6 +14,7 @@ import User from './pages/profiles/User';
 import UserEdit from './pages/profiles/UserEdit';
 import Team from './pages/teams/team';
 import TeamPage from './pages/teams/teampage';
+import TeamEdit from './pages/teams/teamedit';
 
 const themes = {
 	dark: createTheme({
@@ -86,6 +87,7 @@ function App() {
 						<Route path="/user/:id" element={<User />} />
 						<Route path="/myteam" element={<TeamPage />} />
 						<Route path="/team/:id" element={<Team />} />	
+						<Route path="/editartime/:id" element={<TeamEdit />}/>
 						<Route path="/editarperfil" element={<UserEdit />}/>
 						<Route path="*" element={<Notfound />} /> 
 					</Routes>

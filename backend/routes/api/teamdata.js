@@ -60,4 +60,67 @@ router.get('/fetchpublic', function(req, res, next) {
     });
 });
 
+
+/* PATCH existing team data */
+router.patch('/update', multerUpload.single('avatar'), function(req, res, next) {
+
+    var decodedToken = null;
+    var form = req.body;
+
+    console.log(chalk.magentaBright('Edição') + ' solicitada para time de ID #' + form.id);
+    // TODO: Verificar autorização kkkkkkk
+
+    try {
+        decodedToken = jwt.verify(req.cookies['token'], process.env.DB_PASS);
+    }
+    catch (err) {
+        console.log(chalk.redBright('FALHA TOKEN USUÁRIO'));
+        return res.sendStatus(400);
+    }
+
+    
+    if (req.file !== undefined)
+    {
+        jimp.read(req.file.path)
+        .then(image => {
+            image.resize(256, 256).quality(75).write(path.join(__dirname, '..', '..', 'public', 'images', 'team_pfp', form.id + '.jpg'));
+            fs.unlinkSync(req.file.path);
+        })
+    }
+
+    dbconnection.then(conn => {
+
+        conn.query('SELECT `id_creator` FROM `team` WHERE `id` = ?;', [form.id]).then(rows => { 
+            if (rows.length == 0)
+            {
+                res.sendStatus(400);
+                console.log(chalk.redBright('TIME INEXISTENTE'));
+            }
+            else if (rows[0].id_creator !== decodedToken.uid)
+            {
+                res.sendStatus(401);
+                console.log(chalk.redBright('NÃO AUTORIZADO'));
+            }
+            
+            else
+            {
+                conn.query('UPDATE `team` SET `title` = ?, `about` = ?, `id_sport` = ?, `gender` = ? WHERE `id` = ?;', 
+                    [form.name, form.about === '' ? null : form.about, form.sport, form.gender, form.id]).then(rows_a => {
+                    if (rows_a.affectedRows > 0 )
+                    {
+                        res.sendStatus(200);
+                        console.log(chalk.greenBright('SUCESSO'));
+                    }  
+                    else
+                    {
+                        res.sendStatus(500);
+                        console.log(chalk.redBright('ERRO SQL'));
+                    }
+                });
+
+            }
+        })
+    });
+});
+
 module.exports = router;
