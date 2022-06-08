@@ -209,7 +209,7 @@ function User(props) {
 								<p>Equipes</p>
 							</Typography>
 
-							<Typography component="div" sx={{ overflowX: 'scroll', borderRadius: '0.5em', minWidth: '20rem', width: '40%', backgroundColor: theme.palette.background.box, padding: '0.5em 1em', border:1,
+							<Typography component="div" sx={{ display: 'flex', gap: '0.75em', overflowX: 'scroll', borderRadius: '0.5em', minWidth: '20rem', width: '40%', backgroundColor: theme.palette.background.box, padding: '0.5em 1em', border:1,
 								borderColor:theme.palette.background.overlay }}>
 								{
 									Object.keys(teamsdata).map((key, i) => {
@@ -217,7 +217,7 @@ function User(props) {
 
 										return (
 											<Stack  direction="column" sx={{ cursor: 'pointer', alignItems: 'center', textAlign: 'center' }}>
-
+												
 												<Badge color="primary"
 													overlap="circular"
 													anchorOrigin= {{ vertical: 'bottom', horizontal: 'right' }}
@@ -239,7 +239,6 @@ function User(props) {
 													{team.title}
 												</Typography>
 											</Stack>
-
 										)
 									})
 								}

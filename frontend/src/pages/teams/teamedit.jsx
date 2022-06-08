@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext, useRef } from 'react';
 import { useTheme, Box, Stack, Avatar, Typography, TextField, IconButton, List, ListItem, ListItemText, ListItemIcon, ListItemButton, Icon, RadioGroup, Radio, FormControlLabel } from '@mui/material';
-import { Edit } from '@mui/icons-material';
+import { DeleteForever, Edit } from '@mui/icons-material';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { SessionContext, HostContext } from '../../util/contexts';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -162,6 +162,26 @@ function Teamedit(props) {
         });
     }
 
+    function deleteTeamdata()
+    {
+        setIsLoading(true);
+
+        const formData = new FormData();
+        formData.append("id", team_uid);
+
+        fetch(hostname + 'teamdata/delete', {
+            method: 'DELETE',
+            credentials: 'include',
+            body: formData
+        }).then(response => {
+            setIsLoading(false);
+            if (response.ok) { 
+                navigate('/myteam/');
+            }
+            // TODO checagem de erros mínima
+        });
+    }
+
 	/*eslint-disable */
 	useEffect(() => {fetchTeamdata(); fetchUserdata(); fetchDatafields();}, [session_uid]);
     useEffect(formValidateEffect, [formdata]);
@@ -293,7 +313,9 @@ function Teamedit(props) {
                         </Stack>
                     </Box>
                     <LoadingButton loading={isLoading} onClick={novoTime ? createTeamdata : updateTeamdata} endIcon={<Edit />} sx={{marginTop: '2em'}} disabled={!formvalid} size="large" variant="contained">salvar alterações</LoadingButton>
-
+                    
+                    <LoadingButton color="error" loading={isLoading} onClick={() => {if(window.confirm("Tem certeza de que quer deletar esta equipe?")) {deleteTeamdata();} }} endIcon={<DeleteForever />} sx={{marginTop: '2em',
+                        display: novoTime ? 'none' : 'auto' }} disabled={!formvalid} size="large" variant="contained">deletar time</LoadingButton>
 				</Stack>
 			</Box>
 		);

@@ -122,7 +122,6 @@ router.patch('/update', multerUpload.single('avatar'), function(req, res, next) 
     });
 });
 
-
 /* POST new teamdata */
 router.post('/create', multerUpload.single('avatar'), function(req, res, next) {
 
@@ -165,6 +164,60 @@ router.post('/create', multerUpload.single('avatar'), function(req, res, next) {
                 console.log(chalk.redBright('ERRO SQL'));
             }
         });
+    });
+});
+
+
+/* DELETE team data */
+router.delete('/delete', multerUpload.single('avatar'), function(req, res, next) {
+
+    var decodedToken = null;
+    var form = req.body;
+
+    console.log(chalk.red('Remoção') + ' solicitada para time de ID #' + form.id);
+
+    try {
+        decodedToken = jwt.verify(req.cookies['token'], process.env.DB_PASS);
+    }
+    catch (err) {
+        console.log(chalk.redBright('FALHA TOKEN USUÁRIO'));
+        return res.sendStatus(400);
+    }
+
+    dbconnection.then(conn => {
+
+        conn.query('SELECT `id_creator` FROM `team` WHERE `id` = ?;', [form.id]).then(rows => { 
+            if (rows.length == 0)
+            {
+                res.sendStatus(400);
+                console.log(chalk.redBright('TIME INEXISTENTE'));
+            }
+            else if (rows[0].id_creator !== decodedToken.uid)
+            {
+                res.sendStatus(401);
+                console.log(chalk.redBright('NÃO AUTORIZADO'));
+            }  
+            else
+            {
+                
+                fs.unlink(path.join(__dirname, '..', '..', 'public', 'images', 'team_pfp', form.id.toString() + '.jpg'), (err) => {});
+
+                conn.query('DELETE FROM `person_team` WHERE `id_team` = ?;', [form.id]);
+                conn.query('DELETE FROM `team` WHERE `id` = ?;', [form.id]).then(rows_a => {
+                    if (rows_a.affectedRows > 0 )
+                    {
+                        res.sendStatus(200);
+                        console.log(chalk.greenBright('SUCESSO'));
+                    }  
+                    else
+                    {
+                        res.sendStatus(500);
+                        console.log(chalk.redBright('ERRO SQL'));
+                    }
+                });
+
+            }
+        })
     });
 });
 
