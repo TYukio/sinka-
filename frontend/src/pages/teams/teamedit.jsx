@@ -29,6 +29,7 @@ function Teamedit(props) {
 
 	const session_uid = useContext(SessionContext);
     const team_uid = params.id;
+    const novoTime = team_uid === 'novo';
 
     const formValidateEffect = formvalidation.formValidateEffect.bind(null, formdata, setFormvalid);
     const onChangeHandler = formvalidation.onChangeHandler.bind(null, formdata, setFormdata);
@@ -44,24 +45,40 @@ function Teamedit(props) {
 		if (session_uid === null)
             return;
 
-        fetch(hostname + 'teamdata/fetchpublic?id=' + team_uid, {
-            method: 'GET'
-        }).then(response => {
-            if (response.ok) { 
-                response.json().then((json) => {
-                    setTeamdata(json);
-                    setFormdata(
-                        {
-                            ...formdata,
-                            name: { value: json.title, err: false, touched: false },
-                            about: { value: json.about, err: false, touched: false  },
-                            gender: { value: json.gender, err: false, touched: false },
-                            sport: { value: json.id_sport, err: false, touched: false }
-                        }
-                    )       
-                });
-            }
-        });
+        if (novoTime)
+        {
+            setTeamdata({});
+            setFormdata(
+                {
+                    ...formdata,
+                    name: { value: '', err: true, touched: false },
+                    about: { value: '', err: false, touched: false  },
+                    gender: { value: 'o', err: false, touched: false },
+                    sport: { value: 1, err: false, touched: false }
+                }
+            )   
+        }
+        else
+        {
+            fetch(hostname + 'teamdata/fetchpublic?id=' + team_uid, {
+                method: 'GET'
+            }).then(response => {
+                if (response.ok) { 
+                    response.json().then((json) => {
+                        setTeamdata(json);
+                        setFormdata(
+                            {
+                                ...formdata,
+                                name: { value: json.title, err: false, touched: false },
+                                about: { value: json.about, err: false, touched: false  },
+                                gender: { value: json.gender, err: false, touched: false },
+                                sport: { value: json.id_sport, err: false, touched: false }
+                            }
+                        )       
+                    });
+                }
+            });
+        }
     }
 
     function fetchUserdata() {
@@ -119,6 +136,32 @@ function Teamedit(props) {
         });
     }
 
+    function createTeamdata()
+    {
+        setIsLoading(true);
+
+        const formData = new FormData();
+        formData.append("name", formdata.name.value);
+        formData.append("about", formdata.about.value);
+        formData.append("gender", formdata.gender.value);
+        formData.append("sport", formdata.sport.value);
+
+        if (avatarSelection !== null)
+            formData.append("avatar", avatarSelection);
+            
+        fetch(hostname + 'teamdata/create', {
+            method: 'POST',
+            credentials: 'include',
+            body: formData
+        }).then(response => {
+            setIsLoading(false);
+            if (response.ok) { 
+                response.text().then(text => navigate('/team/' + text));
+            }
+            // TODO checagem de erros mínima
+        });
+    }
+
 	/*eslint-disable */
 	useEffect(() => {fetchTeamdata(); fetchUserdata(); fetchDatafields();}, [session_uid]);
     useEffect(formValidateEffect, [formdata]);
@@ -126,8 +169,13 @@ function Teamedit(props) {
 
 	if (teamdata && userdata && sports.length > 0)
 	{
-        if (teamdata.id_creator !== session_uid)
-            return(<Navigate to={'/team/' + team_uid} />);
+        if (!novoTime)
+        {
+            if (teamdata.id_creator !== session_uid)
+                return(<Navigate to={'/team/' + team_uid} />);
+        }
+        else if (session_uid === null)
+            return(<Navigate to="/" />);
 
 		return (
 			<Box sx={{height: '100%', width:'100%', display: 'flex'}}>
@@ -136,7 +184,7 @@ function Teamedit(props) {
 				<Stack direction="column" sx={{padding: '2rem', paddingTop: '0', flexGrow: 1, overflowWrap: 'break-all', alignItems: 'center' }}>
 
                     <Typography fontWeight="bold" variant="h4" component="div" sx={{marginY: '1rem', color: theme.palette.common.white}}>
-                        <p>Editar time Sinka</p>
+                        <p>{novoTime ? 'Criar' : 'Editar'} time Sinka</p>
                     </Typography>
 					
                     <Box display="flex" justifyContent="center" flexWrap="wrap" alignItems="center" spacing="1em" sx={{maxWidth: '75%'}}>
@@ -244,7 +292,7 @@ function Teamedit(props) {
 
                         </Stack>
                     </Box>
-                    <LoadingButton loading={isLoading} onClick={updateTeamdata} endIcon={<Edit />} sx={{marginTop: '2em'}} disabled={!formvalid} size="large" variant="contained">salvar alterações</LoadingButton>
+                    <LoadingButton loading={isLoading} onClick={novoTime ? createTeamdata : updateTeamdata} endIcon={<Edit />} sx={{marginTop: '2em'}} disabled={!formvalid} size="large" variant="contained">salvar alterações</LoadingButton>
 
 				</Stack>
 			</Box>

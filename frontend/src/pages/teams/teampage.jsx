@@ -263,7 +263,7 @@ function TeamPage(props) {
                     }}>
                         <Search />
                     </Fab>
-                    <Fab href="/criartime" color="primary" aria-label="edit" sx={{
+                    <Fab href="/editartime/novo" color="primary" aria-label="edit" sx={{
                         position: 'fixed', bottom: '3rem', left: mobile ? '3rem' : '15rem', zIndex: 255,
                     }}>
                         <Add />
