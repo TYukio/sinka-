@@ -6,7 +6,7 @@ import { SessionContext, HostContext } from '../../util/contexts';
 
 import Dashboard from '../../components/dashboard/Dashboard';
 import Loading from '../../components/Loading';
-import { Add, Search } from '@mui/icons-material';
+import { Add } from '@mui/icons-material';
 import defaultbanner from './defaultbanner.png'
 
 function TeamPage(props) {

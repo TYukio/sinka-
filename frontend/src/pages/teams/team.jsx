@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from 'react';
 import { useTheme, Box, Stack, Avatar, Typography, Divider, Fab, Chip, Icon, Container, useMediaQuery, Menu, MenuItem, IconButton } from '@mui/material';
-import { Edit, MoreVert, SportsOutlined, Star } from '@mui/icons-material';
+import { Edit, MoreVert, PersonAdd, PersonRemove, SportsOutlined, Star } from '@mui/icons-material';
 import { useParams, useNavigate } from 'react-router-dom';
 import { SessionContext, HostContext } from '../../util/contexts';
 import Dashboard from '../../components/dashboard/Dashboard';
@@ -19,8 +19,20 @@ function Team(props) {
 
 	const [sports, setSports] = useState([]);
 
+
 	const [contextTarget, setContextTarget] = useState(null)
 	const [contextTargetMember, setContextTargetMember] = useState(null)
+
+
+	function checkTeamMember()
+	{
+		for (let i = 0; i < teamdata.members.length; ++i)
+		{
+			if (teamdata.members[i].id_person === session_uid)
+				return true;
+		}
+		return false;
+	}
 
 	// Backend
 	const hostname = useContext(HostContext);
@@ -34,7 +46,10 @@ function Team(props) {
 			method: 'GET'
 		}).then(response => {
 			if (response.ok) {
-				response.json().then((json) => setTeamdata(json));
+				response.json().then((json) => {
+					setTeamdata(json);
+				});
+				
 			} else if (response.status === 404) {
 				navigate('/user');
 			}
@@ -53,7 +68,7 @@ function Team(props) {
 		});
 	}
 
-	function removeMember() {
+	function removeMember(person) {
 		if (team_uid === null)
 			return;
 
@@ -63,7 +78,26 @@ function Team(props) {
 			headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
                 id_team: team_uid,
-                id_person: contextTargetMember.id
+                id_person: person ? person : contextTargetMember.id
+            })
+		}).then(response => {
+			if (response.ok) {
+				fetchTeamdata();
+				setContextTarget(null);
+			}
+		});
+	}
+
+	function addMember() {
+		if (team_uid === null)
+			return;
+
+		fetch(hostname + 'teamdata/addmember', {
+			method: 'PUT',
+			credentials: 'include',
+			headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                id_team: team_uid
             })
 		}).then(response => {
 			if (response.ok) {
@@ -249,7 +283,6 @@ function Team(props) {
 									</Menu>
 
 									{Object.keys(teamdata.members).map((key, i) => {
-
 										let member = teamdata.members[i];
 
 										return (
@@ -301,6 +334,22 @@ function Team(props) {
 					}}>
 						<Edit />
 					</Fab>
+
+
+					<Fab onClick={addMember} color="primary" aria-label="join" sx={{
+						position: 'fixed', bottom: '3rem', right: '3rem', zIndex: 255,
+						display: checkTeamMember() || session_uid === parseInt(teamdata.id_creator) || session_uid === null ? 'none' : 'auto'
+					}}>
+						<PersonAdd />
+					</Fab>
+
+					<Fab onClick={() => {if (window.confirm("Tem certeza que deseja sair desta equipe?")) removeMember(session_uid);}} color="error" aria-label="join" sx={{
+						position: 'fixed', bottom: '3rem', right: '3rem', zIndex: 255,
+						display: !checkTeamMember() || session_uid === parseInt(teamdata.id_creator) || session_uid === null  ? 'none' : 'auto'
+					}}>
+						<PersonRemove />
+					</Fab>
+
 					<Divider sx={{ width: '16rem' }} />
 					<Box sx={{ display: 'flex', flexDirection: 'row', fontSize: '0.725rem', alignItems: 'center', letterSpacing: '0.06em', marginLeft: '2px', }}>
 						<p>Criado em</p>

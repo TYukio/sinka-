@@ -25,7 +25,7 @@ function User(props) {
 
 	// Backend
 	const hostname = useContext(HostContext);
-	const mobile = useMediaQuery('(max-width:768px)');
+	const mobile = useMediaQuery('(max-aspect-ratio: 3/2)');
 	function fetchUserdata() {
 		if (profile_uid === null)
 			return;
@@ -209,7 +209,7 @@ function User(props) {
 								<p>Equipes</p>
 							</Typography>
 
-							<Typography component="div" sx={{ display: 'flex', gap: '0.75em', overflowX: 'scroll', borderRadius: '0.5em', minWidth: '20rem', width: '40%', backgroundColor: theme.palette.background.box, padding: '0.5em 1em', border:1,
+							<Typography component="div" sx={{ display: 'flex', gap: '0.75em', overflowX: 'scroll', borderRadius: '0.5em', minHeight: '4.5em', minWidth: '20rem', width: '40%', backgroundColor: theme.palette.background.box, padding: '0.5em 1em', border:1,
 								borderColor:theme.palette.background.overlay }}>
 								{
 									Object.keys(teamsdata).map((key, i) => {
@@ -243,6 +243,9 @@ function User(props) {
 									})
 								}
 
+								<Typography width="100%" alignSelf="center" justifySelf="center" textAlign="center">
+									{teamsdata.length === 0 ? 'Nenhuma equipe associada' : undefined}
+								</Typography>
 							</Typography>
 						</Box>
 					</Container>

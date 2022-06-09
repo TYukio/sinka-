@@ -246,7 +246,7 @@ router.delete('/removemember', function(req, res, next) {
                 res.sendStatus(400);
                 console.log(chalk.redBright('TIME INEXISTENTE'));
             }
-            else if (rows[0].id_creator !== decodedToken.uid)
+            else if (form.id_person !== decodedToken.uid && rows[0].id_creator !== decodedToken.uid)
             {
                 res.sendStatus(401);
                 console.log(chalk.redBright('NÃO AUTORIZADO'));
@@ -258,6 +258,30 @@ router.delete('/removemember', function(req, res, next) {
                 console.log(chalk.greenBright('SUCESSO'));
             }
         })
+    });
+});
+
+/* PUT new member in team */
+router.put('/addmember', function(req, res, next) {
+
+    var decodedToken = null;
+    var form = req.body;
+
+    console.log(chalk.blueBright('Entrada') + ' solicitada para usuário no time de ID #' + form.id_team);
+
+    try {
+        decodedToken = jwt.verify(req.cookies['token'], process.env.DB_PASS);
+    }
+    catch (err) {
+        console.log(chalk.redBright('FALHA TOKEN USUÁRIO'));
+        return res.sendStatus(400);
+    }
+
+    dbconnection.then(conn => {
+
+        conn.query('INSERT INTO `person_team` (`id_person`, `id_team`, `coach`) VALUES (?, ?, ?);', [decodedToken.uid, form.id_team, 0]);
+        res.sendStatus(200);
+        console.log(chalk.greenBright('SUCESSO'));
     });
 });
 
