@@ -257,14 +257,8 @@ function TeamPage(props) {
                         </Box>
                     </Box>
 
-                    <Fab href="/" color="primary" aria-label="edit" sx={{
-                        position: 'fixed', bottom: '3rem', right: '3rem', zIndex: 255,
-
-                    }}>
-                        <Search />
-                    </Fab>
                     <Fab href="/editartime/novo" color="primary" aria-label="edit" sx={{
-                        position: 'fixed', bottom: '3rem', left: mobile ? '3rem' : '15rem', zIndex: 255,
+                        position: 'fixed', bottom: '3rem', left: mobile ? '3rem' : '15rem', zIndex: 255, display: session_uid !== null ? 'auto' : 'none'
                     }}>
                         <Add />
                     </Fab>

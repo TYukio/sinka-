@@ -101,7 +101,7 @@ function Team(props) {
 	if (teamdata && sports.length > 0) {
 		return (
 
-			<Box height="100%" width="100%" display="flex" >
+			<Box height="100%" width="100%" display="flex" sx={{overflowX: mobile ? 'auto' : 'hidden'}} >
 				<Dashboard sx={{ position: 'fixed' }} useDefault={true} />
 
 				<Stack direction="column" sx={{ padding: '2rem', paddingTop: '0', flexGrow: 1, overflowWrap: 'break-all', alignItems: 'center' }}>

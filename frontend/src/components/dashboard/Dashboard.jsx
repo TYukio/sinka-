@@ -43,7 +43,7 @@ function Dashboard(props) {
                         display: 'flex',
                         backgroundColor: theme.palette.background.overlay,
                     }}>
-                        <Stack direction="column" sx={{ backgroundColor: theme.palette.background.overlay, width: '13rem', justifyContent: 'flex-start', }} spacing={2}>
+                        <Stack direction="column" sx={{ backgroundColor: theme.palette.background.overlay, width: '13rem', justifyContent: 'flex-start', height: '100%' }} spacing={2}>
                             <Box sx={{ height: '2.8em', marginTop: '1em', textAlign: 'center',  }}><img alt="" src={logo} style={{ height: '100%' }} ></img></Box>
 
                             {
@@ -67,7 +67,7 @@ function Dashboard(props) {
                                 })
                             }
 
-                            <Stack direction="column-reverse" sx={{ pb: '1em', flexGrow: 1, alignItems: 'center', width: '100%' }}>
+                            <Stack direction="column-reverse" sx={{ pb: '1em', flexGrow: 1, width: '100%' }}>
 
                                 <Button href={session_uid !== null ? '/auth/signout' : '/entrar'} color="neutral" sx={{ width: '100%', height: '3rem' }} startIcon={session_uid !== null ? <Logout color="error" /> : <Login color="success" />}>
                                     {session_uid !== null ? 'Sair' : 'Entrar'}
