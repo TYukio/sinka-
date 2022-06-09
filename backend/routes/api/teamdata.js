@@ -169,7 +169,7 @@ router.post('/create', multerUpload.single('avatar'), function(req, res, next) {
 
 
 /* DELETE team data */
-router.delete('/delete', multerUpload.single('avatar'), function(req, res, next) {
+router.delete('/delete', function(req, res, next) {
 
     var decodedToken = null;
     var form = req.body;
@@ -220,5 +220,85 @@ router.delete('/delete', multerUpload.single('avatar'), function(req, res, next)
         })
     });
 });
+
+
+/* DELETE member from team */
+router.delete('/removemember', function(req, res, next) {
+
+    var decodedToken = null;
+    var form = req.body;
+
+    console.log(chalk.red('Remoção') + ' solicitada para integrante de ID # ' + form.id_person  + ' no time de ID #' + form.id_team);
+
+    try {
+        decodedToken = jwt.verify(req.cookies['token'], process.env.DB_PASS);
+    }
+    catch (err) {
+        console.log(chalk.redBright('FALHA TOKEN USUÁRIO'));
+        return res.sendStatus(400);
+    }
+
+    dbconnection.then(conn => {
+
+        conn.query('SELECT `id_creator` FROM `team` WHERE `id` = ?;', [form.id_team]).then(rows => { 
+            if (rows.length == 0)
+            {
+                res.sendStatus(400);
+                console.log(chalk.redBright('TIME INEXISTENTE'));
+            }
+            else if (rows[0].id_creator !== decodedToken.uid)
+            {
+                res.sendStatus(401);
+                console.log(chalk.redBright('NÃO AUTORIZADO'));
+            }  
+            else
+            {
+                conn.query('DELETE FROM `person_team` WHERE `id_team` = ? AND `id_person` = ?;', [form.id_team, form.id_person]);
+                res.sendStatus(200);
+                console.log(chalk.greenBright('SUCESSO'));
+            }
+        })
+    });
+});
+
+/* PATCH coach status for member */
+router.patch('/setcoach', function(req, res, next) {
+
+    var decodedToken = null;
+    var form = req.body;
+
+    console.log(chalk.magenta('Coachzagem') + ' solicitada para integrante de ID # ' + form.id_person  + ' no time de ID #' + form.id_team);
+
+    try {
+        decodedToken = jwt.verify(req.cookies['token'], process.env.DB_PASS);
+    }
+    catch (err) {
+        console.log(chalk.redBright('FALHA TOKEN USUÁRIO'));
+        return res.sendStatus(400);
+    }
+
+    dbconnection.then(conn => {
+
+        conn.query('SELECT `id_creator` FROM `team` WHERE `id` = ?;', [form.id_team]).then(rows => { 
+            if (rows.length == 0)
+            {
+                res.sendStatus(400);
+                console.log(chalk.redBright('TIME INEXISTENTE'));
+            }
+            else if (rows[0].id_creator !== decodedToken.uid)
+            {
+                res.sendStatus(401);
+                console.log(chalk.redBright('NÃO AUTORIZADO'));
+            }  
+            else
+            {
+                conn.query('UPDATE `person_team` SET `coach` = ? WHERE `id_team` = ? AND `id_person` = ?;', [form.coach, form.id_team, form.id_person]);
+                res.sendStatus(200);
+                console.log(chalk.greenBright('SUCESSO'));
+            }
+        })
+    });
+});
+
 
 module.exports = router;

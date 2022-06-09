@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from 'react';
-import { useTheme, Box, Stack, Avatar, Typography, Divider, Fab, Chip, Icon, Container, useMediaQuery } from '@mui/material';
-import { Edit, SportsOutlined } from '@mui/icons-material';
+import { useTheme, Box, Stack, Avatar, Typography, Divider, Fab, Chip, Icon, Container, useMediaQuery, Menu, MenuItem, IconButton } from '@mui/material';
+import { Edit, MoreVert, SportsOutlined, Star } from '@mui/icons-material';
 import { useParams, useNavigate } from 'react-router-dom';
 import { SessionContext, HostContext } from '../../util/contexts';
 import Dashboard from '../../components/dashboard/Dashboard';
@@ -18,6 +18,9 @@ function Team(props) {
 	const team_uid = params.id;
 
 	const [sports, setSports] = useState([]);
+
+	const [contextTarget, setContextTarget] = useState(null)
+	const [contextTargetMember, setContextTargetMember] = useState(null)
 
 	// Backend
 	const hostname = useContext(HostContext);
@@ -46,6 +49,47 @@ function Team(props) {
 				response.json().then((json) => {
 					setSports(json);
 				});
+			}
+		});
+	}
+
+	function removeMember() {
+		if (team_uid === null)
+			return;
+
+		fetch(hostname + 'teamdata/removemember', {
+			method: 'DELETE',
+			credentials: 'include',
+			headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                id_team: team_uid,
+                id_person: contextTargetMember.id
+            })
+		}).then(response => {
+			if (response.ok) {
+				fetchTeamdata();
+				setContextTarget(null);
+			}
+		});
+	}
+
+	function setCoach() {
+		if (team_uid === null)
+			return;
+
+		fetch(hostname + 'teamdata/setcoach', {
+			method: 'PATCH',
+			credentials: 'include',
+			headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                id_team: team_uid,
+                id_person: contextTargetMember.id,
+				coach: contextTargetMember.coach === true ? 0 : 1
+            })
+		}).then(response => {
+			if (response.ok) {
+				fetchTeamdata();
+				setContextTarget(null);
 			}
 		});
 	}
@@ -189,29 +233,56 @@ function Team(props) {
 										fontSize: '16px',
 									}}>Participantes</Typography>
 
+
+									<Menu
+										anchorEl={contextTarget}
+										open={contextTarget !== null}
+										onClose={() => setContextTarget(null)}
+									>
+										<MenuItem onClick={setCoach}>{ contextTargetMember === null || !contextTargetMember.coach ? 'Tornar coach' : 'Revogar coach'}</MenuItem>
+										{
+											(contextTargetMember !== null && contextTargetMember.id !== session_uid) ?
+												<MenuItem sx={{color: '#E34234'}} onClick={() => {if (window.confirm("Tem certeza que deseja remover este usuário?")) removeMember(); } }>Remover integrante</MenuItem> :
+												undefined
+										}
+										
+									</Menu>
+
 									{Object.keys(teamdata.members).map((key, i) => {
 
 										let member = teamdata.members[i];
 
 										return (
-											<Box onClick={() => navigate(`/user/${member.id_person}`)} marginTop="0.5em" sx={{ cursor: "pointer" }} display="flex" justifyContent="left">
-												<Avatar onHover={{}} src={hostname + `images/pfp/${member.id_person}.jpg?${new Date().valueOf()}`} sx={{
-													width: '2.5em',
-													height: '2.5em',
-													marginY: '0.25em',
-													border: '0.12em solid',
-													marginRight: '0.75em',
-													borderColor: theme.palette.common.white
-												}} />
+											<Box marginTop="0.5em" sx={{ cursor: "pointer" }} display="flex" justifyContent="left">
+												
+												<Box display="flex" flexGrow="1" onClick={() => navigate(`/user/${member.id_person}`)}>
+													<Avatar onHover={{}} src={hostname + `images/pfp/${member.id_person}.jpg?${new Date().valueOf()}`} sx={{
+														width: '2.5em',
+														height: '2.5em',
+														marginY: '0.25em',
+														border: '0.12em solid',
+														marginRight: '0.75em',
+														borderColor: theme.palette.common.white
+													}} />
 
-												<Stack alignSelf="center">
-													<Box display="flex">
-														<Typography marginRight="0.35em" color={member.coach === 1 ? '#E0F80E' : 'auto'}>{member.full_name}</Typography>
-														{member.coach === 1 ? <SportsOutlined sx={{ color: '#E0F80E' }} /> : undefined}
-													</Box>
+													<Stack alignSelf="center">
+														<Box display="flex">
+															<Typography marginRight="0.35em" color={member.coach > 0 ? '#E0F80E' : 'auto'}>{member.full_name}</Typography>
+															{teamdata.id_creator === member.id_person ? <Star sx={{ color: 'primary' }} /> : undefined}
+															{member.coach > 0 ? <SportsOutlined sx={{ color: '#E0F80E' }} /> : undefined}
+														</Box>
 
-													<Typography fontSize="0.75em"><b>Desde: </b>{member.joined.substr(0, 10).split('-').reverse().join('/')}</Typography>
-												</Stack>
+														<Typography fontSize="0.75em"><b>Desde: </b>{member.joined.substr(0, 10).split('-').reverse().join('/')}</Typography>
+													</Stack>
+
+												</Box>
+
+												<IconButton
+													sx={{height: '2em', width: '2em', alignSelf: "center", display: session_uid === parseInt(teamdata.id_creator) ? 'auto' : 'none'}}
+													onClick={(event) => {setContextTarget(event.target); setContextTargetMember({id: member.id_person, coach: member.coach > 0})}}
+												>
+													<MoreVert />
+												</IconButton>
 
 											</Box>
 										)
