@@ -8,6 +8,7 @@ import Dashboard from '../../components/dashboard/Dashboard';
 import Loading from '../../components/Loading';
 import InfoIcon from '@mui/icons-material/Info';
 
+
 import defaultbanner from './defaultbanner.png'
 
 function User(props) {
@@ -88,6 +89,7 @@ function User(props) {
 			<Box height="100%" width="100%" display="flex" >
 				<Dashboard sx={{ position: 'fixed' }} useDefault={true} />
 
+				
 				<Stack direction="column" sx={{ padding: '2rem', paddingTop: '0', flexGrow: 1, overflowWrap: 'break-all', alignItems: 'center' }}>
 
 					<Box sx={{
@@ -284,6 +286,7 @@ function User(props) {
 						</Typography>
 
 					</Box>
+					
 				</Stack>
 			</Box >
 		);

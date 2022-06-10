@@ -3,7 +3,7 @@ import { Stack, Collapse, Typography, Divider, Button, IconButton, useTheme, use
 import { HomeOutlined, PersonOutline, Logout, Login, DoubleArrowRounded, WorkspacesOutlined, GroupsOutlined      } from '@mui/icons-material';
 import { SessionContext } from '../../util/contexts';
 import logo from './sinka.svg';
-
+import Scrollbar from './scrollbar.css'
 function Dashboard(props) {
     const theme = useTheme();
     const mobile = useMediaQuery('(max-width:768px)');
