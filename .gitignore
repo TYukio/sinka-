@@ -17,6 +17,7 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 # Backend data
 backend/public/images/pfp/*.jpg
 backend/public/images/team_pfp/*.jpg
+backend/public/images/court/*.jpg
 backend/public/temp/*
 !backend/public/temp/.gitkeep
 

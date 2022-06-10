@@ -4,7 +4,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import styled from "@emotion/styled";
 import React from "react";
 import { Link } from "react-router-dom";
-import { fakeComponentAlert } from '../../../util/miscmethods';
 import { SessionContext } from '../../../util/contexts';
 
 function Sidebar({ isOpen, toggle }) {
@@ -81,9 +80,9 @@ function Sidebar({ isOpen, toggle }) {
                 }}>
                     <LinkRes to='/sobre' onClick={toggle}>Sobre</LinkRes>
 
-                    <LinkRes to='/myteam'>Descobrir</LinkRes>
+                    <LinkRes to='/myteam' onClick={toggle}>Equipes</LinkRes>
 
-                    <LinkRes to='#' onClick={fakeComponentAlert}>Serviços</LinkRes>
+                    <LinkRes to='/courts' onClick={toggle}>Quadras</LinkRes>
 
                     { session_uid == null ?
                     <LinkRes to='/entrar' onClick={toggle}>Login</LinkRes>

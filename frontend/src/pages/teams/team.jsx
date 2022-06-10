@@ -7,7 +7,7 @@ import Dashboard from '../../components/dashboard/Dashboard';
 import Loading from '../../components/Loading';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import defaultbanner from './defaultbanner.png'
-import Cardlocal from '../../components/cardlocal';
+
 function Team(props) {
 	const [teamdata, setTeamdata] = useState();
 	const navigate = useNavigate()
@@ -137,7 +137,6 @@ function Team(props) {
 
 			<Box height="100%" width="100%" display="flex" sx={{overflowX: mobile ? 'auto' : 'hidden'}} >
 				<Dashboard sx={{ position: 'fixed' }} useDefault={true} />
-				<Cardlocal></Cardlocal>
 				<Stack direction="column" sx={{ padding: '2rem', paddingTop: '0', flexGrow: 1, overflowWrap: 'break-all', alignItems: 'center' }}>
 				
 					<Box sx={{

@@ -102,21 +102,23 @@ INSERT INTO `team` (`id_creator`, `id_sport`, `creation`, `title`, `gender`, `ab
     'Time real da seleção brasileira unisex, patrocinado pela redbull e talz'
 );
 
-INSERT INTO `sportcourt` (`id_owner`, `id_sport`, `creation`, `title`, `addressname`) VALUES
+INSERT INTO `sportcourt` (`id_owner`, `id_sport`, `creation`, `title`, `subtitle`, `addressname`) VALUES
 (
 	5,
     2,
     '2022-04-30',
 	'Quadra Teodoro',
+	'Quadra de society',
     'Rua da maionese, 437'
 );
 
-INSERT INTO `sportcourt` (`id_owner`, `id_sport`, `creation`, `title`, `addressname`) VALUES
+INSERT INTO `sportcourt` (`id_owner`, `id_sport`, `creation`, `title`, `subtitle`, `addressname`) VALUES
 (
 	4,
     4,
     '2022-05-22',
 	'Handebol de elite',
+    'Quadra profissional de Handebol',
     'Rua Fernando Alonso, 1046'
 );
 

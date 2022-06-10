@@ -3,7 +3,6 @@ import { React, useContext, useEffect, useState } from 'react'
 import logo from './sinka.svg'
 import DehazeIcon from '@mui/icons-material/Dehaze';
 import Link from '@mui/material/Link';
-import { fakeComponentAlert } from '../../../util/miscmethods';
 import { SessionContext, HostContext } from '../../../util/contexts';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
@@ -132,15 +131,15 @@ function Navbar({ toggle }) {
                             fontWeight: '500'
                         }}>
                             <LinkNav href="/myteam">
-                                Descobrir
+                                Equipes
                             </LinkNav>
                         </Grid>
                         <Grid sx={{
                             height: '80px',
                             fontWeight: '500'
                         }}>
-                            <LinkNav onClick={fakeComponentAlert}>
-                                Serviços
+                            <LinkNav href={'/courts'}>
+                                Quadras
                             </LinkNav>
                         </Grid>
                         <Grid sx={{

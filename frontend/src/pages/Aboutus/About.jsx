@@ -2,7 +2,6 @@ import { useState } from "react";
 import Cardabout from "../../components/About/CardAbout";
 import Navbar from "../../components/home/Navbar/Navbar";
 import Sidebar from "../../components/home/Navbar/Sidebar";
-import Cardlocal from '../../components/cardlocal';
 import { Stack  } from "@mui/material";
 
 function About() {

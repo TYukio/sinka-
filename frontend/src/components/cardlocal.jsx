@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Icon, Typography, Chip, Stack } from '@mui/material'
+import { Box, Icon, Typography, Chip } from '@mui/material'
 const Cardlocal = (props) => {
     return (
 
@@ -9,6 +9,7 @@ const Cardlocal = (props) => {
             justifyContent: 'center',
             minWidth: '20em',
             width: '40em',
+            '&:hover': {transform: 'scale(1.05)'}
         }}>
             <Box  sx={{
                 backgroundImage:'url(' + props.image + ')',

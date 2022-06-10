@@ -1,9 +1,9 @@
 import { useState, useContext } from 'react';
 import { Stack, Collapse, Typography, Divider, Button, IconButton, useTheme, useMediaQuery, Box } from '@mui/material';
-import { HomeOutlined, PersonOutline, Logout, Login, DoubleArrowRounded, WorkspacesOutlined, GroupsOutlined      } from '@mui/icons-material';
+import { HomeOutlined, PersonOutline, Logout, Login, DoubleArrowRounded, WorkspacesOutlined, GroupsOutlined, PlaceOutlined      } from '@mui/icons-material';
 import { SessionContext } from '../../util/contexts';
 import logo from './sinka.svg';
-import Scrollbar from './scrollbar.css'
+
 function Dashboard(props) {
     const theme = useTheme();
     const mobile = useMediaQuery('(max-width:768px)');
@@ -16,20 +16,14 @@ function Dashboard(props) {
         { label: 'Navegue' },
         { label: 'Home', icon: <HomeOutlined />, href: '/' },
         { label: 'Sobre', icon: <WorkspacesOutlined />, href: '/sobre' },
-        
-        
-        
-        
+        { label: 'Descobrir' },
+        { label: 'Quadras', icon: <PlaceOutlined />, href: '/courts/'  },
+        { label: 'Equipes', icon: <GroupsOutlined />, href: '/myteam/'  }
     ]
 
     if (session_uid !== null) {
         defaultbuttons.push({ label: 'Meu Sinka' });
-        defaultbuttons.push({ label: 'Perfil', icon: <PersonOutline />, href: '/user/' + session_uid });
-        defaultbuttons.push({ label: 'Meus Times', icon: <GroupsOutlined />, href: '/myteam/'  });
-        
-    }
-    else{
-        defaultbuttons.push({ label: 'Ver Times', icon: <GroupsOutlined />, href: '/myteam/'  });
+        defaultbuttons.push({ label: 'Perfil', icon: <PersonOutline />, href: '/user/' + session_uid });   
     }
 
     const dashbuttons = props.useDefault === true ? defaultbuttons.concat(additionalbuttons) : additionalbuttons;
