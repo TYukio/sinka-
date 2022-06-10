@@ -39,12 +39,13 @@ CREATE TABLE sportcourt
 (
 	id INT UNSIGNED AUTO_INCREMENT NOT NULL,
     id_owner INT UNSIGNED NOT NULL,
+	id_sport INT UNSIGNED NOT NULL,
     creation DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    id_sport INT UNSIGNED NOT NULL,
     title VARCHAR(64) NOT NULL,
-    address VARCHAR(256) DEFAULT NULL,
+    addressname VARCHAR(256) DEFAULT NULL,
     
 	FOREIGN KEY(id_owner) REFERENCES person(id),
+	FOREIGN KEY(id_sport) REFERENCES sport(id),
     
     PRIMARY KEY(id)
 );

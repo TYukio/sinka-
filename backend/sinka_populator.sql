@@ -4,7 +4,7 @@ USE sinka;
 INSERT INTO `persontype` (`title`, `mui_icon`) VALUES ('Atleta', 'directions_run');
 INSERT INTO `persontype` (`title`, `mui_icon`) VALUES ('Personal Trainer', 'sports_kabaddi');
 INSERT INTO `persontype` (`title`, `mui_icon`) VALUES ('Coach', 'sports');
-INSERT INTO `persontype` (`title`, `mui_icon`) VALUES ('Administrador', 'admin_panel_settings');
+INSERT INTO `persontype` (`title`, `mui_icon`) VALUES ('Organizador', 'badge');
 
 # Esportes
 INSERT INTO `sport` (`title`, `mui_icon`) VALUES ('Vôlei', 'sports_volleyball');
@@ -102,6 +102,24 @@ INSERT INTO `team` (`id_creator`, `id_sport`, `creation`, `title`, `gender`, `ab
     'Time real da seleção brasileira unisex, patrocinado pela redbull e talz'
 );
 
+INSERT INTO `sportcourt` (`id_owner`, `id_sport`, `creation`, `title`, `addressname`) VALUES
+(
+	5,
+    2,
+    '2022-04-30',
+	'Quadra Teodoro',
+    'Rua da maionese, 437'
+);
+
+INSERT INTO `sportcourt` (`id_owner`, `id_sport`, `creation`, `title`, `addressname`) VALUES
+(
+	4,
+    4,
+    '2022-05-22',
+	'Handebol de elite',
+    'Rua Fernando Alonso, 1046'
+);
+
 # Atribuições de tipo de usuário
 INSERT INTO `person_persontype` (`id_person`, `id_persontype`) VALUES (1, 1);
 INSERT INTO `person_persontype` (`id_person`, `id_persontype`) VALUES (1, 2);
@@ -113,6 +131,7 @@ INSERT INTO `person_persontype` (`id_person`, `id_persontype`) VALUES (3, 1);
 
 INSERT INTO `person_persontype` (`id_person`, `id_persontype`) VALUES (4, 1);
 INSERT INTO `person_persontype` (`id_person`, `id_persontype`) VALUES (4, 2);
+INSERT INTO `person_persontype` (`id_person`, `id_persontype`) VALUES (4, 4);
 
 INSERT INTO `person_persontype` (`id_person`, `id_persontype`) VALUES (5, 4);
 
