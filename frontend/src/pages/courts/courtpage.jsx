@@ -18,6 +18,7 @@ function CourtPage(props) {
     const [sports, setSports] = useState([]);
 
     const [searchTerms, setSearchTerms] = useState('');
+    const [isOrganizer, setIsOrganizer] = useState(false);
 
     // Backend
     const hostname = useContext(HostContext);
@@ -35,6 +36,30 @@ function CourtPage(props) {
         });
     }
 
+    function fetchUserdata() {
+		if (session_uid === null)
+			return;
+
+		fetch(hostname + 'userdata/fetchpublic?id=' + session_uid, {
+			method: 'GET'
+		}).then(response => {
+			if (response.ok) {
+				response.json().then((json) => {
+                    for (let i = 0; i < json.types.length; ++i)
+                    {
+                        // 4 é organizador
+                        if (json.types[i] === 4)
+                        {
+                            setIsOrganizer(true);
+                            break;
+                        }
+                    }
+
+                });
+			}
+		});
+	}
+
     function fetchDatafields() {
         fetch(hostname + 'datafields/sports', {
             method: 'GET'
@@ -49,6 +74,7 @@ function CourtPage(props) {
 
     /*eslint-disable */
     useEffect(() => { fetchCourtdata(); fetchDatafields(); }, []);
+    useEffect(() => { fetchUserdata(); }, [session_uid]);
     /*eslint-enable */
 
     if (courtsdata && sports.length > 0) {
@@ -107,7 +133,10 @@ function CourtPage(props) {
                                                 <CardLocal title={court.title} subtitle={court.subtitle}
                                                     sport={sports.find(element => element.id === court.id_sport)}
                                                     image={hostname + `images/court/${court.id}.jpg?${new Date().valueOf()}`}
-                                                    address={court.addressname}/>
+                                                    address={court.addressname}
+                                                    id={court.id_owner === session_uid ? court.id : null}
+                                                    refreshCallback={fetchCourtdata}
+                                                />
                                             </>
 
                                         );
@@ -117,9 +146,8 @@ function CourtPage(props) {
                             }
                         </Box>
                     </Box>
-
-                    <Fab href="/editartime/novo" color="primary" aria-label="edit" sx={{
-                        position: 'fixed', bottom: '3rem', left: mobile ? '3rem' : '15rem', zIndex: 255, display: session_uid !== null ? 'auto' : 'none'
+                    <Fab href="/cadastrarlocal" color="primary" aria-label="edit" sx={{
+                        position: 'fixed', bottom: '3rem', left: mobile ? '3rem' : '15rem', zIndex: 255, display: isOrganizer ? 'auto' : 'none'
                     }}>
                         <Add />
                     </Fab>

@@ -35,8 +35,8 @@ router.post('/create', multerUpload.single('avatar'), function(req, res, next) {
     // TODO: Validar tipo de usuário
 
     dbconnection.then(conn => {
-        conn.query('INSERT INTO `sportcourt` (`id_owner`, `id_sport`, `title`, `addressname`) VALUES (?, ?, ?, ?);', 
-            [decodedToken.uid, form.sport, form.name, form.addressname]).then(rows => {
+        conn.query('INSERT INTO `sportcourt` (`id_owner`, `id_sport`, `title`, `subtitle`, `addressname`) VALUES (?, ?, ?, ?, ?);', 
+            [decodedToken.uid, form.sport, form.title, form.subtitle, form.address]).then(rows => {
             if (rows.affectedRows > 0 )
             {
                 if (req.file !== undefined)
@@ -66,7 +66,7 @@ router.delete('/delete', function(req, res, next) {
     var decodedToken = null;
     var form = req.body;
 
-    console.log(chalk.red('Remoção') + ' solicitada para local esportivo de ID #' + form.id);
+    console.log(chalk.red('Remoção') + ' solicitada para local esportivo de ID #' + form.id_court);
 
     try {
         decodedToken = jwt.verify(req.cookies['token'], process.env.DB_PASS);
@@ -77,7 +77,7 @@ router.delete('/delete', function(req, res, next) {
     }
 
     dbconnection.then(conn => {
-        conn.query('SELECT `id_owner` FROM `sportcourt` WHERE `id` = ?;', [form.id]).then(rows => { 
+        conn.query('SELECT `id_owner` FROM `sportcourt` WHERE `id` = ?;', [form.id_court]).then(rows => { 
             if (rows.length == 0)
             {
                 res.sendStatus(400);
@@ -90,8 +90,8 @@ router.delete('/delete', function(req, res, next) {
             }  
             else
             {
-                fs.unlink(path.join(__dirname, '..', '..', 'public', 'images', 'court', form.id.toString() + '.jpg'), (err) => {});
-                conn.query('DELETE FROM `sportcourt` WHERE `id` = ?;', [form.id]).then(rows_a => {
+                fs.unlink(path.join(__dirname, '..', '..', 'public', 'images', 'court', form.id_court.toString() + '.jpg'), (err) => {});
+                conn.query('DELETE FROM `sportcourt` WHERE `id` = ?;', [form.id_court]).then(rows_a => {
                     if (rows_a.affectedRows > 0 )
                     {
                         res.sendStatus(200);

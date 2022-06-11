@@ -5,6 +5,7 @@ import { CssBaseline } from '@mui/material';
 import { SessionContext, HostContext } from './util/contexts';
 import { useCookies } from 'react-cookie';
 import { useJwt } from 'react-jwt';
+
 import Aboutus from "./pages/Aboutus/About" 
 import Notfound from './pages/Notfound';
 import Home from './pages/LandingPage/Home';
@@ -16,6 +17,7 @@ import Team from './pages/teams/team';
 import TeamPage from './pages/teams/teampage';
 import TeamEdit from './pages/teams/teamedit';
 import Courts from './pages/courts/courtpage';
+import CourtCreate from './pages/courts/courtcreate';
 
 const themes = {
 	dark: createTheme({
@@ -88,6 +90,7 @@ function App() {
 						<Route path="/user/:id" element={<User />} />
 						<Route path="/myteam" element={<TeamPage />} />
 						<Route path="/courts" element={<Courts />} />
+						<Route path="/cadastrarlocal" element={<CourtCreate />} />
 						<Route path="/team/:id" element={<Team />} />	
 						<Route path="/editartime/:id" element={<TeamEdit />}/>
 						<Route path="/editarperfil" element={<UserEdit />}/>

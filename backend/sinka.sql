@@ -42,6 +42,7 @@ CREATE TABLE sportcourt
 	id_sport INT UNSIGNED NOT NULL,
     creation DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
     title VARCHAR(64) NOT NULL,
+	subtitle VARCHAR(64) NOT NULL,
     addressname VARCHAR(256) DEFAULT NULL,
     
 	FOREIGN KEY(id_owner) REFERENCES person(id),
