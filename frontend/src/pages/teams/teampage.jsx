@@ -131,7 +131,9 @@ function TeamPage(props) {
                                                         flexWrap: 'wrap',
                                                         gap: '1rem',
                                                         justifyContent: 'center',
-                                                        marginTop: mobile ? '2em' : 'none'
+                                                        marginTop: mobile ? '2em' : 'none',
+                                                        transition: '0.2s',
+                                                        '&:hover': {transform: 'scale(1.05)', transition: '0.2s'}
                                                     }}>
 
                                                     <Box sx={{

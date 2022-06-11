@@ -43,7 +43,7 @@ router.post('/create', multerUpload.single('avatar'), function(req, res, next) {
                 {
                     jimp.read(req.file.path)
                     .then(image => {
-                        image.resize(256, 256).quality(75).write(path.join(__dirname, '..', '..', 'public', 'images', 'court', rows.insertId.toString() + '.jpg'));
+                        image.resize(1024, 500).quality(75).write(path.join(__dirname, '..', '..', 'public', 'images', 'court', rows.insertId.toString() + '.jpg'));
                         fs.unlinkSync(req.file.path);
                     })
                 }
