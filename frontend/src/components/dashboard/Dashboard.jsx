@@ -3,6 +3,7 @@ import { Stack, Collapse, Typography, Divider, Button, IconButton, useTheme, use
 import { HomeOutlined, PersonOutline, Logout, Login, DoubleArrowRounded, WorkspacesOutlined, GroupsOutlined, PlaceOutlined      } from '@mui/icons-material';
 import { SessionContext } from '../../util/contexts';
 import logo from './sinka.svg';
+import scrollbar from './scrollbar.css'
 
 function Dashboard(props) {
     const theme = useTheme();
